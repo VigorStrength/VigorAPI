@@ -74,4 +74,5 @@ type SystemPreferences struct {
     TimeZone          string `bson:"timeZone" json:"timeZone"`
     DisplayMode       string `bson:"displayMode" json:"displayMode"`
     MeasurementSystem string `bson:"measurementSystem" json:"measurementSystem"`
+    AllowReadReceipt  bool   `bson:"allowReadReceipt" json:"allowReadReceipt"` // Global setting for allowing read receipts.
 }
