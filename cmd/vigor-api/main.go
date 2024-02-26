@@ -10,7 +10,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-
 func main() {
 	//Load configuration
 	cfg, err := config.LoadConfig()
@@ -29,7 +28,7 @@ func main() {
 	// Set up your Gin router
 	router := gin.Default()
 
-	// Set up you routes 
+	// Set up you routes
 	api.SetupRoutes(router)
 
 	// Start you API server
