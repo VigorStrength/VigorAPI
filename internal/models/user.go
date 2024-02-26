@@ -62,6 +62,7 @@ type Lifestyle struct {
     WorkoutFrequency *int   `bson:"workoutFrequency,omitempty" json:"workoutFrequency,omitempty"` // Optional future feature.
     WorkoutDuration  string `bson:"workoutDuration" json:"workoutDuration" binding:"required"`
     DiscoveryMethod  *string `bson:"discoveryMethod,omitempty" json:"discoveryMethod,omitempty"` // Optional future feature.
+    IntolerancesAndAllergies []string `bson:"intolerancesAndAllergies" json:"intolerancesAndAllergies"` // List of user's intolerances and allergies.
 }
 
 type CycleInformation struct {
