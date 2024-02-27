@@ -15,7 +15,7 @@ func LoadConfig() (*Config, error) {
 		return nil, errors.New("MONGODB_URI environment variable is not set")
 	}
 
-	config :=  &Config {
+	config := &Config{
 		MongoDBURI: mongoDBURI,
 	}
 
