@@ -31,6 +31,8 @@ type UserSubscription struct {
 }
 
 type UserProfile struct {
+	Username         string            `bson:"username" json:"username" binding:"required"`
+    ProfilePicture   string            `bson:"profilePicture" json:"profilePicture"` // URL to the user's profile picture.
 	MainGoal         string            `bson:"mainGoal" json:"mainGoal" binding:"required"`
 	SecondaryGoal    *string           `bson:"secondaryGoal,omitempty" json:"secondaryGoal,omitempty"` // Optional for female users.
 	BodyInformation  BodyInformation   `bson:"bodyInformation" json:"bodyInformation" binding:"required"`

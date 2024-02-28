@@ -7,16 +7,20 @@ import (
 
 type Config struct {
 	MongoDBURI string
+	DatabaseName string
 }
 
 func LoadConfig() (*Config, error) {
-	mongoDBURI := os.Getenv("MONGODB_URI")
-	if mongoDBURI == "" {
-		return nil, errors.New("MONGODB_URI environment variable is not set")
+	mongoDBURI := os.Getenv("VIGOR_DB_URI")
+	databaseName := os.Getenv("VIGOR_DB_NAME")
+
+	if mongoDBURI == "" || databaseName == "" {
+		return nil, errors.New("database configuration not set")
 	}
 
 	config := &Config{
 		MongoDBURI: mongoDBURI,
+		DatabaseName: databaseName,
 	}
 
 	return config, nil
