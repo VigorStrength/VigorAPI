@@ -1,0 +1,39 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": ["senderId", "content", "sentAt"],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId"
+      },
+      "senderId": {
+        "bsonType": "objectId",
+        "description": "must be an objectId and is required"
+      },
+      "recipientId": {
+        "bsonType": "objectId",
+        "description": "optional objectId referencing the recipient"
+      },
+      "groupId": {
+        "bsonType": "objectId",
+        "description": "optional objectId referencing the group"
+      },
+      "content": {
+        "bsonType": "string",
+        "description": "must be a string and is required"
+      },
+      "sentAt": {
+        "bsonType": "date",
+        "description": "must be a date and is required"
+      },
+      "receivedAt": {
+        "bsonType": "date",
+        "description": "optional date when the message was received"
+      },
+      "readAt": {
+        "bsonType": "date",
+        "description": "optional date when the message was read"
+      }
+    }
+  }
+}

@@ -1,0 +1,175 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": [
+      "firstName",
+      "lastName",
+      "email",
+      "passwordHash",
+      "birthDate",
+      "gender",
+      "height",
+      "weight",
+      "subscription",
+      "trialEndsAt",
+      "profileInformation"
+    ],
+    "properties": {
+      "_id": { "bsonType": "objectId" },
+      "firstName": {
+        "bsonType": "string",
+        "description": "must be a string and is required"
+      },
+      "lastName": {
+        "bsonType": "string",
+        "description": "must be a string and is required"
+      },
+      "email": {
+        "bsonType": "string",
+        "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+        "description": "must be a valid email address"
+      },
+      "passwordHash": { "bsonType": "string" },
+      "birthDate": { "bsonType": "date" },
+      "gender": { "bsonType": "string" },
+      "height": { "bsonType": "int" },
+      "weight": { "bsonType": "int" },
+      "subscription": {
+        "bsonType": "object",
+        "required": ["type", "status", "startDate"],
+        "properties": {
+          "type": {
+            "bsonType": "string",
+            "description": "defines the subscription type (e.g., 'monthly', 'annual')"
+          },
+          "status": {
+            "bsonType": "string",
+            "description": "current status of the subscription"
+          },
+          "startDate": {
+            "bsonType": "date",
+            "description": "subscription start date"
+          },
+          "endDate": {
+            "bsonType": "date",
+            "description": "subscription end date, if any"
+          },
+          "nextRenewalDate": {
+            "bsonType": "date",
+            "description": "indicates the next schedule renewal date of the subscription, if applicable"
+          },
+          "isActive": {
+            "bsonType": "bool",
+            "description": "indicates whether the subscription is currently active"
+          }
+        }
+      },
+      "trialEndsAt": {
+        "bsonType": "date",
+        "description": "indicates the ends of the trial period"
+      },
+      "profileInformation": {
+        "bsonType": "object",
+        "required": [
+          "username",
+          "mainGoal",
+          "bodyInformation",
+          "activityLevel",
+          "physicalActivity",
+          "lifestyle"
+        ],
+        "properties": {
+          "username": { "bsonType": "string" },
+          "profilePicture": { "bsonType": "string" },
+          "mainGoal": { "bsonType": "string" },
+          "secondaryGoal": { "bsonType": "string" },
+          "bodyInformation": {
+            "bsonType": "object",
+            "required": ["bodyType"],
+            "properties": {
+              "bodyType": { "bsonType": "string" },
+              "bodyGoal": { "bsonType": "string" },
+              "healthRestrictions": {
+                "bsonType": "array",
+                "items": { "bsonType": "string" }
+              },
+              "focusArea": {
+                "bsonType": "array",
+                "items": { "bsonType": "string" }
+              }
+            }
+          },
+          "activityLevel": { "bsonType": "string" },
+          "physicalActivity": {
+            "bsonType": "object",
+            "required": ["fitnessLevel", "activities"],
+            "properties": {
+              "fitnessLevel": {
+                "bsonType": "string",
+                "description": "user's fitness level"
+              },
+              "activities": {
+                "bsonType": "array",
+                "items": {
+                  "bsonType": "string",
+                  "description": "list of user's physical activities"
+                }
+              }
+            }
+          },
+          "lifestyle": {
+            "bsonType": "object",
+            "required": [
+              "diet",
+              "typicalDay",
+              "trainingLocation",
+              "workoutTime",
+              "workoutFrequency",
+              "workoutDuration"
+            ],
+            "properties": {
+              "diet": {
+                "bsonType": "string",
+                "description": "user's diet preference"
+              },
+              "waterIntake": { "bsonType": "int" },
+              "sleepDuration": { "bsonType": "int" },
+              "typicalDay": { "bsonType": "string" },
+              "trainingLocation": { "bsonType": "string" },
+              "workoutTime": { "bsonType": "string" },
+              "workoutFrequency": { "bsonType": "int" },
+              "workoutDuration": { "bsonType": "string" },
+              "discoveryMethod": {
+                "bsonType": "string",
+                "description": "how the user discovered the app"
+              },
+              "intolerancesAndAllergies": {
+                "bsonType": "array",
+                "items": {
+                  "bsonType": "string",
+                  "description": "list of user's intolerances and allergies"
+                }
+              }
+            }
+          },
+          "cycleInformation": {
+            "bsonType": "object",
+            "properties": {
+              "reproductiveStage": { "bsonType": "string" }
+            }
+          }
+        }
+      },
+      "systemPreferences": {
+        "bsonType": "object",
+        "properties": {
+          "language": { "bsonType": "string" },
+          "timeZone": { "bsonType": "string" },
+          "displayMode": { "bsonType": "string" },
+          "measurementSystem": { "bsonType": "string" },
+          "allowReadReceipt": { "bsonType": "bool" }
+        }
+      }
+    }
+  }
+}

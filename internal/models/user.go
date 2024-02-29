@@ -23,11 +23,12 @@ type User struct {
 }
 
 type UserSubscription struct {
-	Type       string     `bson:"type" json:"type" binding:"required"`
-	Status     string     `bson:"status" json:"status" binding:"required"`
-	StartDate  *time.Time `bson:"startDate,omitempty" json:"startDate,omitempty" binding:"required"`
-	EndDate    *time.Time `bson:"endDate,omitempty" json:"endDate,omitempty"`
-	RenewalDay int        `bson:"renewalDay,omitempty" json:"renewalDay,omitempty"`
+    Type       string     `bson:"type" json:"type" binding:"required"`
+    Status     string     `bson:"status" json:"status" binding:"required"`
+    StartDate  *time.Time `bson:"startDate,omitempty" json:"startDate,omitempty" binding:"required"`
+    EndDate    *time.Time `bson:"endDate,omitempty" json:"endDate,omitempty"`
+    NextRenewalDate *time.Time `bson:"nextRenewalDate,omitempty" json:"nextRenewalDate,omitempty"` // Next scheduled renewal date
+    IsActive   bool       `bson:"isActive" json:"isActive"` // Indicates whether the subscription is currently active
 }
 
 type UserProfile struct {
