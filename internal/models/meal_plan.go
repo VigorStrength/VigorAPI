@@ -53,14 +53,13 @@ type UserNutritionalLog struct {
 
 // WeeklyPlan represents a weekly grouping of meals by category, used for generic meal proposals.
 type WeeklyPlan struct {
-	ID             primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
-	WeekNumber     *int               `bson:"weekNumber,omitempty" json:"weekNumber,omitempty"` // Optional; not required for generic meal proposals.
-	Breakfast      []Meal             `bson:"breakfast" json:"breakfast" binding:"required"`
-	MorningSnack   []Meal             `bson:"morningSnack" json:"morningSnack"` // Optional, not all diets may include a morning snack.
-	Lunch          []Meal             `bson:"lunch" json:"lunch" binding:"required"`
-	AfternoonSnack []Meal             `bson:"afternoonSnack" json:"afternoonSnack"` // Optional.
-	Dinner         []Meal             `bson:"dinner" json:"dinner" binding:"required"`
-	// Additional meal categories like PreWorkoutSnack and PostWorkoutSnack can be added here.
+    ID             primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
+    WeekNumber     int                `bson:"weekNumber,omitempty" json:"weekNumber,omitempty"` // Optional; not required for chef's picks.
+    Breakfast      []primitive.ObjectID `bson:"breakfast" json:"breakfast"`
+    MorningSnack   []primitive.ObjectID `bson:"morningSnack" json:"morningSnack"` // Optional, not all diets may include a morning snack.
+    Lunch          []primitive.ObjectID `bson:"lunch" json:"lunch"`
+    AfternoonSnack []primitive.ObjectID `bson:"afternoonSnack" json:"afternoonSnack"` // Optional.
+    Dinner         []primitive.ObjectID `bson:"dinner" json:"dinner"`
 }
 
 // MealPlan represents the structured plan of meals for a user over a month, organized into weekly plans.

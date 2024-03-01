@@ -1,0 +1,111 @@
+{
+  "definitions": {
+    "ingredient": {
+      "bsonType": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "bsonType": "string"
+        },
+        "quantity": {
+          "bsonType": "string"
+        }
+      }
+    },
+    "nutritionalInfo": {
+      "bsonType": "object",
+      "required": [
+        "energy",
+        "protein",
+        "fat",
+        "saturatedFat",
+        "carbohydrates",
+        "sugars",
+        "fiber"
+      ],
+      "properties": {
+        "energy": {
+          "bsonType": "double"
+        },
+        "protein": {
+          "bsonType": "double"
+        },
+        "fat": {
+          "bsonType": "double"
+        },
+        "saturatedFat": {
+          "bsonType": "double"
+        },
+        "carbohydrates": {
+          "bsonType": "double"
+        },
+        "sugars": {
+          "bsonType": "double"
+        },
+        "fiber": {
+          "bsonType": "double"
+        }
+      }
+    }
+  },
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": [
+      "name",
+      "mealType",
+      "ingredients",
+      "method",
+      "prepTime",
+      "cookingTime",
+      "nutritionalInfo",
+      "numberOfServings"
+    ],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId"
+      },
+      "name": {
+        "bsonType": "string"
+      },
+      "mealType": {
+        "bsonType": "string"
+      },
+      "ingredients": {
+        "bsonType": "array",
+        "items": {
+          "$ref": "#/definitions/ingredient"
+        }
+      },
+      "method": {
+        "bsonType": "array",
+        "items": {
+          "bsonType": "string"
+        }
+      },
+      "prepTime": {
+        "bsonType": "int"
+      },
+      "cookingTime": {
+        "bsonType": "int"
+      },
+      "nutritionalInfo": {
+        "$ref": "#/definitions/nutritionalInfo"
+      },
+      "description": {
+        "bsonType": "string"
+      },
+      "nutritionalLabels": {
+        "bsonType": "array",
+        "items": {
+          "bsonType": "string"
+        }
+      },
+      "completed": {
+        "bsonType": "bool"
+      },
+      "numberOfServings": {
+        "bsonType": "int"
+      }
+    }
+  }
+}
