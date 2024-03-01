@@ -21,40 +21,38 @@ type Exercise struct {
 
 // ExerciseLog represents the logging of exercises, including proposed logs and actual user logs.
 type ExerciseLog struct {
-	ProposedReps   int    `bson:"proposedReps" json:"proposedReps" binding:"required"`
-	ActualReps     int    `bson:"actualReps" json:"actualReps"`
-	ProposedWeight string `bson:"proposedWeight" json:"proposedWeight"` // Can be empty if no equipment.
-	ActualWeight   string `bson:"actualWeight" json:"actualWeight"`
+	ProposedReps   int      `bson:"proposedReps" json:"proposedReps" binding:"required"`
+	ActualReps     int      `bson:"actualReps" json:"actualReps"`
+	ProposedWeight float64  `bson:"proposedWeight" json:"proposedWeight"` // Can be empty if no equipment.
+	ActualWeight   float64  `bson:"actualWeight" json:"actualWeight"`
 }
 
 // Circuit represents a set of exercises performed in sequence, with optional rest and laps tracking.
 type Circuit struct {
-	Exercises    []Exercise `bson:"exercises" json:"exercises" binding:"required"`
-	RestTime     *int       `bson:"restTime,omitempty" json:"restTime,omitempty"` // Optional rest time in seconds.
-	ProposedLaps int        `bson:"proposedLaps" json:"proposedLaps" binding:"required"`
-	ActualLaps   int        `bson:"actualLaps" json:"actualLaps"`
-	Completed    bool       `bson:"completed" json:"completed"`
+	ExerciseIDs  []primitive.ObjectID `bson:"exerciseIds" json:"exerciseIds" binding:"required"`
+	RestTime     *int                 `bson:"restTime,omitempty" json:"restTime,omitempty"` // Optional rest time in seconds.
+	ProposedLaps int                  `bson:"proposedLaps" json:"proposedLaps" binding:"required"`
+	ActualLaps   int                  `bson:"actualLaps" json:"actualLaps"`
+	Completed    bool                 `bson:"completed" json:"completed"`
 }
 
 // WorkoutDay represents a complete day's workout plan, including warm-up, workout, and cool-down.
 type WorkoutDay struct {
-	ID               primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
-	WarmUp           []Circuit          `bson:"warmUp" json:"warmUp" binding:"required"`
-	Workout          []Circuit          `bson:"workout" json:"workout" binding:"required"`
-	CoolDown         []Circuit          `bson:"coolDown" json:"coolDown" binding:"required"`
-	TotalExercises   int                `bson:"totalExercises" json:"totalExercises"`
-	TotalLaps        int                `bson:"totalLaps" json:"totalLaps"`
-	WorkoutTimeRange [2]int             `bson:"workoutTimeRange" json:"workoutTimeRange"` // [minTime, maxTime] in seconds.
-	Equipment        []string           `bson:"equipment" json:"equipment"`
-	CompletionStatus bool               `bson:"completionStatus" json:"completionStatus"` // Indicates if the WorkoutDay is completed.
+	WarmUp           []Circuit `bson:"warmUp" json:"warmUp" binding:"required"`
+	Workout          []Circuit `bson:"workout" json:"workout" binding:"required"`
+	CoolDown         []Circuit `bson:"coolDown" json:"coolDown" binding:"required"`
+	TotalExercises   int       `bson:"totalExercises" json:"totalExercises"`
+	TotalLaps        int       `bson:"totalLaps" json:"totalLaps"`
+	WorkoutTimeRange [2]int    `bson:"workoutTimeRange" json:"workoutTimeRange"` // [minTime, maxTime] in seconds.
+	Equipment        []string  `bson:"equipment" json:"equipment"`
+	CompletionStatus bool      `bson:"completionStatus" json:"completionStatus"` // Indicates if the WorkoutDay is completed.
 }
 
 // WorkoutWeek represents a single week within a workout plan, containing multiple workout days.
 type WorkoutWeek struct {
-	ID            primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
-	Days          []WorkoutDay       `bson:"days" json:"days" binding:"required"`
-	WeekNumber    int                `bson:"weekNumber" json:"weekNumber" binding:"required"`
-	CompletedDays int                `bson:"completedDays" json:"completedDays"` // Derived by counting days with CompletionStatus true.
+	Days          []WorkoutDay `bson:"days" json:"days" binding:"required"`
+	WeekNumber    int          `bson:"weekNumber" json:"weekNumber" binding:"required"`
+	CompletedDays int          `bson:"completedDays" json:"completedDays"` // Derived by counting days with CompletionStatus true.
 }
 
 // WorkoutPlan represents a user's workout plan, including weeks and progress tracking.

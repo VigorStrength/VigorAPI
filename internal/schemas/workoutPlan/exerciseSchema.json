@@ -1,0 +1,37 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": [
+      "name",
+      "description",
+      "videoURL",
+      "targetMuscles",
+      "equipmentNeeded",
+      "instructions",
+      "time"
+    ]
+  },
+  "properties": {
+    "_id": { "bsonType": "objectId" },
+    "name": { "bsonType": "string" },
+    "description": { "bsonType": "string" },
+    "videoURL": { "bsonType": "string" },
+    "targetMuscles": { "bsonType": "array", "items": { "bsonType": "string" } },
+    "equipmentNeeded": {
+      "bsonType": "array",
+      "items": { "bsonType": "string" }
+    },
+    "instructions": { "bsonType": "array", "items": { "bsonType": "string" } },
+    "time": { "bsonType": "int" },
+    "log": {
+      "bsonType": "object",
+      "required": ["proposedReps"],
+      "properties": {
+        "proposedReps": "int",
+        "actualReps": "int",
+        "proposedWeight": "double",
+        "actualWeight": "double"
+      }
+    }
+  }
+}
