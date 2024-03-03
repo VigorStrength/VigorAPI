@@ -51,6 +51,8 @@ func ensureIndexes(ctx context.Context, dbName string) error {
 	usersCollection := Client.Database(dbName).Collection("users")
 	exercisesCollection := Client.Database(dbName).Collection("exercises")
 	mealsCollection := Client.Database(dbName).Collection("meals")
+	userMealStatusCollection := Client.Database(dbName).Collection("userMealStatus")
+
 	// Index for 'email'
 	emailIndexModel := mongo.IndexModel{
 		Keys:    bson.M{"email": 1}, // Unique index on 'email'
@@ -96,6 +98,20 @@ func ensureIndexes(ctx context.Context, dbName string) error {
 		return err
 	}
 	log.Println("Successfully created unique index for 'name' in 'meals' collection")
+
+	userMealStatusIndexModel := mongo.IndexModel{
+		Keys: bson.D{
+			{Key: "userId", Value: 1},
+			{Key: "mealId", Value: 1},
+		},
+		Options: options.Index().SetUnique(true),
+	}
+
+	if _, err := userMealStatusCollection.Indexes().CreateOne(ctx, userMealStatusIndexModel); err != nil {
+		log.Println("Error trying to create unique index for 'userId' and 'mealId' fields in 'userMealStatus' collection")
+		return err
+	}
+	log.Println("Successfully created index for userMealStatuses collection")
 
 	return nil
 }
@@ -143,6 +159,16 @@ func InitializeCollections(ctx context.Context, dbName string) error {
 		return err
 	}
 
+	userMealStatusSchema, err := schemaFiles.ReadFile("schemas/mealPlan/userMealStatusSchema.json")
+	if err != nil {
+		return err 
+	}
+
+	var userMealStatusSchemaBson bson.M
+	if err := json.Unmarshal(userMealStatusSchema, &userMealStatusSchemaBson); err != nil {
+		return err
+	}
+
 	mealPlanSchema, err := schemaFiles.ReadFile("schemas/mealPlan/mealPlanSchema.json")
 	if err != nil {
 		return err
@@ -187,6 +213,10 @@ func InitializeCollections(ctx context.Context, dbName string) error {
 	}
 
 	if err := applyCollectionValidation(ctx, db, "meals", mealSchemaBson); err != nil {
+		return err
+	}
+
+	if err := applyCollectionValidation(ctx, db, "meals", userMealStatusSchemaBson); err != nil {
 		return err
 	}
 

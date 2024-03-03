@@ -100,9 +100,6 @@
           "bsonType": "string"
         }
       },
-      "completed": {
-        "bsonType": "bool"
-      },
       "numberOfServings": {
         "bsonType": "int"
       }

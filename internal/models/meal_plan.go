@@ -35,7 +35,6 @@ type Meal struct {
 	NutritionalInfo   NutritionalInfo    `bson:"nutritionalInfo" json:"nutritionalInfo" binding:"required"`
 	Description       string             `bson:"description,omitempty" json:"description,omitempty"` // Optional.
 	NutritionalLabels []string           `bson:"nutritionalLabels" json:"nutritionalLabels"`         // E.g., GF, DF, etc.
-	Completed         bool               `bson:"completed" json:"completed"`
 	NumberOfServings  int                `bson:"numberOfServings" json:"numberOfServings" binding:"required"` // Default is 1; can be updated.
 }
 
@@ -60,6 +59,13 @@ type WeeklyPlan struct {
     Lunch          []primitive.ObjectID `bson:"lunch" json:"lunch"`
     AfternoonSnack []primitive.ObjectID `bson:"afternoonSnack" json:"afternoonSnack"` // Optional.
     Dinner         []primitive.ObjectID `bson:"dinner" json:"dinner"`
+}
+
+type UserMealStatus struct {
+    ID       primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
+    UserID   primitive.ObjectID `bson:"userId" json:"userId" binding:"required"`
+    MealID   primitive.ObjectID `bson:"mealId" json:"mealId" binding:"required"`
+    Completed bool              `bson:"completed" json:"completed"`
 }
 
 // MealPlan represents the structured plan of meals for a user over a month, organized into weekly plans.
