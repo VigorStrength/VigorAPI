@@ -1,21 +1,22 @@
 {
   "$jsonSchema": {
     "bsonType": "object",
-    "required": ["userId", "mealId"],
+    "required": ["userId", "mealId", "completed"],
     "properties": {
       "_id": {
         "bsonType": "objectId"
       },
       "userId": {
         "bsonType": "objectId",
-        "description": "Id of the user to whom the meal is attributed through the meal plan. Must be an objectId and is required"
+        "description": "User ID for whom the meal completion status is tracked."
       },
       "mealId": {
         "bsonType": "objectId",
-        "description": "Id of the assigned meal. Must be an objectId and is required"
+        "description": "Meal ID that the status is tracked for."
       },
       "completed": {
-        "bsonType": "bool"
+        "bsonType": "bool",
+        "description": "Indicates whether the meal has been completed by the user."
       }
     }
   }

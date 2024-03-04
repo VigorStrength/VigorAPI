@@ -1,0 +1,23 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": ["userId", "workoutDayId", "completed"],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId"
+      },
+      "userId": {
+        "bsonType": "objectId",
+        "description": "User ID for whom the workout day completion status is tracked."
+      },
+      "workoutDayId": {
+        "bsonType": "objectId",
+        "description": "Workout Day ID that the status is tracked for."
+      },
+      "completed": {
+        "bsonType": "bool",
+        "description": "Indicates whether the workout day has been completed by the user."
+      }
+    }
+  }
+}

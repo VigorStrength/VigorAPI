@@ -1,0 +1,24 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": ["userId", "workoutWeekId", "completedDays"],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId"
+      },
+      "userId": {
+        "bsonType": "objectId",
+        "description": "User ID for whom the workout week progress is tracked."
+      },
+      "workoutWeekId": {
+        "bsonType": "objectId",
+        "description": "Workout Week ID that the progress is tracked for."
+      },
+      "completedDays": {
+        "bsonType": "int",
+        "minimum": 0,
+        "description": "The number of days within the workout week that have been completed by the user."
+      }
+    }
+  }
+}
