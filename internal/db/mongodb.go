@@ -47,119 +47,49 @@ func ConnectDB(cfg *config.Config) error {
 }
 
 func ensureIndexes(ctx context.Context, dbName string) error {
-	// Users Collection
-	usersCollection := Client.Database(dbName).Collection("users")
-
-	// Index for 'email'
-	emailIndexModel := mongo.IndexModel{
-		Keys:    bson.M{"email": 1}, // Unique index on 'email'
-		Options: options.Index().SetUnique(true),
-	}
-	if _, err := usersCollection.Indexes().CreateOne(ctx, emailIndexModel); err != nil {
-		log.Println("Error creating unique index for 'email' field in 'users' collection")
-		return err
-	}
-	log.Println("Successfully created unique index for 'email' field in 'users' collection.")
-
-	// Index for 'username'
-	usernameIndexModel := mongo.IndexModel{
-		Keys:    bson.M{"username": 1}, // Unique index on 'username'
-		Options: options.Index().SetUnique(true),
-	}
-	if _, err := usersCollection.Indexes().CreateOne(ctx, usernameIndexModel); err != nil {
-		log.Println("Error creating unique index for 'username' field in 'users' collection")
-		return err
-	}
-	log.Println("Successfully created unique index for 'username' field in 'users' collection.")
-
-	// Exercises Collection
-	exercisesCollection := Client.Database(dbName).Collection("exercises")
-
-	// Index for Exercise Name
-	exerciseNameIndexModel := mongo.IndexModel{
-		Keys:    bson.M{"name": 1}, // Unique index on 'name'
-		Options: options.Index().SetUnique(true),
-	}
-	if _, err := exercisesCollection.Indexes().CreateOne(ctx, exerciseNameIndexModel); err != nil {
-		log.Println("Error creating unique index for 'name' field in 'exercises' collection")
-		return err
-	}
-	log.Println("Successfully created unique index for 'name' in 'exercises' collection")
-
-	// Meals Collection
-	mealsCollection := Client.Database(dbName).Collection("meals")
-
-	// Index for Meal Name
-	mealNameIndexModel := mongo.IndexModel{
-		Keys:    bson.M{"name": 1}, // Unique index on 'name'
-		Options: options.Index().SetUnique(true),
-	}
-	if _, err := mealsCollection.Indexes().CreateOne(ctx, mealNameIndexModel); err != nil {
-		log.Println("Error creating unique index for 'name' field in 'meals' collection")
-		return err
-	}
-	log.Println("Successfully created unique index for 'name' in 'meals' collection")
-
-	// Additional collections and indexes can follow the same pattern as above.
-	userMealStatusCollection := Client.Database(dbName).Collection("userMealStatus")
-	userMealStatusIndexModel := mongo.IndexModel{
-		Keys: bson.D{
-			{Key: "userId", Value: 1},
-			{Key: "mealId", Value: 1},
+	collections := map[string][]mongo.IndexModel{
+		"users": {
+			{Keys: bson.M{"email": 1}, Options: options.Index().SetUnique(true)},
+			{Keys: bson.M{"username": 1}, Options: options.Index().SetUnique(true)},
 		},
-		Options: options.Index().SetUnique(true),
-	}
-	if _, err := userMealStatusCollection.Indexes().CreateOne(ctx, userMealStatusIndexModel); err != nil {
-		log.Println("Error creating unique index for 'userId' and 'mealId' fields in 'userMealStatus' collection")
-		return err
-	}
-	log.Println("Successfully created index for userMealStatuses collection")
-
-	// Index for userCircuitStatus
-	userCircuitStatusCollection := Client.Database(dbName).Collection("userCircuitStatus")
-	userCircuitStatusIndexModel := mongo.IndexModel{
-		Keys: bson.D{
-			{Key: "userId", Value: 1},
-			{Key: "circuitId", Value: 1},
+		"exercises": {
+			{Keys: bson.M{"name": 1}, Options: options.Index().SetUnique(true)},
 		},
-		Options: options.Index().SetUnique(true),
-	}
-	if _, err := userCircuitStatusCollection.Indexes().CreateOne(ctx, userCircuitStatusIndexModel); err != nil {
-		log.Println("Error creating unique index for 'userCircuitStatus' collection")
-		return err
-	}
-	log.Println("Successfully created index for userCircuitStatus collection")
-
-	// Index for userWorkoutDayStatus
-	userWorkoutDayStatusCollection := Client.Database(dbName).Collection("userWorkoutDayStatus")
-	userWorkoutDayStatusIndexModel := mongo.IndexModel{
-		Keys: bson.D{
-			{Key: "userId", Value: 1},
-			{Key: "workoutDayId", Value: 1},
+		"meals": {
+			{Keys: bson.M{"name": 1}, Options: options.Index().SetUnique(true)},
 		},
-		Options: options.Index().SetUnique(true),
-	}
-	if _, err := userWorkoutDayStatusCollection.Indexes().CreateOne(ctx, userWorkoutDayStatusIndexModel); err != nil {
-		log.Println("Error creating unique index for 'userWorkoutDayStatus' collection")
-		return err
-	}
-	log.Println("Successfully created index for userWorkoutDayStatus collection")
-
-	// Index for userWorkoutWeekStatus
-	userWorkoutWeekStatusCollection := Client.Database(dbName).Collection("userWorkoutWeekStatus")
-	userWorkoutWeekStatusIndexModel := mongo.IndexModel{
-		Keys: bson.D{
-			{Key: "userId", Value: 1},
-			{Key: "workoutWeekId", Value: 1},
+		"userMealStatus": {
+			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "mealId", Value: 1}}, Options: options.Index().SetUnique(true)},
 		},
-		Options: options.Index().SetUnique(true),
+		"userCircuitStatus": {
+			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "circuitId", Value: 1}}, Options: options.Index().SetUnique(true)},
+		},
+		"userWorkoutDayStatus": {
+			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "workoutDayId", Value: 1}}, Options: options.Index().SetUnique(true)},
+		},
+		"userWorkoutWeekStatus": {
+			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "workoutWeekId", Value: 1}}, Options: options.Index().SetUnique(true)},
+		},
 	}
-	if _, err := userWorkoutWeekStatusCollection.Indexes().CreateOne(ctx, userWorkoutWeekStatusIndexModel); err != nil {
-		log.Println("Error creating unique index for 'userWorkoutWeekStatus' collection", err)
-		return err
+	
+	for collection, indexes := range collections {
+		if err := createIndexes(ctx, dbName, collection, indexes); err != nil {
+			return err
+		}
 	}
-	log.Println("Successfully created index for userWorkoutWeekStatus collection")
+	log.Println("Successfully created indexes for all collctions.")
+	return nil
+}
 
+func createIndexes(ctx context.Context, dbName, collectionName string, indexes []mongo.IndexModel) error {
+	collection := Client.Database(dbName).Collection(collectionName)
+	for _, indexModel := range indexes {
+		if _, err := collection.Indexes().CreateOne(ctx, indexModel); err != nil {
+			log.Printf("Error creating index for collection '%s'!\n", collectionName)
+			return err 
+		}
+		log.Printf("Successfully created index for collection '%s'.\n", collectionName)
+	}
 	return nil
 }
 
