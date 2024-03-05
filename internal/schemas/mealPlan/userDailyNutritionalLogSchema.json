@@ -1,0 +1,38 @@
+{
+  "$jsonSchema": {
+    "title": "User daily nutritional logs",
+    "description": "Record of a user's daily nutritional logs",
+    "bsonType": "object",
+    "required": ["userId", "date"],
+    "properties": {
+      "userId": {
+        "bsonType": "objectId",
+        "description": "Must be a valid user ID and is required"
+      },
+      "date": {
+        "bsonType": "date",
+        "description": "The date of the log entry and is required"
+      },
+      "calories": {
+        "bsonType": "double",
+        "description": "Total calories consumed"
+      },
+      "proteins": {
+        "bsonType": "double",
+        "description": "Total proteins consumed"
+      },
+      "fats": {
+        "bsonType": "double",
+        "description": "Total fats consumed"
+      },
+      "carbs": {
+        "bsonType": "double",
+        "description": "Total carbs consumed"
+      },
+      "waterIntake": {
+        "bsonType": "double",
+        "description": "Total water intake in liters or ounces"
+      }
+    }
+  }
+}

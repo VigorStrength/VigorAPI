@@ -38,8 +38,8 @@ type Meal struct {
 	NumberOfServings  int                `bson:"numberOfServings" json:"numberOfServings" binding:"required"` // Default is 1; can be updated.
 }
 
-// UserNutritionalLog represents the user's daily log of nutritional intake.
-type UserNutritionalLog struct {
+// UserDailyNutritionalLog represents the user's daily log of nutritional intake.
+type UserDailyNutritionalLog struct {
 	UserID      primitive.ObjectID `bson:"userId" json:"userId" binding:"required"`
 	Date        time.Time          `bson:"date" json:"date" binding:"required"`
 	Calories    float64            `bson:"calories" json:"calories"`

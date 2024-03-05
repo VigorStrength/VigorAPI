@@ -70,6 +70,9 @@ func ensureIndexes(ctx context.Context, dbName string) error {
 		"userWorkoutWeekStatus": {
 			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "workoutWeekId", Value: 1}}, Options: options.Index().SetUnique(true)},
 		},
+		"UserDailyNutritionalLogs": {
+			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "date", Value: 1}}, Options: options.Index().SetUnique(true)},
+		},
 	}
 	
 	for collection, indexes := range collections {
@@ -109,6 +112,7 @@ func InitializeCollections(ctx context.Context, dbName string) error {
 		{"meals", "schemas/mealPlan/mealSchema.json"},
 		{"userMealStatus", "schemas/mealPlan/userMealStatusSchema.json"},
 		{"mealPlans", "schemas/mealPlan/mealPlanSchema.json"},
+		{"userDailyNutritionalLogs", "schemas/mealPlan/UserDailyNutritionalLogSchema.json"},
 		{"messages", "schemas/messaging/groupSchema.json"},
 		{"messagesGroups", "schemas/messaging/messageSchema.json"},
 	}
