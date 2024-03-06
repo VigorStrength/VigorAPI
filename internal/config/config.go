@@ -2,20 +2,29 @@ package config
 
 import (
 	"errors"
-	"os"
+
+	"github.com/spf13/viper"
 )
 
 type Config struct {
-	MongoDBURI string
+	MongoDBURI   string
 	DatabaseName string
 }
 
-func LoadConfig() (*Config, error) {
-	mongoDBURI := os.Getenv("VIGOR_DB_URI")
-	databaseName := os.Getenv("VIGOR_DB_NAME")
+func LoadConfig() (*Config, error){
+	viper.AutomaticEnv()
 
-	if mongoDBURI == "" || databaseName == "" {
-		return nil, errors.New("database configuration not set")
+	viper.SetDefault("VIGOR_DB_URI", "mongodb://localhost:27017")
+	viper.SetDefault("VIGOR_DB_NAME", "Vigor_Production")
+
+	mongoDBURI := viper.GetString("VIGOR_DB_URI")
+	if mongoDBURI == "" {
+		return nil, errors.New("missing VIGOR_DB_URI")
+	}
+
+	databaseName := viper.GetString("VIGOR_DB_NAME")
+	if databaseName == "" {
+		return nil, errors.New("missing VIGOR_DB_NAME")
 	}
 
 	config := &Config{
@@ -25,3 +34,4 @@ func LoadConfig() (*Config, error) {
 
 	return config, nil
 }
+
