@@ -5,7 +5,6 @@ import (
 	"embed"
 	"encoding/json"
 	"log"
-	"time"
 
 	"github.com/GhostDrew11/vigor-api/internal/config"
 	"go.mongodb.org/mongo-driver/bson"
@@ -13,13 +12,12 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var Client *mongo.Client
-var schemaFiles embed.FS
+type MongoDBService struct {
+	Client *mongo.Client
+	SchemaFile embed.FS
+}
 
-func ConnectDB(cfg *config.Config) error {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-
+func (ms *MongoDBService) ConnectDB(ctx context.Context, cfg *config.Config) error {
 	clientOptions := options.Client().ApplyURI(cfg.MongoDBURI)
 	client, err := mongo.Connect(ctx, clientOptions)
 	if err != nil {
@@ -31,22 +29,21 @@ func ConnectDB(cfg *config.Config) error {
 		return err
 	}
 
-	Client = client
+	ms.Client = client
 	log.Println("Connected to MongoDB successfully.")
 
-	// Ensure indexes after successful connection. If index creation fails, return the error.
-	if err := ensureIndexes(ctx, cfg.DatabaseName); err != nil {
+	if err := ms.EnsureIndexes(ctx, cfg.DatabaseName); err != nil {
 		return err
 	}
 
-	if err := InitializeCollections(ctx, cfg.DatabaseName); err != nil {
+	if err := ms.InitializeCollections(ctx, cfg.DatabaseName); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func ensureIndexes(ctx context.Context, dbName string) error {
+func (ms *MongoDBService) EnsureIndexes(ctx context.Context, dbName string) error {
 	collections := map[string][]mongo.IndexModel{
 		"users": {
 			{Keys: bson.M{"email": 1}, Options: options.Index().SetUnique(true)},
@@ -74,18 +71,18 @@ func ensureIndexes(ctx context.Context, dbName string) error {
 			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "date", Value: 1}}, Options: options.Index().SetUnique(true)},
 		},
 	}
-	
+
 	for collection, indexes := range collections {
-		if err := createIndexes(ctx, dbName, collection, indexes); err != nil {
+		if err := ms.CreateIndexes(ctx, dbName, collection, indexes); err != nil {
 			return err
 		}
 	}
-	log.Println("Successfully created indexes for all collctions.")
+	log.Println("Successfully created indexes for all collections.")
 	return nil
 }
 
-func createIndexes(ctx context.Context, dbName, collectionName string, indexes []mongo.IndexModel) error {
-	collection := Client.Database(dbName).Collection(collectionName)
+func (ms *MongoDBService) CreateIndexes(ctx context.Context, dbName, collectionName string, indexes []mongo.IndexModel) error {
+	collection := ms.Client.Database(dbName).Collection(collectionName)
 	for _, indexModel := range indexes {
 		if _, err := collection.Indexes().CreateOne(ctx, indexModel); err != nil {
 			log.Printf("Error creating index for collection '%s'!\n", collectionName)
@@ -93,12 +90,12 @@ func createIndexes(ctx context.Context, dbName, collectionName string, indexes [
 		}
 		log.Printf("Successfully created index for collection '%s'.\n", collectionName)
 	}
+
 	return nil
 }
 
-func InitializeCollections(ctx context.Context, dbName string) error {
-	db := Client.Database(dbName)
-
+func (ms *MongoDBService) InitializeCollections(ctx context.Context, dbName string) error {
+	db := ms.Client.Database(dbName)
 	schemas := []struct {
 		collectionName string
 		schemaFile     string
@@ -118,7 +115,8 @@ func InitializeCollections(ctx context.Context, dbName string) error {
 	}
 
 	for _, s := range schemas {
-		schema, err := schemaFiles.ReadFile(s.schemaFile)
+
+		schema, err := ms.SchemaFile.ReadFile(s.schemaFile)
 		if err != nil {
 			log.Printf("Error Reading %s schema file!\n", s.collectionName)
 			return err
@@ -130,17 +128,16 @@ func InitializeCollections(ctx context.Context, dbName string) error {
 			return err
 		}
 
-		if err := applyCollectionValidation(ctx, db, s.collectionName, schemaBson); err != nil {
+		if err := ms.ApplyCollectionValidation(ctx, db, s.collectionName, schemaBson); err != nil {
 			return err
 		}
 	}
-
 	log.Println("Successfully initialized new collections with validation.")
+	
 	return nil
 }
 
-// Helper function to apply validation rules to a collection
-func applyCollectionValidation(ctx context.Context, db *mongo.Database, collectionName string, schemaBson bson.M) error {
+func (ms *MongoDBService) ApplyCollectionValidation(ctx context.Context, db *mongo.Database, collectionName string, schemaBson bson.M) error {
 	opts := options.CreateCollection().SetValidator(bson.M{
 		"$jsonSchema": schemaBson,
 	})
@@ -158,16 +155,14 @@ func applyCollectionValidation(ctx context.Context, db *mongo.Database, collecti
 		log.Printf("Error applying validation rules to %s collection: %v\n", collectionName, err)
 		return err
 	}
-
 	log.Printf("Successfully applied validation rules to %s collection.\n", collectionName)
+
 	return nil
 }
 
-func DisconnectDB() {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-
-	if err := Client.Disconnect(ctx); err != nil {
+func (ms *MongoDBService) DisconnectDB(ctx context.Context) {
+	if err := ms.Client.Disconnect(ctx); err != nil {
 		log.Printf("Error disconnecting from MongoDB: %v", err)
 	}
 }
+

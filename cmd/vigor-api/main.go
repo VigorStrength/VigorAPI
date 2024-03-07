@@ -22,11 +22,18 @@ func main() {
 		log.Fatalf("Error loading config: %v\n", err)
 	}
 
-	//Connect to the database
-	if err := db.ConnectDB(cfg); err != nil {
+	// Instantiate the database service
+	dbService := &db.MongoDBService{}
+
+	// Create a context for the database connction
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	// Connect the database
+	if err := dbService.ConnectDB(ctx, cfg); err != nil {
 		log.Fatalf("Failed to connect to MongoDB: %v\n", err)
 	}
-	defer db.DisconnectDB()
+	defer dbService.DisconnectDB(ctx)
 
 	// Set up your Gin router
 	router := gin.Default()
@@ -35,7 +42,7 @@ func main() {
 	api.SetupRoutes(router)
 
 	server := &http.Server{
-		Addr: ":8080",
+		Addr:    ":8080",
 		Handler: router,
 	}
 
@@ -53,9 +60,6 @@ func main() {
 	<-quit
 	log.Println("Shutting down server...")
 
-	// Create a deadline to wait for.
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
 	// Doesn't block if no connections, but will wait for the duration of the context deadline
 	if err := server.Shutdown(ctx); err != nil {
 		log.Fatalf("Server forced to shutdown: %v\n", err)
