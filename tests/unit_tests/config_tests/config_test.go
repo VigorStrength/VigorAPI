@@ -43,8 +43,6 @@ func TestLoadConfig(t *testing.T) {
 	}
 
 	got, err := config.LoadConfig()
-	if err != nil {
-		assert.ErrorContains(t, err, "missing")
-	}
-	assert.Equal(t, want, got, "LoadConfig returned the expected configuration.")
+	assert.NoError(t, err, "LoadConfig() should not error")
+	assert.Equal(t, want, got, "LoadConfig() should return the expected configuration.")
 }
