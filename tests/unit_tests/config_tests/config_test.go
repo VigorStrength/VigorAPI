@@ -10,6 +10,7 @@ import (
 )
 
 //Implement a mock when it doesn't work
+//Not working currently because LoadConfig is always returning the right config
 // func TestLoadConfigErrURI(t *testing.T) {
 // 	// Set environment variables for the test
 // 	os.Setenv("VIGOR_DB_URI", "")
@@ -19,13 +20,9 @@ import (
 // 	defer os.Unsetenv("VIGOR_DB_URI")
 // 	defer os.Unsetenv("VIGOR_DB_NAME")
 
-// 	want := &config.Config{}
-
-// 	got, err := config.LoadConfig()
-// 	if assert.Error(t, err) {
-// 		assert.Equal(t, "missing VIGOR_DB_URI", err)
-// 	}
-// 	assert.Equal(t,want,got, "Config is nil")
+// 	_, err := config.LoadConfig()
+// 	assert.Error(t, err, "LoadConfig() should error when VIGOR_DB_URI is empty")
+// 	assert.Equal(t, "missing VIGOR_DB_URI", err.Error(), "Error message should match the expected one")
 // }
 
 func TestLoadConfig(t *testing.T) {

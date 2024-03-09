@@ -6,7 +6,16 @@ import (
 	"github.com/GhostDrew11/vigor-api/internal/config"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
+
+type MongoClient interface {
+	Connect(ctx context.Context, opts ...*options.ClientOptions) (*mongo.Client, error)
+	Ping(ctx context.Context, rp *readpref.ReadPref) error
+	Database(name string, opts ...*options.DatabaseOptions) *mongo.Database
+	Disconnect(ctx context.Context) error
+}
 
 type DBService interface {
 	ConnectDB(ctx context.Context, cfg *config.Config) error

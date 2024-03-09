@@ -13,23 +13,26 @@ import (
 )
 
 type MongoDBService struct {
-	Client *mongo.Client
+	Client MongoClient
 	SchemaFile embed.FS
+}
+
+func NewMongoDBService(client MongoClient, schemaFile embed.FS) *MongoDBService {
+	return &MongoDBService{Client: client, SchemaFile: schemaFile}
 }
 
 func (ms *MongoDBService) ConnectDB(ctx context.Context, cfg *config.Config) error {
 	clientOptions := options.Client().ApplyURI(cfg.MongoDBURI)
-	client, err := mongo.Connect(ctx, clientOptions)
+	_, err := ms.Client.Connect(ctx, clientOptions)
 	if err != nil {
 		return err
 	}
 
-	err = client.Ping(ctx, nil)
+	err = ms.Client.Ping(ctx, nil)
 	if err != nil {
 		return err
 	}
 
-	ms.Client = client
 	log.Println("Connected to MongoDB successfully.")
 
 	if err := ms.EnsureIndexes(ctx, cfg.DatabaseName); err != nil {
@@ -138,17 +141,14 @@ func (ms *MongoDBService) InitializeCollections(ctx context.Context, dbName stri
 }
 
 func (ms *MongoDBService) ApplyCollectionValidation(ctx context.Context, db *mongo.Database, collectionName string, schemaBson bson.M) error {
-	opts := options.CreateCollection().SetValidator(bson.M{
-		"$jsonSchema": schemaBson,
-	})
-
+	opts := options.CreateCollection().SetValidator(schemaBson)
 	//Attempt to create the v=collection with validation rules
 	err := db.CreateCollection(ctx, collectionName, opts)
 	if mongo.IsDuplicateKeyError(err) {
 		//If the collection already exists attempt to strenghten it with the new validation rules
 		collModOpts := bson.D{
 			{Key: "collMod", Value: collectionName},
-			{Key: "validator", Value: bson.M{"$jsonSchema": schemaBson}},
+			{Key: "validator", Value: schemaBson},
 		}
 		return db.RunCommand(ctx, collModOpts).Err()
 	} else if err != nil {
