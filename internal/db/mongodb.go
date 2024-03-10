@@ -14,11 +14,11 @@ import (
 
 type MongoDBService struct {
 	Client MongoClient
-	SchemaFile embed.FS
+	SchemaFiles embed.FS
 }
 
 func NewMongoDBService(client MongoClient, schemaFile embed.FS) *MongoDBService {
-	return &MongoDBService{Client: client, SchemaFile: schemaFile}
+	return &MongoDBService{Client: client, SchemaFiles: schemaFile}
 }
 
 func (ms *MongoDBService) ConnectDB(ctx context.Context, cfg *config.Config) error {
@@ -119,7 +119,7 @@ func (ms *MongoDBService) InitializeCollections(ctx context.Context, dbName stri
 
 	for _, s := range schemas {
 
-		schema, err := ms.SchemaFile.ReadFile(s.schemaFile)
+		schema, err := ms.SchemaFiles.ReadFile(s.schemaFile)
 		if err != nil {
 			log.Printf("Error Reading %s schema file!\n", s.collectionName)
 			return err
