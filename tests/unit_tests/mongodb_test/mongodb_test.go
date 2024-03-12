@@ -2,6 +2,7 @@ package mongodb_test
 
 import (
 	"context"
+	"errors"
 	"testing"
 
 	"github.com/GhostDrew11/vigor-api/internal/config"
@@ -19,7 +20,6 @@ func TestConnectDB(t *testing.T) {
 
 	mockClient := new(MockMongoClient)
 	mockDB := new(MockMongoDatabase)
-	mockSingleResult := new(MockMongoSingleResult)
 	mockCollection := new(MockMongoCollection)
 	mockIndexView := new(MockMongoIndexView)
 	mockIndexName := "mockIndexName"
@@ -31,21 +31,37 @@ func TestConnectDB(t *testing.T) {
 	mockClient.On("Database", cfg.DatabaseName, mock.AnythingOfType("[]*options.DatabaseOptions")).Return(mockDB)
 	
 	mockDB.On("CreateCollection", ctx, mock.AnythingOfType("string"), mock.AnythingOfType("[]*options.CreateCollectionOptions")).Return(nil)
-	// mockDB.On("RunCommand", ctx, mock.AnythingOfType("bson.D")).Return(mockSingleResult)
-	// mockSingleResult.On("Err").Return(nil)
 	mockDB.On("Collection", mock.AnythingOfType("string")).Return(mockCollection)
 
-	
-
 	mockCollection.On("Indexes").Return(mockIndexView)
-
 	mockIndexView.On("CreateOne", ctx, mock.AnythingOfType("mongo.IndexModel")).Return(mockIndexName, nil)
 
 	err := service.ConnectDB(ctx, cfg)
 	mockClient.AssertExpectations(t)
 	mockDB.AssertExpectations(t)
-	mockSingleResult.AssertExpectations(t)
 	mockCollection.AssertExpectations(t)
 	mockIndexView.AssertExpectations(t)
 	assert.NoError(t, err)
+}
+
+func TestDisconnectDB(t *testing.T) {
+	ctx := context.Background()
+	mockClient := new(MockMongoClient)
+	service := db.NewMongoDBService(mockClient)
+
+	mockClient.On("Disconnect", ctx).Return(nil)
+	service.DisconnectDB(ctx)
+
+	mockClient.AssertExpectations(t)
+}
+
+func TestDisconnectDBWithError(t *testing.T) {
+	ctx := context.Background()
+	mockClient := new(MockMongoClient)
+	service := db.NewMongoDBService(mockClient)
+
+	mockClient.On("Disconnect", ctx).Return(errors.New("Error DB"))
+	service.DisconnectDB(ctx)
+
+	mockClient.AssertExpectations(t)
 }
