@@ -12,13 +12,16 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+//go:embed schemas/*
+var files embed.FS
+
 type MongoDBService struct {
-	Client MongoClient
+	Client      MongoClient
 	SchemaFiles embed.FS
 }
 
-func NewMongoDBService(client MongoClient, schemaFile embed.FS) *MongoDBService {
-	return &MongoDBService{Client: client, SchemaFiles: schemaFile}
+func NewMongoDBService(client MongoClient) *MongoDBService {
+	return &MongoDBService{Client: client, SchemaFiles: files}
 }
 
 func (ms *MongoDBService) ConnectDB(ctx context.Context, cfg *config.Config) error {
@@ -35,18 +38,19 @@ func (ms *MongoDBService) ConnectDB(ctx context.Context, cfg *config.Config) err
 
 	log.Println("Connected to MongoDB successfully.")
 
-	if err := ms.EnsureIndexes(ctx, cfg.DatabaseName); err != nil {
+	db := ms.Client.Database(cfg.DatabaseName)
+	if err := ms.InitializeCollections(ctx, db); err != nil {
 		return err
 	}
 
-	if err := ms.InitializeCollections(ctx, cfg.DatabaseName); err != nil {
+	if err := ms.EnsureIndexes(ctx, db); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (ms *MongoDBService) EnsureIndexes(ctx context.Context, dbName string) error {
+func (ms *MongoDBService) EnsureIndexes(ctx context.Context, db MongoDatabase) error {
 	collections := map[string][]mongo.IndexModel{
 		"users": {
 			{Keys: bson.M{"email": 1}, Options: options.Index().SetUnique(true)},
@@ -76,7 +80,7 @@ func (ms *MongoDBService) EnsureIndexes(ctx context.Context, dbName string) erro
 	}
 
 	for collection, indexes := range collections {
-		if err := ms.CreateIndexes(ctx, dbName, collection, indexes); err != nil {
+		if err := ms.CreateIndexes(ctx, db, collection, indexes); err != nil {
 			return err
 		}
 	}
@@ -84,12 +88,12 @@ func (ms *MongoDBService) EnsureIndexes(ctx context.Context, dbName string) erro
 	return nil
 }
 
-func (ms *MongoDBService) CreateIndexes(ctx context.Context, dbName, collectionName string, indexes []mongo.IndexModel) error {
-	collection := ms.Client.Database(dbName).Collection(collectionName)
+func (ms *MongoDBService) CreateIndexes(ctx context.Context, db MongoDatabase, collectionName string, indexes []mongo.IndexModel) error {
+	collection := db.Collection(collectionName)
 	for _, indexModel := range indexes {
 		if _, err := collection.Indexes().CreateOne(ctx, indexModel); err != nil {
 			log.Printf("Error creating index for collection '%s'!\n", collectionName)
-			return err 
+			return err
 		}
 		log.Printf("Successfully created index for collection '%s'.\n", collectionName)
 	}
@@ -97,22 +101,21 @@ func (ms *MongoDBService) CreateIndexes(ctx context.Context, dbName, collectionN
 	return nil
 }
 
-func (ms *MongoDBService) InitializeCollections(ctx context.Context, dbName string) error {
-	db := ms.Client.Database(dbName)
+func (ms *MongoDBService) InitializeCollections(ctx context.Context, db MongoDatabase) error {
 	schemas := []struct {
 		collectionName string
 		schemaFile     string
 	}{
-		{"users","schemas/user/userSchema.json"},
+		{"users", "schemas/user/userSchema.json"},
 		{"exercises", "schemas/workoutPlan/exerciseSchema.json"},
 		{"userCircuitStatus", "schemas/workoutPlan/userCircuitStatusSchema.json"},
 		{"userWorkoutDayStatus", "schemas/workoutPlan/userWorkoutDayStatusSchema.json"},
 		{"userWorkoutWeekStatus", "schemas/workoutPlan/userWorkoutWeekStatusSchema.json"},
-		{"workoutPlans","schemas/workoutPlan/workoutPlanSchema.json"},
+		{"workoutPlans", "schemas/workoutPlan/workoutPlanSchema.json"},
 		{"meals", "schemas/mealPlan/mealSchema.json"},
 		{"userMealStatus", "schemas/mealPlan/userMealStatusSchema.json"},
 		{"mealPlans", "schemas/mealPlan/mealPlanSchema.json"},
-		{"userDailyNutritionalLogs", "schemas/mealPlan/UserDailyNutritionalLogSchema.json"},
+		{"userDailyNutritionalLogs", "schemas/mealPlan/userDailyNutritionalLogSchema.json"},
 		{"messages", "schemas/messaging/groupSchema.json"},
 		{"messagesGroups", "schemas/messaging/messageSchema.json"},
 	}
@@ -136,11 +139,11 @@ func (ms *MongoDBService) InitializeCollections(ctx context.Context, dbName stri
 		}
 	}
 	log.Println("Successfully initialized new collections with validation.")
-	
+
 	return nil
 }
 
-func (ms *MongoDBService) ApplyCollectionValidation(ctx context.Context, db *mongo.Database, collectionName string, schemaBson bson.M) error {
+func (ms *MongoDBService) ApplyCollectionValidation(ctx context.Context, db MongoDatabase, collectionName string, schemaBson bson.M) error {
 	opts := options.CreateCollection().SetValidator(schemaBson)
 	//Attempt to create the v=collection with validation rules
 	err := db.CreateCollection(ctx, collectionName, opts)
@@ -165,4 +168,3 @@ func (ms *MongoDBService) DisconnectDB(ctx context.Context) {
 		log.Printf("Error disconnecting from MongoDB: %v", err)
 	}
 }
-
