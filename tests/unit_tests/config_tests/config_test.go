@@ -29,10 +29,12 @@ func TestLoadConfig(t *testing.T) {
 	// Set environment variables for the test
 	os.Setenv("VIGOR_DB_URI", "mongodb://localhost:27017")
 	os.Setenv("VIGOR_DB_NAME", "Vigor_Production")
+	os.Setenv("JWT_SECRET_KEY", "")
 
 	// Unset environment variable after the test
 	defer os.Unsetenv("VIGOR_DB_URI")
 	defer os.Unsetenv("VIGOR_DB_NAME")
+	defer os.Unsetenv("JWT_SECRET_KEY")
 
 	want := &config.Config{
 		MongoDBURI:   "mongodb://localhost:27017",
