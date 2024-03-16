@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Authenticate( jwtSecretKey string) gin.HandlerFunc {
+func Authenticate(ts utils.TokenService) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		token := ctx.GetHeader("Authorization")
 		if token == "" {
@@ -15,7 +15,7 @@ func Authenticate( jwtSecretKey string) gin.HandlerFunc {
 			return
 		}
 
-		claims, err := utils.VerifyToken(token, jwtSecretKey)
+		claims, err := ts.VerifyToken(token)
 		if err != nil {
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "Unauthorized"})
 			return
@@ -27,32 +27,86 @@ func Authenticate( jwtSecretKey string) gin.HandlerFunc {
 	}
 }
 
-// RefreshHandler to handle refresh token logic
-func RefreshHandler(ctx *gin.Context, jwtSecretKey string) {
-	// Assuming the refresh token is sent via headers or cookies
-	refreshToken := ctx.GetHeader("Refresh-Token")
-	if refreshToken == "" {
-		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "No refresh token provided"})
-		return
-	}
+func RefreshHandler(ts utils.TokenService) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		refreshToken := ctx.GetHeader("Refresh-Token")
+		if refreshToken == "" {
+			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "No refresh token provided"})
+			return
+		}
 
-	// Verify the refresh token
-	claims, err := utils.VerifyToken(refreshToken, jwtSecretKey)
-	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "Invalid refresh token"})
-		return
-	}
+		claims, err := ts.VerifyToken(refreshToken)
+		if err != nil {
+			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "Invalid refresh token"})
+			return
+		}
 
-	// Generate new access and refresh tokens
-	newAccessToken, newRefreshToken, err := utils.GenerateToken(claims.UserId, claims.Email, jwtSecretKey)
-	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": "Failed to generate new tokens"})
-		return
-	}
+		newAccessToken, err := ts.GenerateAccessToken(claims.UserId, claims.Email)
+		if err != nil {
+			ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": "Failed to generate new access token"})
+			return
+		}
 
-	// Return new tokens to the client
-	ctx.JSON(http.StatusOK, gin.H{
-		"accessToken": newAccessToken,
-		"refreshToken": newRefreshToken,
-	})
+		newRefreshToken, err := ts.GenerateRefreshToken(claims.UserId, claims.Email)
+		if err != nil {
+			ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": "Failed to generate new refresh token"})
+			return
+		}
+
+		// Return new tokens to the client
+		ctx.JSON(http.StatusOK, gin.H{
+			"accessToken": newAccessToken,
+			"refreshToken": newRefreshToken,
+		})
+	}
 }
+
+// func Authenticate( jwtSecretKey string) gin.HandlerFunc {
+// 	return func(ctx *gin.Context) {
+// 		token := ctx.GetHeader("Authorization")
+// 		if token == "" {
+// 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "Unauthorized"})
+// 			return
+// 		}
+
+// 		claims, err := utils.VerifyToken(token, jwtSecretKey)
+// 		if err != nil {
+// 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "Unauthorized"})
+// 			return
+// 		}
+
+// 		ctx.Set("userId", claims.UserId)
+// 		ctx.Set("email", claims.Email)
+// 		ctx.Next()
+// 	}
+// }
+
+// // RefreshHandler to handle refresh token logic
+// func RefreshHandler(ctx *gin.Context, jwtSecretKey string) {
+// 	// Assuming the refresh token is sent via headers or cookies
+// 	refreshToken := ctx.GetHeader("Refresh-Token")
+// 	if refreshToken == "" {
+// 		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "No refresh token provided"})
+// 		return
+// 	}
+
+// 	// Verify the refresh token
+// 	claims, err := utils.VerifyToken(refreshToken, jwtSecretKey)
+// 	if err != nil {
+// 		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "Invalid refresh token"})
+// 		return
+// 	}
+
+// 	// Generate new access and refresh tokens
+// 	newAccessToken, newRefreshToken, err := utils.GenerateToken(claims.UserId, claims.Email, jwtSecretKey)
+// 	if err != nil {
+// 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": "Failed to generate new tokens"})
+// 		return
+// 	}
+
+// 	// Return new tokens to the client
+// 	ctx.JSON(http.StatusOK, gin.H{
+// 		"accessToken": newAccessToken,
+// 		"refreshToken": newRefreshToken,
+// 	})
+// }

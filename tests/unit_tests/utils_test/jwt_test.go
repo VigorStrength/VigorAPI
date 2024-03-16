@@ -46,21 +46,22 @@ func TestGenerateTokenFailure(t *testing.T) {
 	assert.Empty(t, token, "The token string must be an empty string")
 }
 
-func TestGenerateAllTokensSuccess(t *testing.T) {
+// Same as GenerateRefresh
+// Failure case really not needed cause the main 
+// function is calling GenerateToken for which the failure case is already tested above
+func TestGenerateAccessTokenSuccess(t *testing.T) {
 	userId := primitive.NewObjectID()
-	email := "test@example.com"
-	jwtSecretKey := "supersecret"
-	mockHandler := new(MockJWTHandler)
+    email := "test@example.com"
+    jwtSecretKey := "supersecret"
+    mockHandler := new(MockJWTHandler)
 
-	jwtService := utils.NewJWTService(userId, email,jwtSecretKey, 1 * time.Hour, 24 * time.Hour, mockHandler)
+    jwtService := utils.NewJWTService(jwtSecretKey, mockHandler)
 
-	accessTokenStr, refreshTokenStr, err := jwtService.GenerateAllTokens()
+    accessTokenStr, err := jwtService.GenerateAccessToken(userId, email)
 
-	assert.Nil(t, err, "Generating tokens should not produce an error")
-	assert.NotEmpty(t, accessTokenStr, "Access token should not be empty")
-	assert.NotEmpty(t, refreshTokenStr, "Refresh token should not be empty")
+    assert.NoError(t, err, "Generating access token should not produce an error")
+    assert.NotEmpty(t, accessTokenStr, "Access token should not be empty")
 }
-
 
 func TestVerifyTokenSuccess(t *testing.T) {
 	userId := primitive.NewObjectID()
@@ -80,9 +81,9 @@ func TestVerifyTokenSuccess(t *testing.T) {
 	claims.ExpiresAt = jwt.NewNumericDate(time.Now().Add(1 * time.Hour))
 }).Return(mockToken, nil)
 
-	jwtService := utils.NewJWTService(userId, email,jwtSecretKey, 1 * time.Hour, 24 * time.Hour, mockHandler)
+	jwtService := utils.NewJWTService(jwtSecretKey, mockHandler)
 
-	accessTokenStr, _, err := jwtService.GenerateAllTokens()
+	accessTokenStr, err := jwtService.GenerateAccessToken(userId, email)
 	assert.NoError(t, err, "Generating all tokens should not produce an error")
 
 	accessTokenClaims, err := jwtService.VerifyToken(accessTokenStr)
@@ -95,14 +96,12 @@ func TestVerifyTokenSuccess(t *testing.T) {
 }
 
 func TestVerifyTokenFailureInvalidSigningMethod(t *testing.T) {
-	userId := primitive.NewObjectID()
-    email := "test@example.com"
-    secretKey := "secret"
+    jwtSecretKey := "secret"
 	mockHandler := new(MockJWTHandler)
 
 	mockHandler.On("ParseWithClaims", mock.AnythingOfType("string"), mock.AnythingOfType("*utils.Claims"), mock.AnythingOfType("jwt.Keyfunc")).Return(nil, utils.ErrInvalidSigningMethod)
 
-	jwtService := utils.NewJWTService(userId, email, secretKey, time.Hour, 24*time.Hour, mockHandler)
+	jwtService := utils.NewJWTService(jwtSecretKey,mockHandler)
 
 	_, err := jwtService.VerifyToken("dummyToken")
 	assert.Error(t, err, "Verifying wrongly signed token should return an error")
@@ -112,15 +111,13 @@ func TestVerifyTokenFailureInvalidSigningMethod(t *testing.T) {
 }
 
 func TestVerifyTokenFailureInvalid(t *testing.T) {
-	userId := primitive.NewObjectID()
-    email := "test@example.com"
-    secretKey := "secret"
+    jwtSecretKey := "secret"
 	mockHandler := new(MockJWTHandler)
 
 	mockToken := &jwt.Token{Valid: false}
 	mockHandler.On("ParseWithClaims", mock.AnythingOfType("string"), mock.AnythingOfType("*utils.Claims"), mock.AnythingOfType("jwt.Keyfunc")).Return(mockToken, utils.ErrInvalidToken)
     
-	jwtService := utils.NewJWTService(userId, email, secretKey, time.Hour, 24*time.Hour, mockHandler)
+	jwtService := utils.NewJWTService(jwtSecretKey, mockHandler)
 	
 	_, err := jwtService.VerifyToken("tamperedToken")
 	assert.Error(t, err, "Veryfying invalid token should return an error")
@@ -129,8 +126,6 @@ func TestVerifyTokenFailureInvalid(t *testing.T) {
 }
 
 func TestVerifyTokenFailureExpired(t *testing.T) {
-	userId := primitive.NewObjectID()
-	email := "test@example.com"
 	jwtSecretKey := "supersecret"
 	mockHandler := new(MockJWTHandler)
 
@@ -139,7 +134,7 @@ func TestVerifyTokenFailureExpired(t *testing.T) {
 		claims.ExpiresAt = jwt.NewNumericDate(time.Now().Add(-1 * time.Hour))
 	}).Return(nil, utils.ErrTokenExpired)
 
-	jwtService := utils.NewJWTService(userId, email,jwtSecretKey, -1 * time.Hour, -24 * time.Hour, mockHandler)
+	jwtService := utils.NewJWTService(jwtSecretKey, mockHandler)
 
 	_, err := jwtService.VerifyToken("dummytoken")
 	assert.Error(t, err, "Veryfying expired access token should return an error")

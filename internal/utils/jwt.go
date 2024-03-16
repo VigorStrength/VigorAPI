@@ -13,57 +13,49 @@ var (
 	ErrInvalidToken = errors.New("invalid token")
 	ErrTokenExpired = errors.New("token is expired")
 )
+
 type Claims struct {
-	UserId primitive.ObjectID `json:"userId"`
-	Email string 			  `json:"email"`
-	jwt.RegisteredClaims
+    jwt.RegisteredClaims
+    UserId primitive.ObjectID `json:"userId"`
+    Email  string             `json:"email"`
 }
 
 type JWTService struct {
-	jwtSecretKey []byte
-	signingMethod jwt.SigningMethod
-	accessTokenClaims Claims
-	refreshTokenClaims Claims
-	handler JWTHandler
+    jwtSecretKey  []byte
+    signingMethod jwt.SigningMethod
+    handler       JWTHandler
 }
 
-func NewJWTService(userId primitive.ObjectID, email, key string, accessTokenDuration, refreshTokenDuration time.Duration, handler JWTHandler) *JWTService {
-	accessTokenExp := time.Now().Add(accessTokenDuration)
-	refreshTokenExp := time.Now().Add(refreshTokenDuration)
-
-	return &JWTService{
-		jwtSecretKey: []byte(key),
-		signingMethod: jwt.SigningMethodHS256,
-		accessTokenClaims: Claims{
-			UserId: userId,
-			Email: email,
-			RegisteredClaims: jwt.RegisteredClaims{
-				ExpiresAt: jwt.NewNumericDate(accessTokenExp),
-			},
-		},
-		refreshTokenClaims: Claims{
-			UserId: userId,
-			Email: email,
-			RegisteredClaims: jwt.RegisteredClaims{
-				ExpiresAt: jwt.NewNumericDate(refreshTokenExp),
-			},
-		},
-		handler: handler,
-	}
+func NewJWTService(key string, handler JWTHandler) *JWTService {
+    return &JWTService{
+        jwtSecretKey:  []byte(key),
+        signingMethod: jwt.SigningMethodHS256, // Keep as configurable if needed
+        handler:       handler,
+    }
 }
 
-func (j *JWTService) GenerateAllTokens() (string, string, error) {
-	accessTokenStr, err := GenerateToken(j.signingMethod, j.accessTokenClaims, j.jwtSecretKey)
-	if err != nil {
-		return "", "", err
-	}
+func (j *JWTService) GenerateAccessToken(userId primitive.ObjectID, email string) (string, error) {
+    accessTokenExp := time.Now().Add(1 * time.Hour) // Or use a configuration
+    claims := Claims{
+        UserId: userId,
+        Email:  email,
+        RegisteredClaims: jwt.RegisteredClaims{
+            ExpiresAt: jwt.NewNumericDate(accessTokenExp),
+        },
+    }
+    return GenerateToken(j.signingMethod, claims, j.jwtSecretKey)
+}
 
-	refreshTokenStr, err := GenerateToken(j.signingMethod, j.refreshTokenClaims, j.jwtSecretKey)
-	if err != nil {
-		return "", "", err
-	}
-
-	return accessTokenStr, refreshTokenStr, err
+func (j *JWTService) GenerateRefreshToken(userId primitive.ObjectID, email string) (string, error) {
+    refreshTokenExp := time.Now().Add(24 * time.Hour) // Or use a configuration
+    claims := Claims{
+        UserId: userId,
+        Email:  email,
+        RegisteredClaims: jwt.RegisteredClaims{
+            ExpiresAt: jwt.NewNumericDate(refreshTokenExp),
+        },
+    }
+    return GenerateToken(j.signingMethod, claims, j.jwtSecretKey)
 }
 
 func (j *JWTService) VerifyToken(tokenString string) (*Claims, error) {
@@ -100,6 +92,75 @@ func GenerateToken(tokenSigningMethod jwt.SigningMethod, tokenClaims Claims, sec
 	
 	return tokenStr, nil
 }
+// func NewJWTService(userId primitive.ObjectID, email, key string, accessTokenDuration, refreshTokenDuration time.Duration, handler JWTHandler) *JWTService {
+// 	accessTokenExp := time.Now().Add(accessTokenDuration)
+// 	refreshTokenExp := time.Now().Add(refreshTokenDuration)
+
+// 	return &JWTService{
+// 		jwtSecretKey: []byte(key),
+// 		signingMethod: jwt.SigningMethodHS256,
+// 		accessTokenClaims: Claims{
+// 			UserId: userId,
+// 			Email: email,
+// 			RegisteredClaims: jwt.RegisteredClaims{
+// 				ExpiresAt: jwt.NewNumericDate(accessTokenExp),
+// 			},
+// 		},
+// 		refreshTokenClaims: Claims{
+// 			UserId: userId,
+// 			Email: email,
+// 			RegisteredClaims: jwt.RegisteredClaims{
+// 				ExpiresAt: jwt.NewNumericDate(refreshTokenExp),
+// 			},
+// 		},
+// 		handler: handler,
+// 	}
+// }
+
+// func (j *JWTService) GenerateAllTokens() (string, string, error) {
+// 	accessTokenStr, err := GenerateToken(j.signingMethod, j.accessTokenClaims, j.jwtSecretKey)
+// 	if err != nil {
+// 		return "", "", err
+// 	}
+
+// 	refreshTokenStr, err := GenerateToken(j.signingMethod, j.refreshTokenClaims, j.jwtSecretKey)
+// 	if err != nil {
+// 		return "", "", err
+// 	}
+
+// 	return accessTokenStr, refreshTokenStr, err
+// }
+
+// func VerifyToken(tokenString string, jwtSecretkey string) (*Claims, error) {
+	// 	// Initialize a new instance of `Claims`
+	// 	claims := &Claims{}
+	// 	//Parse the JWT string and store the result in `claims`
+	// 	// Note: the function returns the key for validating the token's signature
+	// 	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
+	// 		// Make sure that the token's algorithm corresponds to "SigningMethodMAC"
+	// 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+	// 			return nil, errors.New("unexpected signing method")
+	// 		}
+	
+	// 		return []byte(jwtSecretkey), nil
+	// 	})
+	
+	// 	if err != nil {
+	// 		return nil, err
+	// 	}
+	
+	// 	if !token.Valid {
+	// 		return nil, errors.New("invalid token")
+	// 	}
+	
+	// 	if time.Now().After(claims.ExpiresAt.Time) {
+	// 		return nil, errors.New("token is expired ")
+	// 	}
+	
+	// 	return claims, nil
+	// }
+
+
 
 
 // func GenerateToken(userId primitive.ObjectID, email , jwtSecretKey string) (string, string, error) {
@@ -138,34 +199,7 @@ func GenerateToken(tokenSigningMethod jwt.SigningMethod, tokenClaims Claims, sec
 // 	return accessTokenStr, refreshTokenStr, nil
 // }
 
-// func VerifyToken(tokenString string, jwtSecretkey string) (*Claims, error) {
-// 	// Initialize a new instance of `Claims`
-// 	claims := &Claims{}
-// 	//Parse the JWT string and store the result in `claims`
-// 	// Note: the function returns the key for validating the token's signature
-// 	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
-// 		// Make sure that the token's algorithm corresponds to "SigningMethodMAC"
-// 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-// 			return nil, errors.New("unexpected signing method")
-// 		}
 
-// 		return []byte(jwtSecretkey), nil
-// 	})
-
-// 	if err != nil {
-// 		return nil, err
-// 	}
-
-// 	if !token.Valid {
-// 		return nil, errors.New("invalid token")
-// 	}
-
-// 	if time.Now().After(claims.ExpiresAt.Time) {
-// 		return nil, errors.New("token is expired ")
-// 	}
-
-// 	return claims, nil
-// }
 
 // func (j *jwtService) GenerateAllTokens() (string, string, error) {
 // 	accessToken := jwt.NewWithClaims(jwt.SigningMethodHS256, j.accessTokenClaims)
