@@ -10,16 +10,12 @@ type HashPasswordService interface {
 	CheckPasswordHash(password, hash string) bool
 }
 
+// var _ TokenService = (*JWTService)(nil)
 type TokenService interface {
     GenerateAccessToken(userId primitive.ObjectID, email string) (string, error)
     GenerateRefreshToken(userId primitive.ObjectID, email string) (string, error)
     VerifyToken(tokenString string) (*Claims, error)
 }
-
-// type TokenService interface {
-// 	GenerateAllTokens() (string, string, error)
-// 	VerifyToken(tokenString string) (*Claims, error)
-// }
 
 type JWTHandler interface {
 	ParseWithClaims(tokenString string, claims *Claims, keyFunc jwt.Keyfunc) (*jwt.Token, error)
