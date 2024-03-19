@@ -17,7 +17,6 @@ func LoadConfig() (*Config, error){
 
 	viper.SetDefault("VIGOR_DB_URI", "mongodb://localhost:27017")
 	viper.SetDefault("VIGOR_DB_NAME", "Vigor_Production")
-	// viper.SetDefault("JWT_SECRET_KEY", "")
 
 	mongoDBURI := viper.GetString("VIGOR_DB_URI")
 	if mongoDBURI == "" {

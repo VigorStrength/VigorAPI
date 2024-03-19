@@ -9,27 +9,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-//Implement a mock when it doesn't work
-//Not working currently because LoadConfig is always returning the right config
-// func TestLoadConfigErrURI(t *testing.T) {
-// 	// Set environment variables for the test
-// 	os.Setenv("VIGOR_DB_URI", "")
-// 	os.Setenv("VIGOR_DB_NAME", "Vigor_Production")
-
-// 	// Unset environment variable after the test
-// 	defer os.Unsetenv("VIGOR_DB_URI")
-// 	defer os.Unsetenv("VIGOR_DB_NAME")
-
-// 	_, err := config.LoadConfig()
-// 	assert.Error(t, err, "LoadConfig() should error when VIGOR_DB_URI is empty")
-// 	assert.Equal(t, "missing VIGOR_DB_URI", err.Error(), "Error message should match the expected one")
-// }
-
-func TestLoadConfig(t *testing.T) {
+func TestLoadConfigSuccess(t *testing.T) {
 	// Set environment variables for the test
 	os.Setenv("VIGOR_DB_URI", "mongodb://localhost:27017")
 	os.Setenv("VIGOR_DB_NAME", "Vigor_Production")
-	os.Setenv("JWT_SECRET_KEY", "")
+	os.Setenv("JWT_SECRET_KEY", "VigorSuperSecretKey")
 
 	// Unset environment variable after the test
 	defer os.Unsetenv("VIGOR_DB_URI")
@@ -39,6 +23,7 @@ func TestLoadConfig(t *testing.T) {
 	want := &config.Config{
 		MongoDBURI:   "mongodb://localhost:27017",
 		DatabaseName: "Vigor_Production",
+		JWTSecretKey: "VigorSuperSecretKey",
 	}
 
 	got, err := config.LoadConfig()
