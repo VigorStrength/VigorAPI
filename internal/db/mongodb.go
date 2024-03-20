@@ -116,8 +116,8 @@ func (ms *MongoDBService) InitializeCollections(ctx context.Context, db MongoDat
 		{"userMealStatus", "schemas/mealPlan/userMealStatusSchema.json"},
 		{"mealPlans", "schemas/mealPlan/mealPlanSchema.json"},
 		{"userDailyNutritionalLogs", "schemas/mealPlan/userDailyNutritionalLogSchema.json"},
-		{"messages", "schemas/messaging/groupSchema.json"},
-		{"messagesGroups", "schemas/messaging/messageSchema.json"},
+		{"messages", "schemas/messaging/messageSchema.json"},
+		{"groupMessages", "schemas/messaging/groupSchema.json"},
 	}
 
 	for _, s := range schemas {
