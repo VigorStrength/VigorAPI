@@ -29,6 +29,7 @@ type ExerciseLog struct {
 
 // Circuit represents a set of exercises performed in sequence, with optional rest and laps tracking.
 type Circuit struct {
+	ID 			 primitive.ObjectID	  `bson:"_id,omitempty" json:"id,omitempty"`
 	ExerciseIDs  []primitive.ObjectID `bson:"exerciseIds" json:"exerciseIds" binding:"required"`
 	RestTime     *int                 `bson:"restTime,omitempty" json:"restTime,omitempty"` // Optional rest time in seconds.
 	ProposedLaps int                  `bson:"proposedLaps" json:"proposedLaps" binding:"required"`
