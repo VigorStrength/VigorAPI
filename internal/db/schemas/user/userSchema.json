@@ -2,6 +2,7 @@
   "$jsonSchema": {
     "bsonType": "object",
     "required": [
+      "role",
       "firstName",
       "lastName",
       "email",
@@ -16,6 +17,12 @@
     ],
     "properties": {
       "_id": { "bsonType": "objectId" },
+      "role": {
+        "bsonType": "string",
+        "description": "must be a string and is required",
+        "enum": ["user"],
+        "default": "user"
+      },
       "firstName": {
         "bsonType": "string",
         "description": "must be a string and is required"

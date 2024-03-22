@@ -1,0 +1,24 @@
+{
+  "$jsonSchema": {
+    "title": "Admin",
+    "description": "Schema for administrators of our database",
+    "bsonType": "object",
+    "required": ["role", "email", "passwordHash"],
+    "properties": {
+      "role": {
+        "bsonType": "string",
+        "description": "must be a string and is required",
+        "enum": ["admin", "superadmin"],
+        "default": "admin"
+      },
+      "email": {
+        "bsonType": "string",
+        "description": "must be a string and is required"
+      },
+      "passwordHash": {
+        "bsonType": "string",
+        "description": "must be a string and is required"
+      }
+    }
+  }
+}

@@ -1,22 +1,18 @@
 {
   "$jsonSchema": {
     "bsonType": "object",
-    "required": ["senderId", "content", "sentAt"],
+    "required": ["conversationId", "senderId", "content", "sentAt"],
     "properties": {
       "_id": {
         "bsonType": "objectId"
       },
+      "conversationId": {
+        "bsonType": "objectId",
+        "description": "must be an objectId referencing the conversation and is required"
+      },
       "senderId": {
         "bsonType": "objectId",
         "description": "must be an objectId and is required"
-      },
-      "recipientId": {
-        "bsonType": "objectId",
-        "description": "optional objectId referencing the recipient"
-      },
-      "groupId": {
-        "bsonType": "objectId",
-        "description": "optional objectId referencing the group"
       },
       "content": {
         "bsonType": "string",

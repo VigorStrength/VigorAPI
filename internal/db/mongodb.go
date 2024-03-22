@@ -56,6 +56,9 @@ func (ms *MongoDBService) EnsureIndexes(ctx context.Context, db MongoDatabase) e
 			{Keys: bson.M{"email": 1}, Options: options.Index().SetUnique(true)},
 			{Keys: bson.M{"username": 1}, Options: options.Index().SetUnique(true)},
 		},
+		"admins": {
+			{Keys: bson.M{"email": 1}, Options: options.Index().SetUnique(true)},
+		},
 		"meals": {
 			{Keys: bson.M{"name": 1}, Options: options.Index().SetUnique(true)},
 		},
@@ -85,6 +88,16 @@ func (ms *MongoDBService) EnsureIndexes(ctx context.Context, db MongoDatabase) e
 		},
 		"UserDailyNutritionalLogs": {
 			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "date", Value: 1}}, Options: options.Index().SetUnique(true)},
+		},
+		"conversations": {
+			{Keys: bson.M{"participants": 1}, Options: options.Index().SetUnique(true)},
+			// if needed add more indexes for conversations
+			// {Keys: bson.M{"createdAt": -1}, Options: options.Index().SetUnique(true)},
+			// {Keys: bson.M{"updatedAt": -1}, Options: options.Index().SetUnique(true)},
+		},
+		"messages": {
+			{Keys: bson.M{"conversationId": 1}, Options: options.Index().SetUnique(false)},
+			{Keys: bson.D{{Key: "conversationId", Value: 1}, {Key: "sentAt", Value: 1}}, Options: options.Index().SetUnique(false)},
 		},
 	}
 
@@ -116,6 +129,7 @@ func (ms *MongoDBService) InitializeCollections(ctx context.Context, db MongoDat
 		schemaFile     string
 	}{
 		{"users", "schemas/user/userSchema.json"},
+		{"admins", "schemas/user/adminSchema.json"},
 		{"exercises", "schemas/workoutPlan/exerciseSchema.json"},
 		{"userCircuitStatus", "schemas/workoutPlan/userCircuitStatusSchema.json"},
 		{"userWorkoutDayStatus", "schemas/workoutPlan/userWorkoutDayStatusSchema.json"},
@@ -129,7 +143,8 @@ func (ms *MongoDBService) InitializeCollections(ctx context.Context, db MongoDat
 		{"mealPlans", "schemas/mealPlan/mealPlanSchema.json"},
 		{"userDailyNutritionalLogs", "schemas/mealPlan/userDailyNutritionalLogSchema.json"},
 		{"messages", "schemas/messaging/messageSchema.json"},
-		{"groupMessages", "schemas/messaging/groupSchema.json"},
+		{"conversations", "schemas/messaging/conversationSchema.json"},
+		{"groups", "schemas/messaging/groupSchema.json"},
 	}
 
 	for _, s := range schemas {

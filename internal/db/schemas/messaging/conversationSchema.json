@@ -1,0 +1,31 @@
+{
+  "$jsonSchema": {
+    "title": "Conversation",
+    "description": "Record a conversation between two or more people",
+    "bsonType": "object",
+    "required": ["participants", "createdAt", "updatedAt"],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId",
+        "description": "The unique identifier for a conversation"
+      },
+      "participants": {
+        "bsonType": "array",
+        "description": "The participants in the conversation. Must be an array of objectIds an is required",
+        "items": {
+          "bsonType": "objectId"
+        },
+        "minItems": 2,
+        "uniqueItems": true
+      },
+      "createdAt": {
+        "bsonType": "date",
+        "description": "The date and time the conversation was created"
+      },
+      "updatedAt": {
+        "bsonType": "date",
+        "description": "The date and time the conversation was last updated"
+      }
+    }
+  }
+}
