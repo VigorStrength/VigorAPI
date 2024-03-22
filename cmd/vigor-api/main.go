@@ -12,6 +12,7 @@ import (
 	"github.com/GhostDrew11/vigor-api/internal/api"
 	"github.com/GhostDrew11/vigor-api/internal/config"
 	"github.com/GhostDrew11/vigor-api/internal/db"
+	"github.com/GhostDrew11/vigor-api/internal/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -35,11 +36,15 @@ func main() {
 	}
 	defer dbService.DisconnectDB(ctx)
 
+	// Create a token service
+	handler := &utils.DefaultJWTHandler{}
+	jwtService := utils.NewJWTService(cfg.JWTSecretKey, handler)
+
 	// Set up your Gin router
 	router := gin.Default()
 
 	// Set up your routes
-	api.SetupRoutes(router)
+	api.SetupRoutes(router, jwtService)
 
 	server := &http.Server{
 		Addr:    ":8080",

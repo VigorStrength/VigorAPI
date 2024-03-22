@@ -1,12 +1,12 @@
 package api
 
-// import (
-// 	"github.com/GhostDrew11/vigor-api/internal/middlewares"
-// 	"github.com/GhostDrew11/vigor-api/internal/utils"
-// 	"github.com/gin-gonic/gin"
-// )
+import (
+	// 	"github.com/GhostDrew11/vigor-api/internal/middlewares"
+	"github.com/GhostDrew11/vigor-api/internal/utils"
+	"github.com/gin-gonic/gin"
+)
 
-// func SetupRoutes(router *gin.Engine, ts utils.TokenService) {
+func SetupRoutes(router *gin.Engine, ts utils.TokenService) {
 // 	// API root
 // 	apiRoot := router.Group("/api/v1")
 
@@ -106,4 +106,4 @@ package api
 // 	// Remove a user from a group
 // 	authenticatedUserRoutes.DELETE("/groups/:groupId/members/:userId", removeGroupMember)
 // 	// Other group functionalities as needed (e.g, add member, join a group, having a group live workout party etc.)
-// }
+}
