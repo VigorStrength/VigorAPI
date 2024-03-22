@@ -38,7 +38,7 @@ func (m *MockJWTService) VerifyToken(tokenString string) (*utils.Claims, error) 
 	return claims, args.Error(1)
 }
 
-func TestAuthenticateMiddlewareSuccess(t *testing.T) {
+func TestRequireRoleMiddlewareSuccess(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	router := gin.New()
 
@@ -46,10 +46,12 @@ func TestAuthenticateMiddlewareSuccess(t *testing.T) {
 	tokenString := "dummyToken"
 	userId := primitive.NewObjectID()
 	email := "test@example.com"
+	role := "user"
 
 	claims := &utils.Claims{
 		UserId: userId,
 		Email:  email,
+		Role:   role,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(1 * time.Hour)),
 		},
@@ -57,7 +59,7 @@ func TestAuthenticateMiddlewareSuccess(t *testing.T) {
 
 	mockJWTService.On("VerifyToken", tokenString).Return(claims, nil)
 
-	router.Use(middlewares.Authenticate(mockJWTService))
+	router.Use(middlewares.RequireRole(mockJWTService, "user"))
 	router.GET("/test", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"message": "Passed"})
 	})
@@ -72,13 +74,13 @@ func TestAuthenticateMiddlewareSuccess(t *testing.T) {
 	mockJWTService.AssertExpectations(t)
 }
 
-func TestAuthenticateMiddlewareWithEmptyToken(t *testing.T) {
+func TestRequireRoleMiddlewareFailureEmptyToken(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	router := gin.New()
 
 	mockJWTService := new(MockJWTService)
 
-	router.Use(middlewares.Authenticate(mockJWTService))
+	router.Use(middlewares.RequireRole(mockJWTService, "user"))
 	router.GET("/test", func(c *gin.Context) {
         c.JSON(http.StatusOK, gin.H{"message": "Should not get here"})
     })
@@ -90,7 +92,7 @@ func TestAuthenticateMiddlewareWithEmptyToken(t *testing.T) {
 	assert.Equal(t, http.StatusUnauthorized, w.Code)
 }
 
-func TestAuthenticateMiddlewareFailureTokenVerification(t *testing.T) {
+func TestRequireRoleMiddlewareFailureTokenVerification(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	router := gin.New()
 
@@ -99,7 +101,7 @@ func TestAuthenticateMiddlewareFailureTokenVerification(t *testing.T) {
 
 	mockJWTService.On("VerifyToken", invalidTokenString).Return(nil, utils.ErrInvalidToken)
 
-	router.Use(middlewares.Authenticate(mockJWTService))
+	router.Use(middlewares.RequireRole(mockJWTService, "user"))
 	router.GET("/test", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"message": "Should not reach"})
 	})
@@ -112,6 +114,40 @@ func TestAuthenticateMiddlewareFailureTokenVerification(t *testing.T) {
 
 	assert.Equal(t, http.StatusUnauthorized, w.Code)
 	mockJWTService.AssertExpectations(t)
+}
+
+func TestRequireRoleMiddlewareFailureRoleMismatch(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+	router := gin.New()
+
+	mockJWTService := new(MockJWTService)
+	tokenString := "dummyToken"
+	userId := primitive.NewObjectID()
+	email := "test@example.com"
+	role := "admin"
+
+	claims := &utils.Claims{
+		UserId: userId,
+		Email:  email,
+		Role:   role,
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(1 * time.Hour)),
+		},
+	}
+
+	mockJWTService.On("VerifyToken", tokenString).Return(claims, nil)
+	
+	router.Use(middlewares.RequireRole(mockJWTService, "user", "superuser"))
+	router.GET("/test", func(c *gin.Context) {
+        c.JSON(http.StatusOK, gin.H{"message": "Should not get here"})
+    })
+
+	w := httptest.NewRecorder()
+    req, _ := http.NewRequest("GET", "/test", nil)
+	req.Header.Set("Authorization", tokenString)
+
+	router.ServeHTTP(w, req)
+	assert.Equal(t, http.StatusForbidden, w.Code)
 }
 
 func TestRefreshHandlerMiddlewareSuccess(t *testing.T) {

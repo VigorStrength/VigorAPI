@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Authenticate(ts utils.TokenService) gin.HandlerFunc {
+func RequireRole(ts utils.TokenService, requiredRoles ...string) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		token := ctx.GetHeader("Authorization")
 		if token == "" {
@@ -21,8 +21,24 @@ func Authenticate(ts utils.TokenService) gin.HandlerFunc {
 			return
 		}
 
+		// Check if the user has the required role
+		roleIsAllowed := false
+		for _, role := range requiredRoles {
+			if claims.Role == role {
+				roleIsAllowed = true
+				break
+			}
+		}
+
+		if !roleIsAllowed {
+			ctx.AbortWithStatusJSON(http.StatusForbidden, gin.H{"message": "Forbidden"})
+			return
+		}
+
+		// Set user info and role in the context
 		ctx.Set("userId", claims.UserId)
 		ctx.Set("email", claims.Email)
+		ctx.Set("role", claims.Role)
 		ctx.Next()
 	}
 }

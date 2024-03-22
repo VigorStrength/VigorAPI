@@ -18,6 +18,7 @@ type Claims struct {
     jwt.RegisteredClaims
     UserId primitive.ObjectID `json:"userId"`
     Email  string             `json:"email"`
+	Role   string             `json:"role"`
 }
 
 type JWTService struct {
