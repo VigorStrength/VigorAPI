@@ -1,0 +1,53 @@
+{
+  "$jsonSchema": {
+    "title": "MealPlan",
+    "description": "Schema for a generic meal plan template",
+    "bsonType": "object",
+    "required": ["duration", "weeklyPlans"],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId",
+        "description": "must be an objectId"
+      },
+      "duration": {
+        "bsonType": "int",
+        "description": "Duration of the meal plan in weeks"
+      },
+      "weeklyPlans": {
+        "bsonType": "array",
+        "items": {
+          "bsonType": "object",
+          "required": ["weekNumber", "breakfast", "lunch", "dinner"],
+          "properties": {
+            "_id": {
+              "bsonType": "objectId"
+            },
+            "weekNumber": {
+              "bsonType": "int"
+            },
+            "breakfast": {
+              "bsonType": "array",
+              "items": { "bsonType": "objectId" }
+            },
+            "morningSnack": {
+              "bsonType": "array",
+              "items": { "bsonType": "objectId" }
+            },
+            "lunch": {
+              "bsonType": "array",
+              "items": { "bsonType": "objectId" }
+            },
+            "afternoonSnack": {
+              "bsonType": "array",
+              "items": { "bsonType": "objectId" }
+            },
+            "dinner": {
+              "bsonType": "array",
+              "items": { "bsonType": "objectId" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

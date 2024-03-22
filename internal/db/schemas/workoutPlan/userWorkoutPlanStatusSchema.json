@@ -1,0 +1,34 @@
+{
+  "$jsonSchema": {
+    "title": "UserWorkoutPlanStatus",
+    "description": "Schema for user's progress on a workout plan.",
+    "bsonType": "object",
+    "required": ["userId", "workoutPlanId", "startDate", "completed"],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId",
+        "description": "must be a objectId"
+      },
+      "userId": {
+        "bsonType": "objectId",
+        "description": "Reference to the User"
+      },
+      "workoutPlanId": {
+        "bsonType": "objectId",
+        "description": "Reference to the WorkoutPlan"
+      },
+      "startDate": {
+        "bsonType": "date",
+        "description": "Start date of the workout plan"
+      },
+      "completionDate": {
+        "bsonType": "date",
+        "description": "Completion date of the workout plan"
+      },
+      "completed": {
+        "bsonType": "bool",
+        "description": "Whether the workout plan is completed"
+      }
+    }
+  }
+}

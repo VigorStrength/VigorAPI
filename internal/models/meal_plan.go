@@ -72,6 +72,7 @@ type WeeklyPlan struct {
 type UserWeeklyPlanStatus struct {
 	ID 			   primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
 	UserID 		   primitive.ObjectID `bson:"userId" json:"userId" binding:"required"`
+	WeeklyPlanId   primitive.ObjectID `bson:"weeklyPlanId" json:"weeklyPlanId" binding:"required"`
 	CompletedDays  int                `bson:"completedDays" json:"completedDays"`
 }
 

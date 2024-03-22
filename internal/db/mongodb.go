@@ -56,14 +56,20 @@ func (ms *MongoDBService) EnsureIndexes(ctx context.Context, db MongoDatabase) e
 			{Keys: bson.M{"email": 1}, Options: options.Index().SetUnique(true)},
 			{Keys: bson.M{"username": 1}, Options: options.Index().SetUnique(true)},
 		},
-		"exercises": {
-			{Keys: bson.M{"name": 1}, Options: options.Index().SetUnique(true)},
-		},
 		"meals": {
 			{Keys: bson.M{"name": 1}, Options: options.Index().SetUnique(true)},
 		},
 		"userMealStatus": {
 			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "mealId", Value: 1}}, Options: options.Index().SetUnique(true)},
+		},
+		"userWeeklyMealPlanStatus": {
+			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "weeklyPlanId", Value: 1}}, Options: options.Index().SetUnique(true)},
+		},
+		"userMealPlanStatus": {
+			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "mealPlanId", Value: 1}}, Options: options.Index().SetUnique(true)},
+		},
+		"exercises": {
+			{Keys: bson.M{"name": 1}, Options: options.Index().SetUnique(true)},
 		},
 		"userCircuitStatus": {
 			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "circuitId", Value: 1}}, Options: options.Index().SetUnique(true)},
@@ -73,6 +79,9 @@ func (ms *MongoDBService) EnsureIndexes(ctx context.Context, db MongoDatabase) e
 		},
 		"userWorkoutWeekStatus": {
 			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "workoutWeekId", Value: 1}}, Options: options.Index().SetUnique(true)},
+		},
+		"userWorkoutPlanStatus": {
+			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "workoutPlanId", Value: 1}}, Options: options.Index().SetUnique(true)},
 		},
 		"UserDailyNutritionalLogs": {
 			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "date", Value: 1}}, Options: options.Index().SetUnique(true)},
@@ -111,9 +120,12 @@ func (ms *MongoDBService) InitializeCollections(ctx context.Context, db MongoDat
 		{"userCircuitStatus", "schemas/workoutPlan/userCircuitStatusSchema.json"},
 		{"userWorkoutDayStatus", "schemas/workoutPlan/userWorkoutDayStatusSchema.json"},
 		{"userWorkoutWeekStatus", "schemas/workoutPlan/userWorkoutWeekStatusSchema.json"},
+		{"userWorkoutPlanStatus", "schemas/workoutPlan/userWorkoutPlanStatusSchema.json"},
 		{"workoutPlans", "schemas/workoutPlan/workoutPlanSchema.json"},
 		{"meals", "schemas/mealPlan/mealSchema.json"},
 		{"userMealStatus", "schemas/mealPlan/userMealStatusSchema.json"},
+		{"userWeeklyMealPlanStatus", "schemas/mealPlan/userWeeklyPlanStatusSchema.json"},
+		{"userMealPlanStatus", "schemas/mealPlan/userMealPlanStatusSchema.json"},
 		{"mealPlans", "schemas/mealPlan/mealPlanSchema.json"},
 		{"userDailyNutritionalLogs", "schemas/mealPlan/userDailyNutritionalLogSchema.json"},
 		{"messages", "schemas/messaging/messageSchema.json"},

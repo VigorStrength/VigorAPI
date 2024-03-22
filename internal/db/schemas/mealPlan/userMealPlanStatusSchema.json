@@ -1,0 +1,34 @@
+{
+  "$jsonSchema": {
+    "title": "UserMealPlanStatus",
+    "description": "Schema for tracking user's meal plan progress",
+    "bsonType": "object",
+    "required": ["userId", "mealPlanId", "startDate"],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId",
+        "description": "must be a objectId"
+      },
+      "userId": {
+        "bsonType": "objectId",
+        "description": "Reference to the User"
+      },
+      "mealPlanId": {
+        "bsonType": "objectId",
+        "description": "Reference to the Meal Plan"
+      },
+      "startDate": {
+        "bsonType": "date",
+        "description": "Start date of the meal plan"
+      },
+      "completionDate": {
+        "bsonType": "date",
+        "description": "Completion date of the meal plan"
+      },
+      "completed": {
+        "bsonType": "bool",
+        "description": "Whether the meal plan is completed"
+      }
+    }
+  }
+}

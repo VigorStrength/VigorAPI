@@ -1,0 +1,27 @@
+{
+  "$jsonSchema": {
+    "title": "UserWeeklyPlanStatus",
+    "description": "Schema for tracking user's weekly meal plan progress",
+    "bsonType": "object",
+    "required": ["userId", "weeklyPlanId", "completedDays"],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId",
+        "description": "must be an objectId"
+      },
+      "userId": {
+        "bsonType": "objectId",
+        "description": "Reference to the user"
+      },
+      "weeklyPlanId": {
+        "bsonType": "objectId",
+        "description": "Reference to the specific Weekly Plan"
+      },
+      "completedDays": {
+        "bsonType": "int",
+        "minimum": 0,
+        "description": "Number of completed days in the weekly meal plan"
+      }
+    }
+  }
+}
