@@ -1,0 +1,55 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": ["userId", "startDate", "endDate", "weeklyPlans"],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId"
+      },
+      "userId": {
+        "bsonType": "objectId"
+      },
+      "startDate": {
+        "bsonType": "date"
+      },
+      "endDate": {
+        "bsonType": "date"
+      },
+      "weeklyPlans": {
+        "bsonType": "array",
+        "items": {
+          "bsonType": "object",
+          "required": ["weekNumber", "breakfast", "lunch", "dinner"],
+          "properties": {
+            "_id": {
+              "bsonType": "objectId"
+            },
+            "weekNumber": {
+              "bsonType": "int"
+            },
+            "breakfast": {
+              "bsonType": "array",
+              "items": { "bsonType": "objectId" }
+            },
+            "morningSnack": {
+              "bsonType": "array",
+              "items": { "bsonType": "objectId" }
+            },
+            "lunch": {
+              "bsonType": "array",
+              "items": { "bsonType": "objectId" }
+            },
+            "afternoonSnack": {
+              "bsonType": "array",
+              "items": { "bsonType": "objectId" }
+            },
+            "dinner": {
+              "bsonType": "array",
+              "items": { "bsonType": "objectId" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

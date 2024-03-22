@@ -50,6 +50,13 @@ type UserDailyNutritionalLog struct {
 	// Monthly and daily nutritional goals can be added here later with AI features.
 }
 
+type UserMealStatus struct {
+    ID       primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
+    UserID   primitive.ObjectID `bson:"userId" json:"userId" binding:"required"`
+    MealID   primitive.ObjectID `bson:"mealId" json:"mealId" binding:"required"`
+    Completed bool              `bson:"completed" json:"completed"`
+}
+
 // WeeklyPlan represents a weekly grouping of meals by category, used for generic meal proposals.
 type WeeklyPlan struct {
     ID             primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
@@ -61,18 +68,34 @@ type WeeklyPlan struct {
     Dinner         []primitive.ObjectID `bson:"dinner" json:"dinner"`
 }
 
-type UserMealStatus struct {
-    ID       primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
-    UserID   primitive.ObjectID `bson:"userId" json:"userId" binding:"required"`
-    MealID   primitive.ObjectID `bson:"mealId" json:"mealId" binding:"required"`
-    Completed bool              `bson:"completed" json:"completed"`
+// UserWeeklyPlanStatus tracks the completion status of a meal plan week for a specific user
+type UserWeeklyPlanStatus struct {
+	ID 			   primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
+	UserID 		   primitive.ObjectID `bson:"userId" json:"userId" binding:"required"`
+	CompletedDays  int                `bson:"completedDays" json:"completedDays"`
 }
 
-// MealPlan represents the structured plan of meals for a user over a month, organized into weekly plans.
 type MealPlan struct {
-	ID          primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
-	UserID      primitive.ObjectID `bson:"userId" json:"userId" binding:"required"`
-	StartDate   time.Time          `bson:"startDate" json:"startDate" binding:"required"`
-	EndDate     time.Time          `bson:"endDate" json:"endDate" binding:"required"`
-	WeeklyPlans []WeeklyPlan       `bson:"weeklyPlans" json:"weeklyPlans" binding:"required"` // Array of weekly meal plans, customized per user.
+	ID       primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
+	Duration int 				`bson:"duration" json:"duration" binding:"required"`
+	WeeklyPlans []WeeklyPlan    `bson:"weeklyPlans" json:"weeklyPlans" binding:"required"`
 }
+
+type UserMealPlanStatus struct {
+	ID         primitive.ObjectID  `bson:"_id,omitempty" json:"id,omitempty"`
+	UserID 	   primitive.ObjectID  `bson:"userId" json:"userId" binding:"required"` 
+	MealPlanID primitive.ObjectID  `bson:"mealPlanId" json:"mealPlanId" binding:"required"`
+	StartDate  time.Time 		   `bson:"startDate" json:"startDate" binding:"required"`
+	CompletionDate *time.Time	   `bson:"completionDate" json:"completionDate"`
+	Completed  bool 			   `bson:"completed" json:"completed"`
+}
+
+// AI MealPlan
+// MealPlan represents the structured plan of meals for a user over a month, organized into weekly plans.
+// type MealPlan struct {
+// 	ID          primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
+// 	UserID      primitive.ObjectID `bson:"userId" json:"userId" binding:"required"`
+// 	StartDate   time.Time          `bson:"startDate" json:"startDate" binding:"required"`
+// 	EndDate     time.Time          `bson:"endDate" json:"endDate" binding:"required"`
+// 	WeeklyPlans []WeeklyPlan       `bson:"weeklyPlans" json:"weeklyPlans" binding:"required"` // Array of weekly meal plans, customized per user.
+// }

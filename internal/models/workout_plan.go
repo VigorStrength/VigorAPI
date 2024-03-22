@@ -85,12 +85,29 @@ type UserWorkoutWeekStatus struct {
     CompletedDays   int                `bson:"completedDays" json:"completedDays"`
 }
 
-// WorkoutPlan represents a user's workout plan, including weeks and progress tracking.
 type WorkoutPlan struct {
-	ID        primitive.ObjectID `bson:"_id" json:"id"`
-	UserID    primitive.ObjectID `bson:"userId" json:"userId" binding:"required"` // Reference to the User.
-	StartDate time.Time          `bson:"startDate" json:"startDate" binding:"required"`
-	EndDate   time.Time          `bson:"endDate" json:"endDate" binding:"required"`
-	Weeks     []WorkoutWeek      `bson:"weeks" json:"weeks" binding:"required"`
-	// Progress field is intentionally omitted as it will be calculated elsewhere.
+	ID 				primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
+	Duration 		int `bson:"duration" json:"duration" binding:"required"`
+	Weeks     		[]WorkoutWeek      `bson:"weeks" json:"weeks" binding:"required"`
 }
+
+type UserWorkoutPlanStatus struct {
+	ID 				primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
+	UserID         	primitive.ObjectID `bson:"userId" json:"userId" binding:"required"` // Reference to the User
+	WorkoutPlanID  	primitive.ObjectID `bson:"workoutPlanId" json:"workoutPlanId" binding:"required"` // Reference to the WorkoutPlan
+	StartDate      	time.Time          `bson:"startDate" json:"startDate" binding:"required"`
+	CompletionDate 	*time.Time         `bson:"completionDate" json:"completionDate"` // nil if not completed
+	Completed      	bool               `bson:"completed" json:"completed"`
+	// More fields as necessary to track progress, such as completed workouts or weeks
+}
+
+// AI WorkoutPlan
+// // WorkoutPlan represents a user's workout plan, including weeks and progress tracking.
+// type WorkoutPlan struct {
+// 	ID        primitive.ObjectID `bson:"_id" json:"id"`
+// 	UserID    primitive.ObjectID `bson:"userId" json:"userId" binding:"required"` // Reference to the User.
+// 	StartDate time.Time          `bson:"startDate" json:"startDate" binding:"required"`
+// 	EndDate   time.Time          `bson:"endDate" json:"endDate" binding:"required"`
+// 	Weeks     []WorkoutWeek      `bson:"weeks" json:"weeks" binding:"required"`
+// 	// Progress field is intentionally omitted as it will be calculated elsewhere.
+// }
