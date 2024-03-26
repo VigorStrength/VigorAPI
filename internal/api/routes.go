@@ -14,13 +14,14 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService) {
 
 	// Auth routes
 	authRoutes := apiRoot.Group("/auth")
-	authRoutes.POST("/login", login)
-	authRoutes.POST("/register", register)
 	authRoutes.POST("/refresh", middlewares.RefreshHandler(ts))
 
 	// Admin routes
 	adminRoutes := apiRoot.Group("/admin")
 	adminRoutes.Use(middlewares.RequireRole(ts, "admin"))
+	// Admin auth routes
+	adminRoutes.POST("/register", registerAdmin)
+	adminRoutes.POST("/login", loginAdmin)
 	// CRUD Exercises
 	adminRoutes.POST("/exercises", createExercise)
 	adminRoutes.PUT("/exercises/:id", updateExercise)
@@ -53,6 +54,9 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService) {
 	// User routes
 	userRoutes := apiRoot.Group("/users")
 	userRoutes.Use(middlewares.RequireRole(ts, "user"))
+	// User auth routes
+	userRoutes.POST("/register", registerUser)
+	userRoutes.POST("/login", loginUser)
 	// CRUD User data
 	userRoutes.GET("/profile", getUserProfile)
 	userRoutes.PUT("/profile", updateUserProfile)

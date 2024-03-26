@@ -24,10 +24,14 @@ type MongoDatabase interface {
 }
 
 type MongoCollection interface {
+	CountDocuments(ctx context.Context, filter interface{}) (int64, error)
 	Indexes() MongoIndexView
+	FindOne(ctx context.Context, filter interface{}) MongoSingleResult
+	InsertOne(ctx context.Context, document interface{}) (MongoInsertOneResult, error)
 }
 
 type MongoSingleResult interface {
+	Decode(v interface{}) error
 	Err() error
 }
 
@@ -42,4 +46,8 @@ type DBService interface {
 	InitializeCollections(ctx context.Context, db MongoDatabase) error
 	ApplyCollectionValidation(ctx context.Context, db MongoDatabase, collectionName string, schemaBson bson.M) error
 	DisconnectDB(ctx context.Context) 
+}
+
+type MongoInsertOneResult struct {
+	InsertedID interface{}
 }

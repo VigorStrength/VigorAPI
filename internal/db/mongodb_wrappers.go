@@ -61,12 +61,32 @@ func (msr *mongoSingleResultWrapper) Err() error {
 	return msr.singleResult.Err()
 }
 
+func (msr *mongoSingleResultWrapper) Decode(v interface{}) error {
+	return msr.singleResult.Decode(v)
+}
+
 type mongoCollectionWrapper struct{
 	collection *mongo.Collection
 }
 
+func (mdc *mongoCollectionWrapper) CountDocuments(ctx context.Context, filter interface{}) (int64, error) {
+	return mdc.collection.CountDocuments(ctx, filter)
+}
+
 func (mdc *mongoCollectionWrapper) Indexes() MongoIndexView {
 	return &mongoIndexViewWrapper{indexView: mdc.collection.Indexes()}
+}
+
+func (mdc *mongoCollectionWrapper) FindOne(ctx context.Context, filter interface{}) MongoSingleResult {
+	return &mongoSingleResultWrapper{singleResult: mdc.collection.FindOne(ctx, filter)}
+}
+
+func (mdc *mongoCollectionWrapper) InsertOne(ctx context.Context, document interface{}) (MongoInsertOneResult, error) {
+	result, err := mdc.collection.InsertOne(ctx, document)
+	if err != nil {
+		return MongoInsertOneResult{}, err
+	}
+	return MongoInsertOneResult{InsertedID: result.InsertedID}, nil
 }
 
 type mongoIndexViewWrapper struct {
