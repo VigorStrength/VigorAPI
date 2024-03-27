@@ -8,5 +8,5 @@ import (
 
 type MongoAdminService interface {
 	RegisterAdmin(ctx context.Context, admin models.Admin) error
-	GetAdminByEmail(ctx context.Context, email string) (*models.Admin, error)
+	GetAdminByEmail(ctx context.Context, email, password string) (*models.Admin, error)
 }

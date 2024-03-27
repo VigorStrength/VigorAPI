@@ -3,12 +3,18 @@ package services
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	"github.com/GhostDrew11/vigor-api/internal/db"
 	"github.com/GhostDrew11/vigor-api/internal/models"
 	"github.com/GhostDrew11/vigor-api/internal/utils"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+)
+
+var (
+	ErrAdminAlreadyExists = errors.New("admin already exists")
+	ErrInvalidAdminCredentials = errors.New("invalid email or password")
 )
 
 type AdminService struct {
@@ -25,11 +31,11 @@ func (as *AdminService) RegisterAdmin(ctx context.Context, admin models.Admin) e
 	filter := bson.M{"email": admin.Email}
 	count, err := as.collection.CountDocuments(ctx, filter)
 	if err != nil {
-		return err
+		return fmt.Errorf("error checking if admin already exists: %w", err)
 	}
 
 	if count > 0 {
-		return errors.New("admin already exists")
+		return ErrAdminAlreadyExists
 	}
 
 	// Hash the admin's password
@@ -51,18 +57,22 @@ func (as *AdminService) RegisterAdmin(ctx context.Context, admin models.Admin) e
 	return nil
 }
 
-func (as *AdminService) GetAdminByEmail(ctx context.Context, email string) (*models.Admin, error) {
+func (as *AdminService) GetAdminByEmail(ctx context.Context, email, password string) (*models.Admin, error) {
 	var admin models.Admin
 	filter := bson.M{"email": email}
 
 	result := as.collection.FindOne(ctx, filter)
 	if result.Err() != nil {
-		return &models.Admin{}, result.Err()
+		return &models.Admin{}, fmt.Errorf("error fetching admin with email %s: %w", email, result.Err())
 	}
 
 	err := result.Decode(&admin)
 	if err != nil {
-		return &models.Admin{}, err
+		return &models.Admin{}, fmt.Errorf("error decoding admin data for email %s: %w", email, err)
+	}
+
+	if !as.hasher.CheckPasswordHash(password, admin.PasswordHash) {
+		return &models.Admin{}, ErrInvalidAdminCredentials
 	}
 
 	return &admin, nil

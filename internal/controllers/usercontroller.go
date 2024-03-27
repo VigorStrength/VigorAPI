@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"errors"
 	"log"
 	"net/http"
 
@@ -25,13 +26,18 @@ func NewUserController(userService services.UserService, jwtService utils.TokenS
 func (uc *UserController) Register(c *gin.Context) {
 	var user models.User
 	if err := c.ShouldBindJSON(&user); err != nil {
-		log.Panic(err)
+		log.Printf("Error parsing JSON: %v\n", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Could not parse request body"})
 		return
 	}
 
 	if err := uc.UserService.RegisterUser(c.Request.Context(), user); err != nil {
-		log.Panic(err)
+		if errors.Is(err, services.ErrUserAlreadyExists) {
+			c.JSON(http.StatusConflict, gin.H{"error": "User already exists"})
+			return
+		}
+
+		log.Printf("Error registering user: %v\n", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to register user"})
 		return
 	}
@@ -42,28 +48,28 @@ func (uc *UserController) Register(c *gin.Context) {
 func (uc *UserController) Login(c *gin.Context) {
 	var loginDetails models.LoginDetails
 	if err := c.ShouldBindJSON(&loginDetails); err != nil {
-		log.Panic(err)
+		log.Printf("Error parsing JSON: %v\n", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Could not parse request body"})
 		return
 	}
 
-	user, err := uc.UserService.GetUserByEmail(c.Request.Context(), loginDetails.Email)
-	if err != nil || !utils.CheckPasswordHash(loginDetails.Password, user.PasswordHash) {
-		log.Panic(err)
+	user, err := uc.UserService.GetUserByEmail(c.Request.Context(), loginDetails.Email, loginDetails.Password)
+	if err != nil {
+		log.Printf("Error authenticating user: %v\n", err)
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid email or password"})
 		return
 	}
-
+	
 	accessToken, err := uc.JWTService.GenerateAccessToken(user.ID, user.Email)
 	if err != nil {
-		log.Panic(err)
+		log.Printf("Error generating access token: %v\n", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate access token"})
 		return
 	}
 
 	refreshToken, err := uc.JWTService.GenerateRefreshToken(user.ID, user.Email)
 	if err != nil {
-		log.Panic(err)
+		log.Printf("Error generating refresh token: %v\n", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate refresh token"})
 		return
 	}

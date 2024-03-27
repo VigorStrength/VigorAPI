@@ -8,5 +8,5 @@ import (
 
 type MongoUserService interface {
 	RegisterUser(ctx context.Context, user models.User) error
-	GetUserByEmail(ctx context.Context, email string) (*models.User, error)
+	GetUserByEmail(ctx context.Context, email, password string) (*models.User, error)
 }

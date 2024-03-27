@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"errors"
 	"log"
 	"net/http"
 
@@ -25,13 +26,18 @@ func NewAdminController(adminService services.AdminService, jwtService utils.Tok
 func (ac *AdminController) Register(c *gin.Context) {
 	var admin models.Admin
 	if err := c.ShouldBindJSON(&admin); err != nil {
-		log.Panic(err)
+		log.Printf("Error parsing JSON: %v\n", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Could not parse request body"})
 		return
 	}
 
 	if err := ac.AdminService.RegisterAdmin(c.Request.Context(), admin); err != nil {
-		log.Panic(err)
+		if errors.Is(err, services.ErrAdminAlreadyExists) {
+			c.JSON(http.StatusConflict, gin.H{"error": "Admin already exists"})
+			return
+		}
+
+		log.Printf("Error registering admin: %v\n", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to register admin"})
 		return
 	}
@@ -42,28 +48,28 @@ func (ac *AdminController) Register(c *gin.Context) {
 func (ac *AdminController) Login(c *gin.Context) {
 	var loginDetails models.LoginDetails
 	if err := c.ShouldBindJSON(&loginDetails); err != nil {
-		log.Panic(err)
+		log.Printf("Error parsing JSON: %v\n", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Could not parse request body"})
 		return
 	}
 
-	admin, err := ac.AdminService.GetAdminByEmail(c.Request.Context(), loginDetails.Email)
-	if err != nil || !utils.CheckPasswordHash(loginDetails.Password, admin.PasswordHash) {
-		log.Panic(err)
+	admin, err := ac.AdminService.GetAdminByEmail(c.Request.Context(), loginDetails.Email, loginDetails.Password)
+	if err != nil {
+		log.Printf("Error authenticating admin: %v\n", err)
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid email or password"})
 		return
 	}
 
 	accessToken, err := ac.JWTService.GenerateAccessToken(admin.ID, admin.Email)
 	if err != nil {	
-		log.Panic(err)
+		log.Printf("Error generating access token: %v\n", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate access token"})
 		return
 	}
 
 	refreshToken, err := ac.JWTService.GenerateRefreshToken(admin.ID, admin.Email)
 	if err != nil {
-		log.Panic(err)
+		log.Printf("Error generating refresh token: %v\n", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate refresh token"})
 		return
 	}
