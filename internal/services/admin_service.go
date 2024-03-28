@@ -9,7 +9,6 @@ import (
 	"github.com/GhostDrew11/vigor-api/internal/models"
 	"github.com/GhostDrew11/vigor-api/internal/utils"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 var (
@@ -26,32 +25,28 @@ func NewAdminService(collection db.MongoCollection, hasher utils.HashPasswordSer
 	return &AdminService{collection: collection, hasher: hasher}
 }
 
-func (as *AdminService) RegisterAdmin(ctx context.Context, admin models.Admin) error {
+func (as *AdminService) RegisterAdmin(ctx context.Context, input models.AdminRegistrationInput) error {
 	// check if the admin already exists
-	filter := bson.M{"email": admin.Email}
+	filter := bson.M{"email": input.Email}
 	count, err := as.collection.CountDocuments(ctx, filter)
 	if err != nil {
 		return fmt.Errorf("error checking if admin already exists: %w", err)
 	}
-
+	
 	if count > 0 {
 		return ErrAdminAlreadyExists
 	}
-
-	// Hash the admin's password
-	hashedPassword, err := as.hasher.HashPassword(admin.PasswordHash)
+	
+	// Create a new admin
+	admin, err := models.NewAdminfromInput(input)
 	if err != nil {
-		return err
+		return fmt.Errorf("error creating admin from input: %w", err)
 	}
-	admin.PasswordHash = hashedPassword
-
-	// Set the user ID
-	admin.ID = primitive.NewObjectID()
-
+	
 	// Insert the admin into the database
 	_, err = as.collection.InsertOne(ctx, admin)
 	if err != nil {
-		return err
+		return fmt.Errorf("error inserting admin into database: %w", err)
 	}
 
 	return nil

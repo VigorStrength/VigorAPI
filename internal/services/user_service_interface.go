@@ -7,6 +7,6 @@ import (
 )
 
 type MongoUserService interface {
-	RegisterUser(ctx context.Context, user models.User) error
+	RegisterUser(ctx context.Context, input models.UserRegistrationInput) error
 	GetUserByEmail(ctx context.Context, email, password string) (*models.User, error)
 }

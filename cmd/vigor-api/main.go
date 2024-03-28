@@ -12,6 +12,7 @@ import (
 	"github.com/GhostDrew11/vigor-api/internal/api"
 	"github.com/GhostDrew11/vigor-api/internal/config"
 	"github.com/GhostDrew11/vigor-api/internal/db"
+	"github.com/GhostDrew11/vigor-api/internal/services"
 	"github.com/GhostDrew11/vigor-api/internal/utils"
 	"github.com/gin-gonic/gin"
 )
@@ -25,6 +26,9 @@ func main() {
 
 	// Instantiate the database service
 	dbService := &db.MongoDBService{}
+	adminCollection := dbService.Client.Database(cfg.DatabaseName).Collection("admins")
+	userCollection := dbService.Client.Database(cfg.DatabaseName).Collection("users")
+	
 
 	// Create a context for the database connction
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -38,13 +42,16 @@ func main() {
 
 	// Create a token service
 	handler := &utils.DefaultJWTHandler{}
+	hasher := &utils.DefaultHasher{}
 	jwtService := utils.NewJWTService(cfg.JWTSecretKey, handler)
+	adminService := services.NewAdminService(adminCollection, hasher)
+	userService := services.NewUserService(userCollection, hasher)
 
 	// Set up your Gin router
 	router := gin.Default()
 
 	// Set up your routes
-	api.SetupRoutes(router, jwtService)
+	api.SetupRoutes(router, jwtService, *userService, *adminService)
 
 	server := &http.Server{
 		Addr:    ":8080",

@@ -9,7 +9,6 @@ import (
 	"github.com/GhostDrew11/vigor-api/internal/models"
 	"github.com/GhostDrew11/vigor-api/internal/utils"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 var (
@@ -26,9 +25,9 @@ func NewUserService(collection db.MongoCollection, hasher utils.HashPasswordServ
 	return &UserService{collection: collection, hasher: hasher}
 }
 
-func (us *UserService) RegisterUser(ctx context.Context, user models.User) error {
+func (us *UserService) RegisterUser(ctx context.Context, input models.UserRegistrationInput) error {
 	// check if the user already exists
-	filter := bson.M{"email": user.Email}
+	filter := bson.M{"email": input.Email}
 	count, err := us.collection.CountDocuments(ctx, filter)
 	if err != nil {
 		return fmt.Errorf("error checking if user already exists: %w", err)
@@ -38,20 +37,16 @@ func (us *UserService) RegisterUser(ctx context.Context, user models.User) error
 		return ErrUserAlreadyExists
 	}
 
-	// Hash the user's password
-	hashedPassword, err := us.hasher.HashPassword(user.PasswordHash)
+	// Create a new user
+	user, err := models.NewUserfromInput(input)
 	if err != nil {
-		return err
+		return fmt.Errorf("error creating user from input: %w", err)
 	}
-	user.PasswordHash = hashedPassword
-
-	// Set the user ID
-	user.ID = primitive.NewObjectID()
-
+	
 	// Insert the user into the database
 	_, err = us.collection.InsertOne(ctx, user)
 	if err != nil {
-		return err
+		return fmt.Errorf("error inserting user into database: %w", err)
 	}
 
 	return nil

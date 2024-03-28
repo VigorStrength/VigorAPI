@@ -24,14 +24,20 @@ func NewUserController(userService services.UserService, jwtService utils.TokenS
 }
 
 func (uc *UserController) Register(c *gin.Context) {
-	var user models.User
-	if err := c.ShouldBindJSON(&user); err != nil {
+	var input models.UserRegistrationInput
+	if err := c.ShouldBindJSON(&input); err != nil {
 		log.Printf("Error parsing JSON: %v\n", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Could not parse request body"})
 		return
 	}
 
-	if err := uc.UserService.RegisterUser(c.Request.Context(), user); err != nil {
+	if err := validate.Struct(input); err != nil {
+		log.Printf("Error validating input: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
+		return
+	}
+
+	if err := uc.UserService.RegisterUser(c.Request.Context(), input); err != nil {
 		if errors.Is(err, services.ErrUserAlreadyExists) {
 			c.JSON(http.StatusConflict, gin.H{"error": "User already exists"})
 			return

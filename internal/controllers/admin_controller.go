@@ -24,14 +24,20 @@ func NewAdminController(adminService services.AdminService, jwtService utils.Tok
 }
 
 func (ac *AdminController) Register(c *gin.Context) {
-	var admin models.Admin
-	if err := c.ShouldBindJSON(&admin); err != nil {
+	var input models.AdminRegistrationInput
+	if err := c.ShouldBindJSON(&input); err != nil {
 		log.Printf("Error parsing JSON: %v\n", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Could not parse request body"})
 		return
 	}
 
-	if err := ac.AdminService.RegisterAdmin(c.Request.Context(), admin); err != nil {
+	if err := validate.Struct(input); err != nil {
+		log.Printf("Error validating input: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
+		return
+	}
+
+	if err := ac.AdminService.RegisterAdmin(c.Request.Context(), input); err != nil {
 		if errors.Is(err, services.ErrAdminAlreadyExists) {
 			c.JSON(http.StatusConflict, gin.H{"error": "Admin already exists"})
 			return
