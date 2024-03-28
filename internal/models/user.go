@@ -1,3 +1,4 @@
+/* trunk-ignore-all(gofmt) */
 package models
 
 import (

@@ -26,34 +26,7 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	// Admin routes
 	adminRoutes := apiRoot.Group("/admin")
 	adminRoutes.Use(middlewares.RequireRole(ts, "admin"))
-	// // CRUD Exercises
-	// adminRoutes.POST("/exercises", createExercise)
-	// adminRoutes.PUT("/exercises/:id", updateExercise)
-	// adminRoutes.DELETE("/exercises/:id", deleteExercise)
-	// adminRoutes.GET("/exercises", getExercises)
-	// // CRUD Workout Plans
-	// adminRoutes.POST("/workout-plans", createWorkoutPlan)
-	// adminRoutes.PUT("/workout-plans/:id", updateWorkoutPlan)
-	// adminRoutes.DELETE("/workout-plans/:id", deleteWorkoutPlan)
-	// adminRoutes.GET("/workout-plans", getWorkoutPlans)
-	// // CRUD Meals
-	// adminRoutes.POST("/meals", createMeal)
-	// adminRoutes.PUT("/meals/:id", updateMeal)
-	// adminRoutes.DELETE("/meals/:id", deleteMeal)
-	// adminRoutes.GET("/meals", getMeals)
-	// // CRUD Meal Plans
-	// adminRoutes.POST("/meal-plans", createMealPlan)
-	// adminRoutes.PUT("/meal-plans/:id", updateMealPlan)
-	// adminRoutes.DELETE("/meal-plans/:id", deleteMealPlan)
-	// adminRoutes.GET("/meal-plans", getMealPlans)
-	// // CRUD Admins
-	// adminRoutes.POST("/admins", createAdmin)
-	// adminRoutes.PUT("/admins/:id", updateAdmin)
-	// adminRoutes.DELETE("/admins/:id", deleteAdmin)
-	// adminRoutes.GET("/admins", getAdmins)
-	// // CRUD Users
-	// adminRoutes.GET("/users", getUsers)
-	// other admin routes as needed(eg list users with active subscriptions, list users with pending subscriptions, list of sales, other analytics etc.)
+	
 
 	// User routes
 	userRoutes := apiRoot.Group("/users")
@@ -126,4 +99,33 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	// // Remove a user from a group
 	// userRoutes.DELETE("/groups/:groupId/members/:userId", removeGroupMember)
 	// Other group functionalities as needed (e.g, add member, join a group, having a group live workout party etc.)
+
+	// // CRUD Exercises
+	// adminRoutes.POST("/exercises", createExercise)
+	// adminRoutes.PUT("/exercises/:id", updateExercise)
+	// adminRoutes.DELETE("/exercises/:id", deleteExercise)
+	// adminRoutes.GET("/exercises", getExercises)
+	// // CRUD Workout Plans
+	// adminRoutes.POST("/workout-plans", createWorkoutPlan)
+	// adminRoutes.PUT("/workout-plans/:id", updateWorkoutPlan)
+	// adminRoutes.DELETE("/workout-plans/:id", deleteWorkoutPlan)
+	// adminRoutes.GET("/workout-plans", getWorkoutPlans)
+	// // CRUD Meals
+	// adminRoutes.POST("/meals", createMeal)
+	// adminRoutes.PUT("/meals/:id", updateMeal)
+	// adminRoutes.DELETE("/meals/:id", deleteMeal)
+	// adminRoutes.GET("/meals", getMeals)
+	// // CRUD Meal Plans
+	// adminRoutes.POST("/meal-plans", createMealPlan)
+	// adminRoutes.PUT("/meal-plans/:id", updateMealPlan)
+	// adminRoutes.DELETE("/meal-plans/:id", deleteMealPlan)
+	// adminRoutes.GET("/meal-plans", getMealPlans)
+	// // CRUD Admins
+	// adminRoutes.POST("/admins", createAdmin)
+	// adminRoutes.PUT("/admins/:id", updateAdmin)
+	// adminRoutes.DELETE("/admins/:id", deleteAdmin)
+	// adminRoutes.GET("/admins", getAdmins)
+	// // CRUD Users
+	// adminRoutes.GET("/users", getUsers)
+	// other admin routes as needed(eg list users with active subscriptions, list users with pending subscriptions, list of sales, other analytics etc.)
 }
