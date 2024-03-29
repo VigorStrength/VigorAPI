@@ -1,4 +1,3 @@
-/* trunk-ignore-all(gofmt) */
 package models
 
 import (
@@ -151,8 +150,8 @@ func convertUserProfileInput(input UserProfileInput) UserProfile {
 	}
 }
 
+//nolint:gosimple // Using struct literal for clarity and explicit mapping between input and domain model.
 func convertSystemPreferencesInput(input SystemPreferencesInput) SystemPreferences {
-	/* trunk-ignore(golangci-lint/gosimple) */
 	return SystemPreferences{
 		Language:          input.Language,
 		TimeZone:          input.TimeZone,
