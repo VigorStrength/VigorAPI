@@ -7,8 +7,8 @@ import (
 )
 
 var (
-	ErrMissingDBURI = errors.New("missing VIGOR_DB_URI")
-	ErrMissingDBNAME = errors.New("missing VIGOR_DB_NAME")
+	ErrMissingDBURI     = errors.New("missing VIGOR_DB_URI")
+	ErrMissingDBNAME    = errors.New("missing VIGOR_DB_NAME")
 	ErrMissingSecretKey = errors.New("missing JWT_SECRET_KEY")
 )
 
@@ -18,14 +18,20 @@ type Config struct {
 	JWTSecretKey string
 }
 
-func LoadConfig(useDefaults bool) (*Config, error){
+func LoadConfig(useDefaults bool) (*Config, error) {
 	viper.AutomaticEnv()
 
-	if useDefaults {
-		viper.SetDefault("VIGOR_DB_URI", "mongodb://localhost:27017")
-		viper.SetDefault("VIGOR_DB_NAME", "Vigor_Production")
-	}
+	environment := viper.GetString("VIGOR_ENV")
+	isTestEnv := environment == "test"
 
+	if useDefaults || isTestEnv {
+		viper.SetDefault("VIGOR_DB_URI", "mongodb://localhost:27017")
+		if isTestEnv {
+			viper.SetDefault("VIGOR_DB_NAME", "Vigor_Test")
+		} else {
+			viper.SetDefault("VIGOR_DB_NAME", "Vigor_Production")
+		}
+	}
 	mongoDBURI := viper.GetString("VIGOR_DB_URI")
 	if mongoDBURI == "" {
 		return nil, ErrMissingDBURI
@@ -42,11 +48,10 @@ func LoadConfig(useDefaults bool) (*Config, error){
 	}
 
 	config := &Config{
-		MongoDBURI: mongoDBURI,
+		MongoDBURI:   mongoDBURI,
 		DatabaseName: databaseName,
 		JWTSecretKey: jwtSecretKey,
 	}
 
 	return config, nil
 }
-
