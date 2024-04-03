@@ -9,6 +9,7 @@ import (
 	"github.com/GhostDrew11/vigor-api/internal/services"
 	"github.com/GhostDrew11/vigor-api/internal/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 )
 
 type UserController struct {
@@ -32,9 +33,20 @@ func (uc *UserController) Register(c *gin.Context) {
 	}
 
 	if err := validate.Struct(input); err != nil {
-		log.Printf("Error validating input: %v\n", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
-		return
+		if validationErrors, ok := err.(validator.ValidationErrors); ok {
+			detailedErrors := make(map[string]string)
+			for _, valErr := range validationErrors {
+				field := valErr.StructField()
+				detailedErrors[field] = valErr.Tag()
+			}
+			log.Printf("Validation errors: %v\n", detailedErrors)
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Validation failed", "details": detailedErrors})
+			return
+		} else {
+			log.Printf("Error validating input: %v\n", err)
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
+			return
+		}
 	}
 
 	if err := uc.UserService.RegisterUser(c.Request.Context(), input); err != nil {

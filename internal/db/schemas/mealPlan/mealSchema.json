@@ -1,53 +1,4 @@
 {
-  "definitions": {
-    "ingredient": {
-      "bsonType": "object",
-      "required": ["name"],
-      "properties": {
-        "name": {
-          "bsonType": "string"
-        },
-        "quantity": {
-          "bsonType": "string"
-        }
-      }
-    },
-    "nutritionalInfo": {
-      "bsonType": "object",
-      "required": [
-        "energy",
-        "protein",
-        "fat",
-        "saturatedFat",
-        "carbohydrates",
-        "sugars",
-        "fiber"
-      ],
-      "properties": {
-        "energy": {
-          "bsonType": "double"
-        },
-        "protein": {
-          "bsonType": "double"
-        },
-        "fat": {
-          "bsonType": "double"
-        },
-        "saturatedFat": {
-          "bsonType": "double"
-        },
-        "carbohydrates": {
-          "bsonType": "double"
-        },
-        "sugars": {
-          "bsonType": "double"
-        },
-        "fiber": {
-          "bsonType": "double"
-        }
-      }
-    }
-  },
   "$jsonSchema": {
     "bsonType": "object",
     "required": [
@@ -73,7 +24,16 @@
       "ingredients": {
         "bsonType": "array",
         "items": {
-          "$ref": "#/definitions/ingredient"
+          "bsonType": "object",
+          "required": ["name"],
+          "properties": {
+            "name": {
+              "bsonType": "string"
+            },
+            "quantity": {
+              "bsonType": "string"
+            }
+          }
         }
       },
       "method": {
@@ -89,7 +49,39 @@
         "bsonType": "int"
       },
       "nutritionalInfo": {
-        "$ref": "#/definitions/nutritionalInfo"
+        "bsonType": "object",
+        "required": [
+          "energy",
+          "protein",
+          "fat",
+          "saturatedFat",
+          "carbohydrates",
+          "sugars",
+          "fiber"
+        ],
+        "properties": {
+          "energy": {
+            "bsonType": "double"
+          },
+          "protein": {
+            "bsonType": "double"
+          },
+          "fat": {
+            "bsonType": "double"
+          },
+          "saturatedFat": {
+            "bsonType": "double"
+          },
+          "carbohydrates": {
+            "bsonType": "double"
+          },
+          "sugars": {
+            "bsonType": "double"
+          },
+          "fiber": {
+            "bsonType": "double"
+          }
+        }
       },
       "description": {
         "bsonType": "string"

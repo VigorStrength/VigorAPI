@@ -5,6 +5,7 @@ import (
 	"embed"
 	"encoding/json"
 	"log"
+	"strings"
 
 	"github.com/GhostDrew11/vigor-api/internal/config"
 	"go.mongodb.org/mongo-driver/bson"
@@ -25,18 +26,10 @@ func NewMongoDBService(client MongoClient) *MongoDBService {
 }
 
 func (ms *MongoDBService) ConnectDB(ctx context.Context, cfg *config.Config) error {
-	clientOptions := options.Client().ApplyURI(cfg.MongoDBURI)
-	_, err := ms.Client.Connect(ctx, clientOptions)
+	err := ms.Client.Ping(ctx, nil)
 	if err != nil {
 		return err
 	}
-
-	err = ms.Client.Ping(ctx, nil)
-	if err != nil {
-		return err
-	}
-
-	log.Println("Connected to MongoDB successfully.")
 
 	db := ms.Client.Database(cfg.DatabaseName)
 	if err := ms.InitializeCollections(ctx, db); err != nil {
@@ -46,6 +39,8 @@ func (ms *MongoDBService) ConnectDB(ctx context.Context, cfg *config.Config) err
 	if err := ms.EnsureIndexes(ctx, db); err != nil {
 		return err
 	}
+
+	log.Println("Connected to MongoDB successfully.")
 
 	return nil
 }
@@ -172,21 +167,30 @@ func (ms *MongoDBService) InitializeCollections(ctx context.Context, db MongoDat
 
 func (ms *MongoDBService) ApplyCollectionValidation(ctx context.Context, db MongoDatabase, collectionName string, schemaBson bson.M) error {
 	opts := options.CreateCollection().SetValidator(schemaBson)
-	//Attempt to create the v=collection with validation rules
+
 	err := db.CreateCollection(ctx, collectionName, opts)
-	if mongo.IsDuplicateKeyError(err) {
-		//If the collection already exists attempt to strenghten it with the new validation rules
-		collModOpts := bson.D{
-			{Key: "collMod", Value: collectionName},
-			{Key: "validator", Value: schemaBson},
+	if err != nil {
+		if strings.Contains(err.Error(), "(NamespaceExists)") {
+			log.Printf("Collection already exists, attempting to update the validator: %s.\n", collectionName)
+			collModOpts := bson.D{
+				{Key: "collMod", Value: collectionName},
+				{Key: "validator", Value: schemaBson},
+				{Key: "validationLevel", Value: "strict"},
+				{Key: "validationAction", Value: "error"},
+			}
+			res := db.RunCommand(ctx, collModOpts)
+			if res.Err() != nil {
+				log.Printf("Error modifying validation rules for collection '%s': %v\n", collectionName, res.Err())
+				return res.Err()
+			}
+			log.Printf("Successfully updated validation rules for collection '%s'.\n", collectionName)
+			return nil
 		}
-		return db.RunCommand(ctx, collModOpts).Err()
-	} else if err != nil {
-		log.Printf("Error applying validation rules to %s collection: %v\n", collectionName, err)
+		log.Printf("Error creating collection or updating validation rules for collection '%s': %v\n", collectionName, err)
 		return err
 	}
-	log.Printf("Successfully applied validation rules to %s collection.\n", collectionName)
 
+	log.Printf("Successfully created collection with validation rules: %s.\n", collectionName)
 	return nil
 }
 

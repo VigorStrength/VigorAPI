@@ -22,7 +22,7 @@
         "description": "must be a date and is required"
       },
       "createdBy": {
-        "bsontype": "date",
+        "bsonType": "date",
         "description": "must be a date and is required"
       }
     }

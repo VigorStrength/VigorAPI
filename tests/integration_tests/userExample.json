@@ -1,0 +1,46 @@
+{
+  "firstName": "Jane",
+  "lastName": "Doe",
+  "email": "jane.doe@example.com",
+  "password": "password",
+  "birthDate": "1990-01-02T15:04:05Z",
+  "gender": "female",
+  "height": 170,
+  "weight": 60,
+  "subscription": {
+    "type": "premium",
+    "status": "active",
+    "startDate": "2023-01-02T15:04:05Z",
+    "endDate": "2023-12-02T15:04:05Z",
+    "nextRenewalDate": "2023-12-02T15:04:05Z",
+    "isActive": true
+  },
+  "trialEndsAt": "2023-02-02T15:04:05Z",
+  "profileInformation": {
+    "username": "jdoe90",
+    "profilePicture": "http://example.com/profile.jpg",
+    "mainGoal": "Build muscle",
+    "secondaryGoal": "Lose fat",
+    "bodyInformation": {
+      "bodyType": "mesomorph",
+      "healthRestrictions": [],
+      "focusArea": ["arms", "legs"]
+    },
+    "activityLevel": "high",
+    "physicalActivity": {
+      "fitnessLevel": "beginner",
+      "activities": ["jogging", "swimming"]
+    },
+    "lifestyle": {
+      "diet": "omnivore",
+      "typicalDay": "active",
+      "trainingLocation": "gym",
+      "workoutTime": "morning",
+      "workoutFrequency": 5,
+      "workoutDuration": "1 hour"
+    },
+    "cycleInformation": {
+      "reproductiveStage": "menstrual_cycle"
+    }
+  }
+}

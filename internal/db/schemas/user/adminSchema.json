@@ -8,8 +8,7 @@
       "role": {
         "bsonType": "string",
         "description": "must be a string and is required",
-        "enum": ["admin", "superadmin"],
-        "default": "admin"
+        "enum": ["admin", "superadmin"]
       },
       "email": {
         "bsonType": "string",

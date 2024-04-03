@@ -15,6 +15,8 @@ import (
 	"github.com/GhostDrew11/vigor-api/internal/services"
 	"github.com/GhostDrew11/vigor-api/internal/utils"
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func main() {
@@ -25,10 +27,14 @@ func main() {
 	}
 
 	// Instantiate the database service
-	dbService := &db.MongoDBService{}
-	adminCollection := dbService.Client.Database(cfg.DatabaseName).Collection("admins")
-	userCollection := dbService.Client.Database(cfg.DatabaseName).Collection("users")
-	
+	clientOptions := options.Client().ApplyURI(cfg.MongoDBURI)
+	mongoClient, err := mongo.Connect(context.TODO(), clientOptions)
+	if err != nil {
+		log.Fatalf("Failed to create MongoDB client: %v\n", err)
+	}
+
+	clientWrapper := db.NewMongoClientWrapper(mongoClient)
+	dbService := db.NewMongoDBService(clientWrapper)
 
 	// Create a context for the database connction
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -39,6 +45,10 @@ func main() {
 		log.Fatalf("Failed to connect to MongoDB: %v\n", err)
 	}
 	defer dbService.DisconnectDB(ctx)
+
+	// Initilize the collections
+	adminCollection := dbService.Client.Database(cfg.DatabaseName).Collection("admins")
+	userCollection := dbService.Client.Database(cfg.DatabaseName).Collection("users")
 
 	// Create a token service
 	handler := &utils.DefaultJWTHandler{}
@@ -79,3 +89,13 @@ func main() {
 
 	log.Println("Server exiting")
 }
+
+// func main() {
+// 	cfg, err := config.LoadConfig(false)
+// 	if err != nil {
+// 		log.Fatalf("Error loading config: %v\n", err)
+// 	}
+
+// 	log.Printf("Using database URI: %s\n", cfg.MongoDBURI)
+// 	log.Printf("Using database name: %s\n", cfg.DatabaseName)
+// }

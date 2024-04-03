@@ -1,0 +1,58 @@
+{
+  "firstName": "Jane",
+  "lastName": "Doe",
+  "email": "jane.doe@example.com",
+  "password": "password123",
+  "birthDate": "1990-01-01",
+  "gender": "female",
+  "height": 170,
+  "weight": 65,
+  "subscription": {
+    "type": "premium",
+    "status": "active",
+    "startDate": "2023-01-01",
+    "endDate": "2024-01-01",
+    "nextRenewalDate": "2024-01-01",
+    "isActive": true
+  },
+  "trialEndsAt": "2023-02-01",
+  "profileInformation": {
+    "username": "jdoe90",
+    "profilePicture": "https://example.com/path/to/image.jpg",
+    "mainGoal": "gain muscle",
+    "secondaryGoal": "improve stamina",
+    "bodyInformation": {
+      "bodyType": "mesomorph",
+      "bodyGoal": "gain muscle",
+      "healthRestrictions": ["none"],
+      "focusArea": ["arms", "legs"]
+    },
+    "activityLevel": "high",
+    "physicalActivity": {
+      "fitnessLevel": "intermediate",
+      "activities": ["weight lifting", "running"]
+    },
+    "lifestyle": {
+      "diet": "omnivore",
+      "waterIntake": 8,
+      "sleepDuration": 8,
+      "typicalDay": "active",
+      "trainingLocation": "gym",
+      "workoutTime": "morning",
+      "workoutFrequency": 5,
+      "workoutDuration": "1 hour",
+      "discoveryMethod": "online search",
+      "intolerancesAndAllergies": ["none"]
+    },
+    "cycleInformation": {
+      "reproductiveStage": "menstrual_cycle"
+    }
+  },
+  "systemPreferences": {
+    "language": "English",
+    "timeZone": "GMT-5",
+    "displayMode": "light",
+    "measurementSystem": "metric",
+    "allowReadReceipt": true
+  }
+}

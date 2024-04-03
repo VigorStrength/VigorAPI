@@ -20,8 +20,7 @@
       "role": {
         "bsonType": "string",
         "description": "must be a string and is required",
-        "enum": ["user"],
-        "default": "user"
+        "enum": ["user"]
       },
       "firstName": {
         "bsonType": "string",
@@ -43,7 +42,7 @@
       "weight": { "bsonType": "int" },
       "subscription": {
         "bsonType": "object",
-        "required": ["type", "status", "startDate"],
+        "required": ["type", "status", "startDate", "isActive"],
         "properties": {
           "type": {
             "bsonType": "string",
@@ -67,7 +66,7 @@
           },
           "isActive": {
             "bsonType": "bool",
-            "description": "indicates whether the subscription is currently active"
+            "description": "indicates whether the subscription is currently active or not and is required"
           }
         }
       },

@@ -21,16 +21,16 @@ type User struct {
 	Subscription       UserSubscription   `bson:"subscription" json:"subscription" binding:"required"`
 	TrialEndsAt        time.Time          `bson:"trialEndsAt" json:"trialEndsAt" binding:"required"`
 	ProfileInformation UserProfile        `bson:"profileInformation" json:"profileInformation" binding:"required"`
-	SystemPreferences  SystemPreferences  `bson:"systemPreferences" json:"systemPreferences"`
+	SystemPreferences  *SystemPreferences  `bson:"systemPreferences,omitempty" json:"systemPreferences,omitempty"`
 }
 
 type UserSubscription struct {
 	Type            string     `bson:"type" json:"type" binding:"required"`
 	Status          string     `bson:"status" json:"status" binding:"required"`
-	StartDate       *time.Time `bson:"startDate,omitempty" json:"startDate,omitempty" binding:"required"`
+	StartDate       time.Time `bson:"startDate,omitempty" json:"startDate" binding:"required"`
 	EndDate         *time.Time `bson:"endDate,omitempty" json:"endDate,omitempty"`
 	NextRenewalDate *time.Time `bson:"nextRenewalDate,omitempty" json:"nextRenewalDate,omitempty"` // Next scheduled renewal date
-	IsActive        bool       `bson:"isActive" json:"isActive"`                                   // Indicates whether the input is currently active
+	IsActive        bool       `bson:"isActive" json:"isActive" binding:"required"`                                   // Indicates whether the input is currently active
 }
 
 type UserProfile struct {
@@ -67,7 +67,7 @@ type Lifestyle struct {
 	WorkoutFrequency         *int     `bson:"workoutFrequency,omitempty" json:"workoutFrequency,omitempty"` // Optional future feature.
 	WorkoutDuration          string   `bson:"workoutDuration" json:"workoutDuration" binding:"required"`
 	DiscoveryMethod          *string  `bson:"discoveryMethod,omitempty" json:"discoveryMethod,omitempty"` // Optional future feature.
-	IntolerancesAndAllergies []string `bson:"intolerancesAndAllergies" json:"intolerancesAndAllergies"`   // List of user's intolerances and allergies.
+	IntolerancesAndAllergies []string `bson:"intolerancesAndAllergies,omitempty" json:"intolerancesAndAllergies,omitempty"`   // List of user's intolerances and allergies.
 }
 
 type CycleInformation struct {
@@ -89,8 +89,8 @@ func NewUserfromInput(input UserRegistrationInput) (User, error) {
 		return User{}, err
 	}
 
-	return User{
-		ID: 			   primitive.NewObjectID(),
+	user := User{
+		ID:                 primitive.NewObjectID(),
 		Role:               "user",
 		FirstName:          input.FirstName,
 		LastName:           input.LastName,
@@ -103,17 +103,25 @@ func NewUserfromInput(input UserRegistrationInput) (User, error) {
 		Subscription:       convertSubscriptionInput(input.Subscription),
 		TrialEndsAt:        input.TrialEndsAt,
 		ProfileInformation: convertUserProfileInput(input.ProfileInformation),
-		SystemPreferences:  convertSystemPreferencesInput(input.SystemPreferences),
-	}, nil
+	}
+
+	if input.SystemPreferences != nil {
+		systemPreferences := convertSystemPreferencesInput(input.SystemPreferences)
+		user.SystemPreferences = &systemPreferences
+	}
+
+	return user, nil
 }
 
+//nolint:gosimple // Using struct literal for clarity and explicit mapping between input and domain model.
+//nolint:staticcheck // Using struct literal for clarity and explicit mapping between input and domain model.
 func convertSubscriptionInput(input SubscriptionInput) UserSubscription {
 	return UserSubscription{
 		Type:            input.Type,
 		Status:          input.Status,
-		StartDate:       &input.StartDate,
-		EndDate:         &input.EndDate,
-		NextRenewalDate: &input.NextRenewalDate,
+		StartDate:       input.StartDate,
+		EndDate:         input.EndDate,
+		NextRenewalDate: input.NextRenewalDate,
 		IsActive:        input.IsActive,
 	}
 }
@@ -150,8 +158,7 @@ func convertUserProfileInput(input UserProfileInput) UserProfile {
 	}
 }
 
-//nolint:gosimple // Using struct literal for clarity and explicit mapping between input and domain model.
-func convertSystemPreferencesInput(input SystemPreferencesInput) SystemPreferences {
+func convertSystemPreferencesInput(input *SystemPreferencesInput) SystemPreferences {
 	return SystemPreferences{
 		Language:          input.Language,
 		TimeZone:          input.TimeZone,

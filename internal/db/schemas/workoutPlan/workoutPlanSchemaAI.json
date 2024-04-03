@@ -1,34 +1,29 @@
 {
-  "definitions": {
-    "circuit": {
-      "bsonType": "object",
-      "required": ["exerciseIds", "proposedLaps"],
-      "properties": {
-        "exerciseIds": {
-          "bsonType": "array",
-          "items": { "bsonType": "objectId" }
-        },
-        "restTime": { "bsonType": "int" },
-        "proposedLaps": { "bsonType": "int" },
-        "actualLaps": { "bsonType": "int" },
-        "completed": { "bsonType": "bool" }
-      }
-    }
-  },
   "$jsonSchema": {
     "bsonType": "object",
     "required": ["userId", "startDate", "endDate", "weeks"],
     "properties": {
-      "_id": { "bsonType": "objectId" },
-      "userId": { "bsonType": "objectId" },
-      "startDate": { "bsonType": "date" },
-      "endDate": { "bsonType": "date" },
+      "_id": {
+        "bsonType": "objectId"
+      },
+      "userId": {
+        "bsonType": "objectId"
+      },
+      "startDate": {
+        "bsonType": "date"
+      },
+      "endDate": {
+        "bsonType": "date"
+      },
       "weeks": {
         "bsonType": "array",
         "items": {
           "bsonType": "object",
           "required": ["days", "weekNumber"],
           "properties": {
+            "weekNumber": {
+              "bsonType": "int"
+            },
             "days": {
               "bsonType": "array",
               "items": {
@@ -37,34 +32,114 @@
                 "properties": {
                   "warmUp": {
                     "bsonType": "array",
-                    "items": { "$ref": "#/definitions/circuit" }
+                    "items": {
+                      "bsonType": "object",
+                      "required": ["exerciseIds", "proposedLaps"],
+                      "properties": {
+                        "exerciseIds": {
+                          "bsonType": "array",
+                          "items": {
+                            "bsonType": "objectId"
+                          }
+                        },
+                        "restTime": {
+                          "bsonType": "int"
+                        },
+                        "proposedLaps": {
+                          "bsonType": "int"
+                        },
+                        "actualLaps": {
+                          "bsonType": "int"
+                        },
+                        "completed": {
+                          "bsonType": "bool"
+                        }
+                      }
+                    }
                   },
                   "workout": {
                     "bsonType": "array",
-                    "items": { "$ref": "#/definitions/circuit" }
+                    "items": {
+                      "bsonType": "object",
+                      "required": ["exerciseIds", "proposedLaps"],
+                      "properties": {
+                        "exerciseIds": {
+                          "bsonType": "array",
+                          "items": {
+                            "bsonType": "objectId"
+                          }
+                        },
+                        "restTime": {
+                          "bsonType": "int"
+                        },
+                        "proposedLaps": {
+                          "bsonType": "int"
+                        },
+                        "actualLaps": {
+                          "bsonType": "int"
+                        },
+                        "completed": {
+                          "bsonType": "bool"
+                        }
+                      }
+                    }
                   },
                   "coolDown": {
                     "bsonType": "array",
-                    "items": { "$ref": "#/definitions/circuit" }
+                    "items": {
+                      "bsonType": "object",
+                      "required": ["exerciseIds", "proposedLaps"],
+                      "properties": {
+                        "exerciseIds": {
+                          "bsonType": "array",
+                          "items": {
+                            "bsonType": "objectId"
+                          }
+                        },
+                        "restTime": {
+                          "bsonType": "int"
+                        },
+                        "proposedLaps": {
+                          "bsonType": "int"
+                        },
+                        "actualLaps": {
+                          "bsonType": "int"
+                        },
+                        "completed": {
+                          "bsonType": "bool"
+                        }
+                      }
+                    }
                   },
-                  "totalExercises": { "bsonType": "int" },
-                  "totalLaps": { "bsonType": "int" },
+                  "totalExercises": {
+                    "bsonType": "int"
+                  },
+                  "totalLaps": {
+                    "bsonType": "int"
+                  },
                   "workoutTimeRange": {
                     "bsonType": "array",
-                    "items": { "bsonType": "int" },
+                    "items": {
+                      "bsonType": "int"
+                    },
                     "minItems": 2,
                     "maxItems": 2
                   },
                   "equipment": {
                     "bsonType": "array",
-                    "items": { "bsonType": "string" }
+                    "items": {
+                      "bsonType": "string"
+                    }
                   },
-                  "completionStatus": { "bsonType": "bool" }
+                  "completionStatus": {
+                    "bsonType": "bool"
+                  }
                 }
               }
             },
-            "weekNumber": { "bsonType": "int" },
-            "completedDays": { "bsonType": "int" }
+            "completedDays": {
+              "bsonType": "int"
+            }
           }
         }
       }
