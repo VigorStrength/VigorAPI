@@ -49,7 +49,7 @@ func (ms *MongoDBService) EnsureIndexes(ctx context.Context, db MongoDatabase) e
 	collections := map[string][]mongo.IndexModel{
 		"users": {
 			{Keys: bson.M{"email": 1}, Options: options.Index().SetUnique(true)},
-			{Keys: bson.M{"username": 1}, Options: options.Index().SetUnique(true)},
+			{Keys: bson.M{"profileInformation.username": 1}, Options: options.Index().SetUnique(true)},
 		},
 		"admins": {
 			{Keys: bson.M{"email": 1}, Options: options.Index().SetUnique(true)},

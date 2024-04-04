@@ -27,7 +27,10 @@ func NewUserService(collection db.MongoCollection, hasher utils.HashPasswordServ
 
 func (us *UserService) RegisterUser(ctx context.Context, input models.UserRegistrationInput) error {
 	// check if the user already exists
-	filter := bson.M{"email": input.Email}
+	filter := bson.M{"$or": []bson.M{
+        {"email": input.Email},
+        {"profileInformation.username": input.ProfileInformation.Username},
+    }}
 	count, err := us.collection.CountDocuments(ctx, filter)
 	if err != nil {
 		return fmt.Errorf("error checking if user already exists: %w", err)

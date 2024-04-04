@@ -82,5 +82,5 @@ type SystemPreferencesInput struct {
     TimeZone          string `json:"timeZone,omitempty" validate:"omitempty"`
     DisplayMode       string `json:"displayMode,omitempty" validate:"omitempty,oneof=light dark"`
     MeasurementSystem string `json:"measurementSystem,omitempty" validate:"omitempty,oneof=metric imperial"`
-    AllowReadReceipt  bool   `json:"allowReadReceipt,omitempty" validate:"required,omitempty"`
+    AllowReadReceipt  bool   `json:"allowReadReceipt,omitempty" validate:"omitempty"`
 }

@@ -1,0 +1,18 @@
+root = "."
+tmp_dir = "tmp"
+
+[build]
+cmd = "go build -o ./tmp/main ./cmd/vigor-api"
+bin = "tmp/main"
+env = ["VIGOR_ENV=test"]
+include_ext = ["go", "tmpl", "tpl"]
+exclude_dir = ["tmp", "scripts", "tests", "integration_tests", "unit_tests"]
+follow_symlink = false
+
+[log]
+time = true
+
+[watch]
+name = "Go Files"
+include = ["*.go", "*.tmpl", "*.tpl"]
+exclude = []

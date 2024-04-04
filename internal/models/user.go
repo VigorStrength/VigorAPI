@@ -88,6 +88,7 @@ func NewUserfromInput(input UserRegistrationInput) (User, error) {
 	if err != nil {
 		return User{}, err
 	}
+	userSubscription := convertSubscriptionInput(input.Subscription)
 
 	user := User{
 		ID:                 primitive.NewObjectID(),
@@ -100,23 +101,17 @@ func NewUserfromInput(input UserRegistrationInput) (User, error) {
 		Gender:             input.Gender,
 		Height:             input.Height,
 		Weight:             input.Weight,
-		Subscription:       convertSubscriptionInput(input.Subscription),
+		Subscription:       *userSubscription,
 		TrialEndsAt:        input.TrialEndsAt,
 		ProfileInformation: convertUserProfileInput(input.ProfileInformation),
-	}
-
-	if input.SystemPreferences != nil {
-		systemPreferences := convertSystemPreferencesInput(input.SystemPreferences)
-		user.SystemPreferences = &systemPreferences
+		SystemPreferences:  convertSystemPreferencesInput(input.SystemPreferences),
 	}
 
 	return user, nil
 }
 
-//nolint:gosimple // Using struct literal for clarity and explicit mapping between input and domain model.
-//nolint:staticcheck // Using struct literal for clarity and explicit mapping between input and domain model.
-func convertSubscriptionInput(input SubscriptionInput) UserSubscription {
-	return UserSubscription{
+func convertSubscriptionInput(input SubscriptionInput) *UserSubscription {
+	return &UserSubscription{
 		Type:            input.Type,
 		Status:          input.Status,
 		StartDate:       input.StartDate,
@@ -158,8 +153,12 @@ func convertUserProfileInput(input UserProfileInput) UserProfile {
 	}
 }
 
-func convertSystemPreferencesInput(input *SystemPreferencesInput) SystemPreferences {
-	return SystemPreferences{
+func convertSystemPreferencesInput(input *SystemPreferencesInput) *SystemPreferences {
+	if input == nil {
+		return nil
+	}
+
+	return &SystemPreferences{
 		Language:          input.Language,
 		TimeZone:          input.TimeZone,
 		DisplayMode:       input.DisplayMode,
