@@ -13,6 +13,7 @@ import (
 
 var (
 	ErrUserAlreadyExists = errors.New("user already exists")
+	ErrUsernameAlreadyTaken = errors.New("username already taken")
 	ErrInvalidUserCredentials = errors.New("invalid email or password")
 )
 
@@ -26,19 +27,25 @@ func NewUserService(collection db.MongoCollection, hasher utils.HashPasswordServ
 }
 
 func (us *UserService) RegisterUser(ctx context.Context, input models.UserRegistrationInput) error {
-	// check if the user already exists
-	filter := bson.M{"$or": []bson.M{
-        {"email": input.Email},
-        {"profileInformation.username": input.ProfileInformation.Username},
-    }}
-	count, err := us.collection.CountDocuments(ctx, filter)
-	if err != nil {
-		return fmt.Errorf("error checking if user already exists: %w", err)
-	}
+	// First, check if the email already exists
+    emailFilter := bson.M{"email": input.Email}
+    emailCount, err := us.collection.CountDocuments(ctx, emailFilter)
+    if err != nil {
+        return fmt.Errorf("error checking if email already exists: %w", err)
+    }
+    if emailCount > 0 {
+        return ErrUserAlreadyExists
+    }
 
-	if count > 0 {
-		return ErrUserAlreadyExists
-	}
+    // Then, check if the username already exists
+    usernameFilter := bson.M{"profileInformation.username": input.ProfileInformation.Username}
+    usernameCount, err := us.collection.CountDocuments(ctx, usernameFilter)
+    if err != nil {
+        return fmt.Errorf("error checking if username already exists: %w", err)
+    }
+    if usernameCount > 0 {
+        return ErrUsernameAlreadyTaken
+    }
 
 	// Create a new user
 	user, err := models.NewUserfromInput(input)

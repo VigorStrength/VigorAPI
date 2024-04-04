@@ -55,6 +55,11 @@ func (uc *UserController) Register(c *gin.Context) {
 			return
 		}
 
+		if errors.Is(err, services.ErrUsernameAlreadyTaken) {
+			c.JSON(http.StatusConflict, gin.H{"error": "Username already taken"})
+			return
+		}
+
 		log.Printf("Error registering user: %v\n", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to register user"})
 		return
