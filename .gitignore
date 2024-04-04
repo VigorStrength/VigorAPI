@@ -1,3 +1,4 @@
 # Ignore everything in the .trunk directory
 .trunk/*
 tmp/*
+.DS_Store

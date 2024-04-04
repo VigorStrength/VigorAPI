@@ -1,7 +1,6 @@
 package api
 
 import (
-	// 	"github.com/GhostDrew11/vigor-api/internal/middlewares"
 	"github.com/GhostDrew11/vigor-api/internal/controllers"
 	"github.com/GhostDrew11/vigor-api/internal/middlewares"
 	"github.com/GhostDrew11/vigor-api/internal/services"
@@ -26,6 +25,11 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	// Admin routes
 	adminRoutes := apiRoot.Group("/admin")
 	adminRoutes.Use(middlewares.RequireRole(ts, "admin"))
+	// // CRUD Exercises
+	// adminRoutes.POST("/exercises", createExercise)
+	// adminRoutes.PUT("/exercises/:id", updateExercise)
+	// adminRoutes.DELETE("/exercises/:id", deleteExercise)
+	// adminRoutes.GET("/exercises", getExercises)
 	
 
 	// User routes
@@ -100,11 +104,6 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	// userRoutes.DELETE("/groups/:groupId/members/:userId", removeGroupMember)
 	// Other group functionalities as needed (e.g, add member, join a group, having a group live workout party etc.)
 
-	// // CRUD Exercises
-	// adminRoutes.POST("/exercises", createExercise)
-	// adminRoutes.PUT("/exercises/:id", updateExercise)
-	// adminRoutes.DELETE("/exercises/:id", deleteExercise)
-	// adminRoutes.GET("/exercises", getExercises)
 	// // CRUD Workout Plans
 	// adminRoutes.POST("/workout-plans", createWorkoutPlan)
 	// adminRoutes.PUT("/workout-plans/:id", updateWorkoutPlan)

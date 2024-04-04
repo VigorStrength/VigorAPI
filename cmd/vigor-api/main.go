@@ -46,16 +46,15 @@ func main() {
 	}
 	defer dbService.DisconnectDB(ctx)
 
-	// Initilize the collections
-	adminCollection := dbService.Client.Database(cfg.DatabaseName).Collection("admins")
-	userCollection := dbService.Client.Database(cfg.DatabaseName).Collection("users")
-
-	// Create a token service
+	// Initialize database 
+	database := dbService.Client.Database(cfg.DatabaseName)
+	
+	// Create required services
 	handler := &utils.DefaultJWTHandler{}
 	hasher := &utils.DefaultHasher{}
 	jwtService := utils.NewJWTService(cfg.JWTSecretKey, handler)
-	adminService := services.NewAdminService(adminCollection, hasher)
-	userService := services.NewUserService(userCollection, hasher)
+	adminService := services.NewAdminService(database, hasher)
+	userService := services.NewUserService(database, hasher)
 
 	// Set up your Gin router
 	router := gin.Default()

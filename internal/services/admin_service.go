@@ -17,34 +17,37 @@ var (
 )
 
 type AdminService struct {
-	collection db.MongoCollection
+	database db.MongoDatabase
 	hasher utils.HashPasswordService
 }
 
-func NewAdminService(collection db.MongoCollection, hasher utils.HashPasswordService) *AdminService {
-	return &AdminService{collection: collection, hasher: hasher}
+func NewAdminService(database db.MongoDatabase, hasher utils.HashPasswordService) *AdminService {
+	return &AdminService{database: database, hasher: hasher}
 }
 
 func (as *AdminService) RegisterAdmin(ctx context.Context, input models.AdminRegistrationInput) error {
+	//Get the admin collection
+	adminCollection := as.database.Collection("admins")
+
 	// check if the admin already exists
 	filter := bson.M{"email": input.Email}
-	count, err := as.collection.CountDocuments(ctx, filter)
+	count, err := adminCollection.CountDocuments(ctx, filter)
 	if err != nil {
 		return fmt.Errorf("error checking if admin already exists: %w", err)
 	}
-	
+
 	if count > 0 {
 		return ErrAdminAlreadyExists
 	}
-	
+
 	// Create a new admin
 	admin, err := models.NewAdminfromInput(input)
 	if err != nil {
 		return fmt.Errorf("error creating admin from input: %w", err)
 	}
-	
+
 	// Insert the admin into the database
-	_, err = as.collection.InsertOne(ctx, admin)
+	_, err = adminCollection.InsertOne(ctx, admin)
 	if err != nil {
 		return fmt.Errorf("error inserting admin into database: %w", err)
 	}
@@ -53,10 +56,13 @@ func (as *AdminService) RegisterAdmin(ctx context.Context, input models.AdminReg
 }
 
 func (as *AdminService) GetAdminByEmail(ctx context.Context, email, password string) (*models.Admin, error) {
+	//Get the admin collection
+	adminCollection := as.database.Collection("admins")
+
 	var admin models.Admin
 	filter := bson.M{"email": email}
 
-	result := as.collection.FindOne(ctx, filter)
+	result := adminCollection.FindOne(ctx, filter)
 	if result.Err() != nil {
 		return &models.Admin{}, fmt.Errorf("error fetching admin with email %s: %w", email, result.Err())
 	}
@@ -72,4 +78,3 @@ func (as *AdminService) GetAdminByEmail(ctx context.Context, email, password str
 
 	return &admin, nil
 }
-
