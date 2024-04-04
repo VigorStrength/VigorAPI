@@ -1,0 +1,49 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": ["userId", "exerciseId", "completed", "completedLogs"],
+    "properties": {
+      "userId": {
+        "bsonType": "objectId",
+        "description": "must be an objectId and is required"
+      },
+      "exerciseId": {
+        "bsonType": "objectId",
+        "description": "must be an objectId and is required"
+      },
+      "completed": {
+        "bsonType": "bool",
+        "description": "must be a boolean and is required"
+      },
+      "completedLogs": {
+        "bsonType": "array",
+        "description": "must be an array of ExerciseLog objects and is required",
+        "items": {
+          "bsonType": "object",
+          "properties": {
+            "setNumber": {
+              "bsonType": ["int", "null"],
+              "description": "can be null or an integer"
+            },
+            "proposedReps": {
+              "bsonType": "int",
+              "description": "must be an integer and is required"
+            },
+            "actualReps": {
+              "bsonType": ["int", "null"],
+              "description": "can be null or an integer"
+            },
+            "proposedWeight": {
+              "bsonType": ["double", "null"],
+              "description": "can be null or a double"
+            },
+            "actualWeight": {
+              "bsonType": ["double", "null"],
+              "description": "can be null or a double"
+            }
+          }
+        }
+      }
+    }
+  }
+}

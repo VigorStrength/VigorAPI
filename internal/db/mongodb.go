@@ -69,6 +69,9 @@ func (ms *MongoDBService) EnsureIndexes(ctx context.Context, db MongoDatabase) e
 		"exercises": {
 			{Keys: bson.M{"name": 1}, Options: options.Index().SetUnique(true)},
 		},
+		"userExerciseStatus": {
+			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "exerciseId", Value: 1}}, Options: options.Index().SetUnique(true)},
+		},
 		"userCircuitStatus": {
 			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "circuitId", Value: 1}}, Options: options.Index().SetUnique(true)},
 		},
@@ -126,6 +129,7 @@ func (ms *MongoDBService) InitializeCollections(ctx context.Context, db MongoDat
 		{"users", "schemas/user/userSchema.json"},
 		{"admins", "schemas/user/adminSchema.json"},
 		{"exercises", "schemas/workoutPlan/exerciseSchema.json"},
+		{"userExerciseStatus", "schemas/workoutPlan/userExerciseStatusSchema.json"},
 		{"userCircuitStatus", "schemas/workoutPlan/userCircuitStatusSchema.json"},
 		{"userWorkoutDayStatus", "schemas/workoutPlan/userWorkoutDayStatusSchema.json"},
 		{"userWorkoutWeekStatus", "schemas/workoutPlan/userWorkoutWeekStatusSchema.json"},

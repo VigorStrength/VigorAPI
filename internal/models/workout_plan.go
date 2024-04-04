@@ -6,27 +6,6 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// Exercise represents a specific exercise, including details for logging and video interaction.
-type Exercise struct {
-	ID              primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
-	Name            string             `bson:"name" json:"name" binding:"required"`
-	Description     string             `bson:"description" json:"description" binding:"required"`
-	VideoURL        string             `bson:"videoUrl" json:"videoUrl" binding:"required"`
-	TargetMuscles   []string           `bson:"targetMuscles" json:"targetMuscles" binding:"required"`
-	EquipmentNeeded []string           `bson:"equipmentNeeded" json:"equipmentNeeded" binding:"required"`
-	Instructions    []string           `bson:"instructions" json:"instructions" binding:"required"`
-	Time            int                `bson:"time" json:"time" binding:"required"` // Time in seconds.
-	Log             ExerciseLog        `bson:"log" json:"log"`
-}
-
-// ExerciseLog represents the logging of exercises, including proposed logs and actual user logs.
-type ExerciseLog struct {
-	ProposedReps   int      `bson:"proposedReps" json:"proposedReps" binding:"required"`
-	ActualReps     int      `bson:"actualReps" json:"actualReps"`
-	ProposedWeight float64  `bson:"proposedWeight" json:"proposedWeight"` // Can be empty if no equipment.
-	ActualWeight   float64  `bson:"actualWeight" json:"actualWeight"`
-}
-
 // Circuit represents a set of exercises performed in sequence, with optional rest and laps tracking.
 type Circuit struct {
 	ID 			 primitive.ObjectID	  `bson:"_id,omitempty" json:"id,omitempty"`
