@@ -1,0 +1,21 @@
+{
+  "name": "Push-Up",
+  "description": "A push-up is a common calisthenics exercise beginning from the prone position. By raising and lowering the body using the arms, push-ups exercise the pectoral muscles, triceps, and anterior deltoids.",
+  "videoURL": "https://example.com/pushup-video",
+  "targetMuscles": ["Chest", "Shoulders", "Triceps"],
+  "equipmentNeeded": [],
+  "instructions": [
+    "Place your hands on the ground, slightly wider than shoulder-width apart.",
+    "Extend your legs back, so you are balanced on your hands and toes.",
+    "Keep your body in a straight line from head to heels.",
+    "Lower your body until your chest nearly touches the ground.",
+    "Push yourself back up to the starting position."
+  ],
+  "time": 60,
+  "log": {
+    "proposedReps": 10,
+    "actualReps": null,
+    "proposedWeight": null,
+    "actualWeight": null
+  }
+}

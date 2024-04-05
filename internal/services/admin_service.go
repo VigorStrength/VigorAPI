@@ -78,3 +78,4 @@ func (as *AdminService) GetAdminByEmail(ctx context.Context, email, password str
 
 	return &admin, nil
 }
+

@@ -66,14 +66,14 @@ func (ac *AdminController) Login(c *gin.Context) {
 		return
 	}
 
-	accessToken, err := ac.JWTService.GenerateAccessToken(admin.ID, admin.Email)
+	accessToken, err := ac.JWTService.GenerateAccessToken(admin.ID, admin.Email, admin.Role)
 	if err != nil {	
 		log.Printf("Error generating access token: %v\n", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate access token"})
 		return
 	}
 
-	refreshToken, err := ac.JWTService.GenerateRefreshToken(admin.ID, admin.Email)
+	refreshToken, err := ac.JWTService.GenerateRefreshToken(admin.ID, admin.Email, admin.Role)
 	if err != nil {
 		log.Printf("Error generating refresh token: %v\n", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate refresh token"})

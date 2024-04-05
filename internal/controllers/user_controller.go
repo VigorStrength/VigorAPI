@@ -83,14 +83,14 @@ func (uc *UserController) Login(c *gin.Context) {
 		return
 	}
 	
-	accessToken, err := uc.JWTService.GenerateAccessToken(user.ID, user.Email)
+	accessToken, err := uc.JWTService.GenerateAccessToken(user.ID, user.Email, user.Role)
 	if err != nil {
 		log.Printf("Error generating access token: %v\n", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate access token"})
 		return
 	}
 
-	refreshToken, err := uc.JWTService.GenerateRefreshToken(user.ID, user.Email)
+	refreshToken, err := uc.JWTService.GenerateRefreshToken(user.ID, user.Email, user.Role)
 	if err != nil {
 		log.Printf("Error generating refresh token: %v\n", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate refresh token"})

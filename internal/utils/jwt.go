@@ -35,11 +35,12 @@ func NewJWTService(key string, handler JWTHandler) *JWTService {
     }
 }
 
-func (j *JWTService) GenerateAccessToken(userId primitive.ObjectID, email string) (string, error) {
+func (j *JWTService) GenerateAccessToken(userId primitive.ObjectID, email, role string) (string, error) {
     accessTokenExp := time.Now().Add(1 * time.Hour) // Or use a configuration
     claims := Claims{
         UserId: userId,
         Email:  email,
+		Role:   role,
         RegisteredClaims: jwt.RegisteredClaims{
             ExpiresAt: jwt.NewNumericDate(accessTokenExp),
         },
@@ -47,11 +48,12 @@ func (j *JWTService) GenerateAccessToken(userId primitive.ObjectID, email string
     return GenerateToken(j.signingMethod, claims, j.jwtSecretKey)
 }
 
-func (j *JWTService) GenerateRefreshToken(userId primitive.ObjectID, email string) (string, error) {
+func (j *JWTService) GenerateRefreshToken(userId primitive.ObjectID, email, role string) (string, error) {
     refreshTokenExp := time.Now().Add(24 * time.Hour) // Or use a configuration
     claims := Claims{
         UserId: userId,
         Email:  email,
+		Role:   role,
         RegisteredClaims: jwt.RegisteredClaims{
             ExpiresAt: jwt.NewNumericDate(refreshTokenExp),
         },

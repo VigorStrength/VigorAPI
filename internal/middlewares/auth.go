@@ -1,6 +1,7 @@
 package middlewares
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/GhostDrew11/vigor-api/internal/utils"
@@ -14,6 +15,8 @@ func RequireRole(ts utils.TokenService, requiredRoles ...string) gin.HandlerFunc
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "Unauthorized"})
 			return
 		}
+
+		token = token[7:] // Remove "Bearer " from the token
 
 		claims, err := ts.VerifyToken(token)
 		if err != nil {
@@ -30,6 +33,7 @@ func RequireRole(ts utils.TokenService, requiredRoles ...string) gin.HandlerFunc
 			}
 		}
 
+		log.Printf("Role : %v",claims.Role)
 		if !roleIsAllowed {
 			ctx.AbortWithStatusJSON(http.StatusForbidden, gin.H{"message": "Forbidden"})
 			return
@@ -57,13 +61,13 @@ func RefreshHandler(ts utils.TokenService) gin.HandlerFunc {
 			return
 		}
 
-		newAccessToken, err := ts.GenerateAccessToken(claims.UserId, claims.Email)
+		newAccessToken, err := ts.GenerateAccessToken(claims.UserId, claims.Email, claims.Role)
 		if err != nil {
 			ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": "Failed to generate new access token"})
 			return
 		}
 
-		newRefreshToken, err := ts.GenerateRefreshToken(claims.UserId, claims.Email)
+		newRefreshToken, err := ts.GenerateRefreshToken(claims.UserId, claims.Email, claims.Role)
 		if err != nil {
 			ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": "Failed to generate new refresh token"})
 			return

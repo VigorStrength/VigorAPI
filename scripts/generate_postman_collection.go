@@ -126,6 +126,22 @@ func main() {
 				},
 			},
 		},
+		{
+			Name:        "Create Exercise",
+			Method:      "POST",
+			Path:        "/api/v1/admin/exercises",
+			Description: "Create a new exercise",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+				{
+					Key: "Authorization",
+					Value: "Bearer {{accessToken}}",
+				},
+			},
+		},
 	}
 
 	// Attemp to read and update an existing collection; otherwise generate a new one

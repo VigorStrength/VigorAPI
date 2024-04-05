@@ -6,18 +6,22 @@
       "description",
       "videoURL",
       "targetMuscles",
-      "equipmentNeeded",
       "instructions",
       "time",
       "log"
     ],
     "properties": {
       "_id": { "bsonType": "objectId" },
-      "name": { "bsonType": "string" },
-      "description": { "bsonType": "string" },
+      "name": { "bsonType": "string", "minLength": 5, "maxLength": 25 },
+      "description": {
+        "bsonType": "string",
+        "minLength": 5,
+        "maxLength": 1000
+      },
       "videoURL": { "bsonType": "string" },
       "targetMuscles": {
         "bsonType": "array",
+        "minItems": 1,
         "items": { "bsonType": "string" }
       },
       "equipmentNeeded": {
@@ -26,20 +30,27 @@
       },
       "instructions": {
         "bsonType": "array",
+        "minItems": 1,
         "items": { "bsonType": "string" }
       },
-      "time": { "bsonType": "int" },
+      "time": { "bsonType": "int", "minimum": 30, "maximum": 300 },
       "log": {
         "bsonType": "object",
         "required": ["proposedReps"],
         "properties": {
           "proposedReps": { "bsonType": "int" },
-          "actualReps": { "bsonType": "int", "description": "can be null" },
+          "actualReps": {
+            "bsonType": "int",
+            "description": "can be null, represents number of actual repetitions performed"
+          },
           "proposedWeight": {
             "bsonType": "double",
-            "description": "can be null"
+            "description": "can be null, represents proposed weight for the exercise"
           },
-          "actualWeight": { "bsonType": "double", "description": "can be null" }
+          "actualWeight": {
+            "bsonType": "double",
+            "description": "can be null, represents actual weight used"
+          }
         }
       }
     }

@@ -12,8 +12,8 @@ type HashPasswordService interface {
 
 // var _ TokenService = (*JWTService)(nil)
 type TokenService interface {
-    GenerateAccessToken(userId primitive.ObjectID, email string) (string, error)
-    GenerateRefreshToken(userId primitive.ObjectID, email string) (string, error)
+    GenerateAccessToken(userId primitive.ObjectID, email, role string) (string, error)
+    GenerateRefreshToken(userId primitive.ObjectID, email, role string) (string, error)
     VerifyToken(tokenString string) (*Claims, error)
 }
 

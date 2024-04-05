@@ -5,14 +5,14 @@ import "go.mongodb.org/mongo-driver/bson/primitive"
 // Exercise represents a specific exercise, including details for logging and video interaction.
 type Exercise struct {
 	ID              primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
-	Name            string             `bson:"name" json:"name" binding:"required" validate:"required,alpha,min=5,max=25"`
-	Description     string             `bson:"description" json:"description" binding:"required" validate:"required,alpha,min=5,max=100"`
-	VideoURL        string             `bson:"videoUrl" json:"videoUrl" binding:"required" validate:"required,url"`
-	TargetMuscles   []string           `bson:"targetMuscles" json:"targetMuscles" binding:"required" validate:"required,dive,required"`
-	EquipmentNeeded []string           `bson:"equipmentNeeded" json:"equipmentNeeded" binding:"required" validate:"required,dive,required"`
+	Name            string             `bson:"name" json:"name" binding:"required" validate:"required,min=5,max=25"`
+	Description     string             `bson:"description" json:"description" binding:"required" validate:"required,min=5,max=1000"`
+	VideoURL        string             `bson:"videoURL" json:"videoURL" binding:"required" validate:"required,url"`
+	TargetMuscles   []string           `bson:"targetMuscles" json:"targetMuscles" binding:"required" validate:"required,dive,required,gt=0"`
+	EquipmentNeeded []string           `bson:"equipmentNeeded,omitempty" json:"equipmentNeeded,omitempty" validate:"omitempty,dive,required"`
 	Instructions    []string           `bson:"instructions" json:"instructions" binding:"required" validate:"required,dive,required"`
-	Time            int                `bson:"time" json:"time" binding:"required" validate:"required"` // Time in seconds.
-	Log             ExerciseLog      `bson:"log" json:"log" validate:"required,dive,required"`
+	Time            int                `bson:"time" json:"time" binding:"required" validate:"required,gte=30,lte=300"` // Time in seconds.
+	Log             ExerciseLog      `bson:"log" json:"log" validate:"required"`
 }
 
 type UserExerciseStatus struct {
