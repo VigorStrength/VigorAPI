@@ -89,6 +89,19 @@ func (mdc *mongoCollectionWrapper) InsertOne(ctx context.Context, document inter
 	return MongoInsertOneResult{InsertedID: result.InsertedID}, nil
 }
 
+func (mdc *mongoCollectionWrapper) UpdateOne(ctx context.Context, filter interface{}, update interface{}) (MongoUpdateResult, error) {
+	result, err := mdc.collection.UpdateOne(ctx, filter, update)
+	if err != nil {
+		return MongoUpdateResult{}, err
+	}
+	return MongoUpdateResult{
+		MatchedCount:  result.MatchedCount,
+		ModifiedCount: result.ModifiedCount,
+		UpsertedCount: result.UpsertedCount,
+		UpsertedID:    result.UpsertedID,
+	}, nil
+}
+
 type mongoIndexViewWrapper struct {
 	indexView mongo.IndexView
 }

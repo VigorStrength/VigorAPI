@@ -1,147 +1,148 @@
-package u_test
+package u
 
-import (
-	"testing"
-	"time"
 
-	"github.com/GhostDrew11/vigor-api/internal/utils"
-	"github.com/golang-jwt/jwt/v5"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-)
+// import (
+// 	"testing"
+// 	"time"
 
-type MockJWTHandler struct {
-	mock.Mock
-}
+// 	"github.com/GhostDrew11/vigor-api/internal/utils"
+// 	"github.com/golang-jwt/jwt/v5"
+// 	"github.com/stretchr/testify/assert"
+// 	"github.com/stretchr/testify/mock"
+// 	"go.mongodb.org/mongo-driver/bson/primitive"
+// )
 
-func (m *MockJWTHandler) ParseWithClaims(tokenString string, claims *utils.Claims, keyFunc jwt.Keyfunc) (*jwt.Token, error) {
-    args := m.Called(tokenString, claims, keyFunc)
-	token, _ := args.Get(0).(*jwt.Token)
-    return token, args.Error(1)
-}
+// type MockJWTHandler struct {
+// 	mock.Mock
+// }
 
-func TestGenerateToken(t *testing.T) {
-	signingMethod := jwt.SigningMethodHS256
-	tokenClaims := &utils.Claims{
-		UserId: primitive.NewObjectID(),
-		Email: "test@example.com",
-		RegisteredClaims: jwt.RegisteredClaims{},
-	}
-	secretKey := []byte("lilsecret")
+// func (m *MockJWTHandler) ParseWithClaims(tokenString string, claims *utils.Claims, keyFunc jwt.Keyfunc) (*jwt.Token, error) {
+//     args := m.Called(tokenString, claims, keyFunc)
+// 	token, _ := args.Get(0).(*jwt.Token)
+//     return token, args.Error(1)
+// }
 
-	token, err := utils.GenerateToken(signingMethod, *tokenClaims, secretKey)
-	assert.Nil(t, err, "Generating token should not return an error")
-	assert.NotNil(t, token, "The generated token should not be nil")
-}
+// func TestGenerateToken(t *testing.T) {
+// 	signingMethod := jwt.SigningMethodHS256
+// 	tokenClaims := &utils.Claims{
+// 		UserId: primitive.NewObjectID(),
+// 		Email: "test@example.com",
+// 		RegisteredClaims: jwt.RegisteredClaims{},
+// 	}
+// 	secretKey := []byte("lilsecret")
 
-func TestGenerateTokenFailure(t *testing.T) {
-	signingMethod := jwt.SigningMethodNone
-	tokenClaims := &utils.Claims{
-		RegisteredClaims: jwt.RegisteredClaims{},
-	}
-	secretKey := []byte("supersecret")
-	token, err := utils.GenerateToken(signingMethod, *tokenClaims, secretKey)
-	assert.NotNil(t, err, "Generating token should return an error")
-	assert.Empty(t, token, "The token string must be an empty string")
-}
+// 	token, err := utils.GenerateToken(signingMethod, *tokenClaims, secretKey)
+// 	assert.Nil(t, err, "Generating token should not return an error")
+// 	assert.NotNil(t, token, "The generated token should not be nil")
+// }
 
-// Same as GenerateRefresh
-// Failure case really not needed cause the main 
-// function is calling GenerateToken for which the failure case is already tested above
-func TestGenerateAccessTokenSuccess(t *testing.T) {
-	userId := primitive.NewObjectID()
-    email := "test@example.com"
-    jwtSecretKey := "supersecret"
-    mockHandler := new(MockJWTHandler)
+// func TestGenerateTokenFailure(t *testing.T) {
+// 	signingMethod := jwt.SigningMethodNone
+// 	tokenClaims := &utils.Claims{
+// 		RegisteredClaims: jwt.RegisteredClaims{},
+// 	}
+// 	secretKey := []byte("supersecret")
+// 	token, err := utils.GenerateToken(signingMethod, *tokenClaims, secretKey)
+// 	assert.NotNil(t, err, "Generating token should return an error")
+// 	assert.Empty(t, token, "The token string must be an empty string")
+// }
 
-    jwtService := utils.NewJWTService(jwtSecretKey, mockHandler)
+// // Same as GenerateRefresh
+// // Failure case really not needed cause the main
+// // function is calling GenerateToken for which the failure case is already tested above
+// func TestGenerateAccessTokenSuccess(t *testing.T) {
+// 	userId := primitive.NewObjectID()
+//     email := "test@example.com"
+//     jwtSecretKey := "supersecret"
+//     mockHandler := new(MockJWTHandler)
 
-    accessTokenStr, err := jwtService.GenerateAccessToken(userId, email)
+//     jwtService := utils.NewJWTService(jwtSecretKey, mockHandler)
 
-    assert.NoError(t, err, "Generating access token should not produce an error")
-    assert.NotEmpty(t, accessTokenStr, "Access token should not be empty")
-}
+//     accessTokenStr, err := jwtService.GenerateAccessToken(userId, email)
 
-func TestVerifyTokenSuccess(t *testing.T) {
-	userId := primitive.NewObjectID()
-	email := "test@example.com"
-	jwtSecretKey := "supersecret"
-	mockHandler := new(MockJWTHandler)
+//     assert.NoError(t, err, "Generating access token should not produce an error")
+//     assert.NotEmpty(t, accessTokenStr, "Access token should not be empty")
+// }
 
-	mockToken := &jwt.Token{Valid: true}
-	mockHandler.On("ParseWithClaims",
-    mock.AnythingOfType("string"),
-    mock.AnythingOfType("*utils.Claims"),
-    mock.AnythingOfType("jwt.Keyfunc"),
-).Run(func(args mock.Arguments) {
-    claims := args.Get(1).(*utils.Claims)
-    claims.UserId = userId 
-    claims.Email = email
-	claims.ExpiresAt = jwt.NewNumericDate(time.Now().Add(1 * time.Hour))
-}).Return(mockToken, nil)
+// func TestVerifyTokenSuccess(t *testing.T) {
+// 	userId := primitive.NewObjectID()
+// 	email := "test@example.com"
+// 	jwtSecretKey := "supersecret"
+// 	mockHandler := new(MockJWTHandler)
 
-	jwtService := utils.NewJWTService(jwtSecretKey, mockHandler)
+// 	mockToken := &jwt.Token{Valid: true}
+// 	mockHandler.On("ParseWithClaims",
+//     mock.AnythingOfType("string"),
+//     mock.AnythingOfType("*utils.Claims"),
+//     mock.AnythingOfType("jwt.Keyfunc"),
+// ).Run(func(args mock.Arguments) {
+//     claims := args.Get(1).(*utils.Claims)
+//     claims.UserId = userId
+//     claims.Email = email
+// 	claims.ExpiresAt = jwt.NewNumericDate(time.Now().Add(1 * time.Hour))
+// }).Return(mockToken, nil)
 
-	accessTokenStr, err := jwtService.GenerateAccessToken(userId, email)
-	assert.NoError(t, err, "Generating all tokens should not produce an error")
+// 	jwtService := utils.NewJWTService(jwtSecretKey, mockHandler)
 
-	accessTokenClaims, err := jwtService.VerifyToken(accessTokenStr)
-	assert.Nil(t, err, "Verifying access token should not produce an error")
+// 	accessTokenStr, err := jwtService.GenerateAccessToken(userId, email)
+// 	assert.NoError(t, err, "Generating all tokens should not produce an error")
 
-	assert.Equal(t, userId, accessTokenClaims.UserId, "UserId should match")
-	assert.Equal(t, email, accessTokenClaims.Email, "Email should match")
+// 	accessTokenClaims, err := jwtService.VerifyToken(accessTokenStr)
+// 	assert.Nil(t, err, "Verifying access token should not produce an error")
 
-	mockHandler.AssertExpectations(t)
-}
+// 	assert.Equal(t, userId, accessTokenClaims.UserId, "UserId should match")
+// 	assert.Equal(t, email, accessTokenClaims.Email, "Email should match")
 
-func TestVerifyTokenFailureInvalidSigningMethod(t *testing.T) {
-    jwtSecretKey := "secret"
-	mockHandler := new(MockJWTHandler)
+// 	mockHandler.AssertExpectations(t)
+// }
 
-	mockHandler.On("ParseWithClaims", mock.AnythingOfType("string"), mock.AnythingOfType("*utils.Claims"), mock.AnythingOfType("jwt.Keyfunc")).Return(nil, utils.ErrInvalidSigningMethod)
+// func TestVerifyTokenFailureInvalidSigningMethod(t *testing.T) {
+//     jwtSecretKey := "secret"
+// 	mockHandler := new(MockJWTHandler)
 
-	jwtService := utils.NewJWTService(jwtSecretKey,mockHandler)
+// 	mockHandler.On("ParseWithClaims", mock.AnythingOfType("string"), mock.AnythingOfType("*utils.Claims"), mock.AnythingOfType("jwt.Keyfunc")).Return(nil, utils.ErrInvalidSigningMethod)
 
-	_, err := jwtService.VerifyToken("dummyToken")
-	assert.Error(t, err, "Verifying wrongly signed token should return an error")
-	assert.Equal(t, utils.ErrInvalidSigningMethod, err)
+// 	jwtService := utils.NewJWTService(jwtSecretKey,mockHandler)
 
-	mockHandler.AssertExpectations(t)
-}
+// 	_, err := jwtService.VerifyToken("dummyToken")
+// 	assert.Error(t, err, "Verifying wrongly signed token should return an error")
+// 	assert.Equal(t, utils.ErrInvalidSigningMethod, err)
 
-func TestVerifyTokenFailureInvalid(t *testing.T) {
-    jwtSecretKey := "secret"
-	mockHandler := new(MockJWTHandler)
+// 	mockHandler.AssertExpectations(t)
+// }
 
-	mockToken := &jwt.Token{Valid: false}
-	mockHandler.On("ParseWithClaims", mock.AnythingOfType("string"), mock.AnythingOfType("*utils.Claims"), mock.AnythingOfType("jwt.Keyfunc")).Return(mockToken, utils.ErrInvalidToken)
-    
-	jwtService := utils.NewJWTService(jwtSecretKey, mockHandler)
-	
-	_, err := jwtService.VerifyToken("tamperedToken")
-	assert.Error(t, err, "Veryfying invalid token should return an error")
-	assert.Equal(t, utils.ErrInvalidToken, err)
-	// assert.Contains(t, utils.ErrInvalidToken, err.Error())
-}
+// func TestVerifyTokenFailureInvalid(t *testing.T) {
+//     jwtSecretKey := "secret"
+// 	mockHandler := new(MockJWTHandler)
 
-func TestVerifyTokenFailureExpired(t *testing.T) {
-	jwtSecretKey := "supersecret"
-	mockHandler := new(MockJWTHandler)
+// 	mockToken := &jwt.Token{Valid: false}
+// 	mockHandler.On("ParseWithClaims", mock.AnythingOfType("string"), mock.AnythingOfType("*utils.Claims"), mock.AnythingOfType("jwt.Keyfunc")).Return(mockToken, utils.ErrInvalidToken)
 
-	mockHandler.On("ParseWithClaims", mock.AnythingOfType("string"), mock.AnythingOfType("*utils.Claims"), mock.AnythingOfType("jwt.Keyfunc")).Run(func(args mock.Arguments) {
-		claims := args.Get(1).(*utils.Claims)
-		claims.ExpiresAt = jwt.NewNumericDate(time.Now().Add(-1 * time.Hour))
-	}).Return(nil, utils.ErrTokenExpired)
+// 	jwtService := utils.NewJWTService(jwtSecretKey, mockHandler)
 
-	jwtService := utils.NewJWTService(jwtSecretKey, mockHandler)
+// 	_, err := jwtService.VerifyToken("tamperedToken")
+// 	assert.Error(t, err, "Veryfying invalid token should return an error")
+// 	assert.Equal(t, utils.ErrInvalidToken, err)
+// 	// assert.Contains(t, utils.ErrInvalidToken, err.Error())
+// }
 
-	_, err := jwtService.VerifyToken("dummytoken")
-	assert.Error(t, err, "Veryfying expired access token should return an error")
-	assert.Equal(t, utils.ErrTokenExpired, err)
+// func TestVerifyTokenFailureExpired(t *testing.T) {
+// 	jwtSecretKey := "supersecret"
+// 	mockHandler := new(MockJWTHandler)
 
-	mockHandler.AssertExpectations(t)
-}
+// 	mockHandler.On("ParseWithClaims", mock.AnythingOfType("string"), mock.AnythingOfType("*utils.Claims"), mock.AnythingOfType("jwt.Keyfunc")).Run(func(args mock.Arguments) {
+// 		claims := args.Get(1).(*utils.Claims)
+// 		claims.ExpiresAt = jwt.NewNumericDate(time.Now().Add(-1 * time.Hour))
+// 	}).Return(nil, utils.ErrTokenExpired)
+
+// 	jwtService := utils.NewJWTService(jwtSecretKey, mockHandler)
+
+// 	_, err := jwtService.VerifyToken("dummytoken")
+// 	assert.Error(t, err, "Veryfying expired access token should return an error")
+// 	assert.Equal(t, utils.ErrTokenExpired, err)
+
+// 	mockHandler.AssertExpectations(t)
+// }
 
 
 

@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"reflect"
+	"strings"
 )
 
 // RouteHeader represents additional headers for a route
@@ -136,9 +137,17 @@ func main() {
 					Key:   "Content-Type",
 					Value: "application/json",
 				},
+			},
+		},
+		{
+			Name:        "Update Exercise",
+			Method:      "PUT",
+			Path:        "/api/v1/admin/exercises/:id",
+			Description: "Update an existing exercise",
+			Headers: []RouteHeader{
 				{
-					Key: "Authorization",
-					Value: "Bearer {{accessToken}}",
+					Key:   "Content-Type",
+					Value: "application/json",
 				},
 			},
 		},
@@ -222,6 +231,9 @@ func createPostmanItemFromRoute(route Route) PostmanItem {
 		})
 	}
 
+	routePath := route.Path
+	routePath = strings.Replace(routePath, ":id", "{{exerciseId}}", -1)
+
 	item := PostmanItem{
 		Name: route.Name,
 		Request: Request{
@@ -232,9 +244,9 @@ func createPostmanItemFromRoute(route Route) PostmanItem {
 				Raw:  "{}",
 			},
 			URL: URL{
-				Raw:  "{{baseUrl}}" + route.Path,
+				Raw:  "{{baseUrl}}" + routePath,
 				Host: []string{"{{baseUrl}}"},
-				Path: []string{route.Path},
+				Path: []string{routePath},
 			},
 		},
 		Response: []interface{}{},

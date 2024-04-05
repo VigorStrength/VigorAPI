@@ -19,10 +19,11 @@ var (
 type AdminService struct {
 	database db.MongoDatabase
 	hasher utils.HashPasswordService
+	parser utils.ParserService
 }
 
-func NewAdminService(database db.MongoDatabase, hasher utils.HashPasswordService) *AdminService {
-	return &AdminService{database: database, hasher: hasher}
+func NewAdminService(database db.MongoDatabase, hasher utils.HashPasswordService, parser utils.ParserService) *AdminService {
+	return &AdminService{database: database, hasher: hasher, parser: parser}
 }
 
 func (as *AdminService) RegisterAdmin(ctx context.Context, input models.AdminRegistrationInput) error {

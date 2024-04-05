@@ -27,7 +27,7 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	adminRoutes.Use(middlewares.RequireRole(ts, "admin"))
 	// // CRUD Exercises
 	adminRoutes.POST("/exercises", adminController.CreateExercise)
-	// adminRoutes.PUT("/exercises/:id", updateExercise)
+	adminRoutes.PUT("/exercises/:id", adminController.UpdateExercise)
 	// adminRoutes.DELETE("/exercises/:id", deleteExercise)
 	// adminRoutes.GET("/exercises", getExercises)
 	

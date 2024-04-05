@@ -1,7 +1,6 @@
 package middlewares
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/GhostDrew11/vigor-api/internal/utils"
@@ -33,7 +32,6 @@ func RequireRole(ts utils.TokenService, requiredRoles ...string) gin.HandlerFunc
 			}
 		}
 
-		log.Printf("Role : %v",claims.Role)
 		if !roleIsAllowed {
 			ctx.AbortWithStatusJSON(http.StatusForbidden, gin.H{"message": "Forbidden"})
 			return

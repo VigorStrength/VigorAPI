@@ -143,10 +143,6 @@
           {
             "key": "Content-Type",
             "value": "application/json"
-          },
-          {
-            "key": "Authorization",
-            "value": "Bearer {{accessToken}}"
           }
         ],
         "body": {
@@ -160,6 +156,32 @@
           ],
           "path": [
             "/api/v1/admin/exercises"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Exercise",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/admin/exercises/{{exerciseId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/exercises/{{exerciseId}}"
           ]
         }
       },

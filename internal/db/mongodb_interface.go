@@ -28,6 +28,7 @@ type MongoCollection interface {
 	Indexes() MongoIndexView
 	FindOne(ctx context.Context, filter interface{}) MongoSingleResult
 	InsertOne(ctx context.Context, document interface{}) (MongoInsertOneResult, error)
+	UpdateOne(ctx context.Context, filter interface{}, update interface{}) (MongoUpdateResult, error)
 }
 
 type MongoSingleResult interface {
@@ -50,4 +51,11 @@ type DBService interface {
 
 type MongoInsertOneResult struct {
 	InsertedID interface{}
+}
+
+type MongoUpdateResult struct {
+	MatchedCount  int64
+	ModifiedCount int64
+	UpsertedCount int64
+	UpsertedID    interface{}
 }
