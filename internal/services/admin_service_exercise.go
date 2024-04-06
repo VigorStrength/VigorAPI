@@ -14,6 +14,26 @@ var (
 	ErrExerciseNotFound = fmt.Errorf("exercise not found")
 )
 
+func (as *AdminService) GetExercises(ctx context.Context) ([]models.Exercise, error) {
+	//Get the exercise collection
+	exerciseCollection := as.database.Collection("exercises")
+
+	// Find all exercises
+	cursor, err := exerciseCollection.Find(ctx, bson.M{})
+	if err != nil {
+		return nil, fmt.Errorf("error finding exercises: %w", err)
+	}
+	defer cursor.Close(ctx)
+
+	// Decode the exercises
+	var exercises []models.Exercise
+	if err := cursor.All(ctx, &exercises); err != nil {
+		return nil, fmt.Errorf("error decoding exercises: %w", err)
+	}
+
+	return exercises, nil
+}
+
 func (as *AdminService) CreateExercise(ctx context.Context, exerciseInput models.Exercise) error {
 	//Get the exercise collection
 	exerciseCollection := as.database.Collection("exercises")

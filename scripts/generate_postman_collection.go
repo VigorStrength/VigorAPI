@@ -140,6 +140,18 @@ func main() {
 			},
 		},
 		{
+			Name:        "Get Exercises",
+			Method:      "GET",
+			Path:        "/api/v1/admin/exercises",
+			Description: "Get all exercises",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
 			Name:        "Update Exercise",
 			Method:      "PUT",
 			Path:        "/api/v1/admin/exercises/:id",

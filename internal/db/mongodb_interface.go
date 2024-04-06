@@ -27,6 +27,7 @@ type MongoCollection interface {
 	CountDocuments(ctx context.Context, filter interface{}) (int64, error)
 	Indexes() MongoIndexView
 	FindOne(ctx context.Context, filter interface{}) MongoSingleResult
+	Find(ctx context.Context, filter interface{}) (MongoCursor, error)
 	InsertOne(ctx context.Context, document interface{}) (MongoInsertOneResult, error)
 	UpdateOne(ctx context.Context, filter interface{}, update interface{}) (MongoUpdateResult, error)
 	DeleteOne(ctx context.Context, filter interface{}) (MongoDeleteResult, error)
@@ -39,6 +40,14 @@ type MongoSingleResult interface {
 
 type MongoIndexView interface {
 	CreateOne(ctx context.Context, model mongo.IndexModel) (string, error)
+}
+
+type MongoCursor interface {
+	All(ctx context.Context, results interface{}) error
+	Next(ctx context.Context) bool
+	Decode(v interface{}) error
+	Close(ctx context.Context) error
+	Err() error
 }
 
 type DBService interface {
@@ -64,3 +73,4 @@ type MongoUpdateResult struct {
 type MongoDeleteResult struct {
 	DeletedCount int64
 }
+

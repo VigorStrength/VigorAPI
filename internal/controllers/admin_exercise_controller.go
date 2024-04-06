@@ -11,6 +11,17 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+func (ac *AdminController) GetExercises(c *gin.Context) {
+	exercises, err := ac.AdminService.GetExercises(c.Request.Context())
+	if err != nil {
+		log.Printf("Error getting exercises: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get exercises"})
+		return
+	}
+
+	c.JSON(http.StatusOK, exercises)
+}
+
 func (ac *AdminController) CreateExercise(c *gin.Context) {
 	var exercise models.Exercise
 

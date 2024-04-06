@@ -81,6 +81,14 @@ func (mdc *mongoCollectionWrapper) FindOne(ctx context.Context, filter interface
 	return &mongoSingleResultWrapper{singleResult: mdc.collection.FindOne(ctx, filter)}
 }
 
+func (mdc *mongoCollectionWrapper) Find(ctx context.Context, filter interface{}) (MongoCursor, error) {
+	cursor, err := mdc.collection.Find(ctx, filter)
+	if err != nil {
+		return nil, err
+	}
+	return &mongoCursorWrapper{cursor: cursor}, nil
+}
+
 func (mdc *mongoCollectionWrapper) InsertOne(ctx context.Context, document interface{}) (MongoInsertOneResult, error) {
 	result, err := mdc.collection.InsertOne(ctx, document)
 	if err != nil {
@@ -116,4 +124,28 @@ type mongoIndexViewWrapper struct {
 
 func (miv *mongoIndexViewWrapper) CreateOne(ctx context.Context, model mongo.IndexModel) (string, error) {
 	return miv.indexView.CreateOne(ctx, model)
+}
+
+type mongoCursorWrapper struct {
+	cursor *mongo.Cursor
+}
+
+func (mcw *mongoCursorWrapper) All(ctx context.Context, results interface{}) error {
+	return mcw.cursor.All(ctx, results)
+}
+
+func (mcw *mongoCursorWrapper) Next(ctx context.Context) bool {
+	return mcw.cursor.Next(ctx)
+}
+
+func (mcw *mongoCursorWrapper) Decode(v interface{}) error {
+	return mcw.cursor.Decode(v)
+}
+
+func (mcw *mongoCursorWrapper) Close(ctx context.Context) error {
+	return mcw.cursor.Close(ctx)
+}
+
+func (mcw *mongoCursorWrapper) Err() error {
+	return mcw.cursor.Err()
 }

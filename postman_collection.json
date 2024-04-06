@@ -212,6 +212,32 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Get Exercises",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/admin/exercises",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/exercises"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }
