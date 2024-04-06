@@ -1,21 +1,94 @@
-{
-  "name": "Push-Up",
-  "description": "A push-up is a common calisthenics exercise beginning from the prone position. By raising and lowering the body using the arms, push-ups exercise the pectoral muscles, triceps, and anterior deltoids.",
-  "videoURL": "https://example.com/pushup-video",
-  "targetMuscles": ["Chest", "Shoulders", "Triceps"],
-  "equipmentNeeded": [],
-  "instructions": [
-    "Place your hands on the ground, slightly wider than shoulder-width apart.",
-    "Extend your legs back, so you are balanced on your hands and toes.",
-    "Keep your body in a straight line from head to heels.",
-    "Lower your body until your chest nearly touches the ground.",
-    "Push yourself back up to the starting position."
-  ],
-  "time": 60,
-  "log": {
-    "proposedReps": 10,
-    "actualReps": null,
-    "proposedWeight": null,
-    "actualWeight": null
+[
+  {
+    "name": "Push-Up",
+    "description": "A push-up is a common calisthenics exercise beginning from the prone position. By raising and lowering the body using the arms, push-ups exercise the pectoral muscles, triceps, and anterior deltoids.",
+    "videoURL": "https://example.com/pushup-video",
+    "targetMuscles": ["Chest", "Shoulders", "Triceps"],
+    "equipmentNeeded": [],
+    "instructions": [
+      "Place your hands on the ground, slightly wider than shoulder-width apart.",
+      "Extend your legs back, so you are balanced on your hands and toes.",
+      "Keep your body in a straight line from head to heels.",
+      "Lower your body until your chest nearly touches the ground.",
+      "Push yourself back up to the starting position."
+    ],
+    "time": 60,
+    "log": {
+      "proposedReps": 10,
+      "actualReps": null,
+      "proposedWeight": null,
+      "actualWeight": null
+    }
+  },
+  {
+    "name": "Bulgarian Split Squats",
+    "description": "The Bulgarian Split Squat is an excellent exercise to build lower body strength and balance. It primarily targets the quadriceps, hamstrings, and glutes. The rear-foot-elevated position allows for greater range of motion and increased activation of the target muscles.",
+    "videoURL": "https://example.com/bulgarian-split-squat-video",
+    "targetMuscles": ["Quadriceps", "Hamstrings", "Glutes"],
+    "equipmentNeeded": ["Bench"],
+    "instructions": [
+      "Stand a couple of feet from a bench, facing away.",
+      "Place one foot on the bench behind you.",
+      "Lower your hips to bring your front thigh near horizontal.",
+      "Keep your torso upright throughout the movement.",
+      "Press your front heel to return to the starting position."
+    ],
+    "time": 60,
+    "log": {
+      "proposedReps": 10
+    }
+  },
+  {
+    "name": "Standing Dumbbell Shoulder Press",
+    "description": "The Standing Dumbbell Shoulder Press is a fundamental upper body exercise that targets the deltoids, triceps, and upper trapezius. Performing the exercise standing engages the core and improves overall stability.",
+    "videoURL": "https://example.com/standing-dumbbell-shoulder-press-video",
+    "targetMuscles": ["Deltoids", "Triceps", "Upper Trapezius"],
+    "equipmentNeeded": ["Dumbbells"],
+    "instructions": [
+      "Stand with feet shoulder-width apart, holding dumbbells at shoulder height.",
+      "Press the dumbbells overhead until arms are fully extended.",
+      "Lower the weights with control back to shoulder height."
+    ],
+    "time": 45,
+    "log": {
+      "proposedReps": 8,
+      "proposedWeight": 25.0
+    }
+  },
+  {
+    "name": "Plank",
+    "description": "The Plank is a core exercise that involves maintaining a position similar to a push-up for an extended period. It targets the abdominal muscles, lower back, and shoulders.",
+    "videoURL": "https://example.com/plank-video",
+    "targetMuscles": ["Abdominals", "Lower Back", "Shoulders"],
+    "equipmentNeeded": [],
+    "instructions": [
+      "Place your forearms on the ground, elbows directly beneath your shoulders.",
+      "Extend your legs back, so you are balanced on your forearms and toes.",
+      "Keep your body in a straight line from head to heels.",
+      "Hold this position for the prescribed time."
+    ],
+    "time": 60,
+    "log": {
+      "proposedReps": 3,
+      "proposedTime": 60
+    }
+  },
+  {
+    "name": "Dumbbell Bent-Over Row",
+    "description": "The Dumbbell Bent-Over Row is a compound exercise that targets the upper back, lats, and biceps. It is an effective movement to improve strength and muscle development in the back.",
+    "videoURL": "https://example.com/dumbbell-bent-over-row-video",
+    "targetMuscles": ["Upper Back", "Lats", "Biceps"],
+    "equipmentNeeded": ["Dumbbells"],
+    "instructions": [
+      "Stand with feet hip-width apart, holding dumbbells in front of thighs.",
+      "Hinge at the hips to bring the torso close to parallel with the ground.",
+      "Pull the dumbbells towards your hips, squeezing the shoulder blades together.",
+      "Lower the weights back to the starting position."
+    ],
+    "time": 45,
+    "log": {
+      "proposedReps": 10,
+      "proposedWeight": 30.0
+    }
   }
-}
+]

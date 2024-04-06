@@ -5,7 +5,7 @@ import "go.mongodb.org/mongo-driver/bson/primitive"
 // Exercise represents a specific exercise, including details for logging and video interaction.
 type Exercise struct {
 	ID              primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
-	Name            string             `bson:"name" json:"name" binding:"required" validate:"required,min=5,max=25"`
+	Name            string             `bson:"name" json:"name" binding:"required" validate:"required,min=5,max=50"`
 	Description     string             `bson:"description" json:"description" binding:"required" validate:"required,min=5,max=1000"`
 	VideoURL        string             `bson:"videoURL" json:"videoURL" binding:"required" validate:"required,url"`
 	TargetMuscles   []string           `bson:"targetMuscles" json:"targetMuscles" binding:"required" validate:"required,dive,required,gt=0"`
@@ -34,7 +34,7 @@ type ExerciseLog struct {
 
 // ExerciseUpdateInput represents the input for updating an exercise.
 type ExerciseUpdateInput struct {
-	Name            *string   `json:"name,omitempty" validate:"omitempty,min=5,max=25"`
+	Name            *string   `json:"name,omitempty" validate:"omitempty,min=5,max=50"`
 	Description     *string   `json:"description,omitempty" validate:"omitempty,min=5,max=1000"`
 	VideoURL        *string   `json:"videoURL,omitempty" validate:"omitempty,url"`
 	TargetMuscles   *[]string `json:"targetMuscles,omitempty" validate:"omitempty,dive,required,gt=0"`

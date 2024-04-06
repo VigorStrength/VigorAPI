@@ -75,3 +75,25 @@ func (ac *AdminController) UpdateExercise(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "Exercise updated successfully"})
 }
+
+func (ac *AdminController) DeleteExercise(c *gin.Context) {
+	exerciseID, err := primitive.ObjectIDFromHex(c.Param("id"))
+	if err != nil {
+		log.Printf("Error parsing ID: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+
+	if err := ac.AdminService.DeleteExercise(c.Request.Context(), exerciseID); err != nil {
+		if errors.Is(err, services.ErrExerciseNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Exercise not found"})
+			return
+		}
+
+		log.Printf("Error deleting exercise: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete exercise"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Exercise deleted successfully"})
+}

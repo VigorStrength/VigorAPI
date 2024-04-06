@@ -61,3 +61,20 @@ func (as *AdminService) UpdateExercise(ctx context.Context, exerciseID primitive
 
 	return nil
 }
+
+func (as *AdminService) DeleteExercise(ctx context.Context, exerciseID primitive.ObjectID) error {
+	//Get the exercise collection
+	exerciseCollection := as.database.Collection("exercises")
+	filter := bson.M{"_id": exerciseID}
+
+	result, err := exerciseCollection.DeleteOne(ctx, filter)
+	if err != nil {
+		return fmt.Errorf("error deleting exercise: %w", err)
+	}
+
+	if result.DeletedCount == 0 {
+		return ErrExerciseNotFound
+	}
+
+	return nil
+}

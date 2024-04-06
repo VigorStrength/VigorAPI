@@ -29,6 +29,7 @@ type MongoCollection interface {
 	FindOne(ctx context.Context, filter interface{}) MongoSingleResult
 	InsertOne(ctx context.Context, document interface{}) (MongoInsertOneResult, error)
 	UpdateOne(ctx context.Context, filter interface{}, update interface{}) (MongoUpdateResult, error)
+	DeleteOne(ctx context.Context, filter interface{}) (MongoDeleteResult, error)
 }
 
 type MongoSingleResult interface {
@@ -58,4 +59,8 @@ type MongoUpdateResult struct {
 	ModifiedCount int64
 	UpsertedCount int64
 	UpsertedID    interface{}
+}
+
+type MongoDeleteResult struct {
+	DeletedCount int64
 }

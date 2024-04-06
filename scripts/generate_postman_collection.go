@@ -151,6 +151,18 @@ func main() {
 				},
 			},
 		},
+		{
+			Name:        "Delete Exercise",
+			Method:      "DELETE",
+			Path:        "/api/v1/admin/exercises/:id",
+			Description: "Delete an existing exercise",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
 	}
 
 	// Attemp to read and update an existing collection; otherwise generate a new one

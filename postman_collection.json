@@ -186,6 +186,32 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Delete Exercise",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/admin/exercises/{{exerciseId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/exercises/{{exerciseId}}"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }

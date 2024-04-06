@@ -102,6 +102,14 @@ func (mdc *mongoCollectionWrapper) UpdateOne(ctx context.Context, filter interfa
 	}, nil
 }
 
+func (mdc *mongoCollectionWrapper) DeleteOne(ctx context.Context, filter interface{}) (MongoDeleteResult, error) {
+	result, err := mdc.collection.DeleteOne(ctx, filter)
+	if err != nil {
+		return MongoDeleteResult{}, err
+	}
+	return MongoDeleteResult{DeletedCount: result.DeletedCount}, nil
+}
+
 type mongoIndexViewWrapper struct {
 	indexView mongo.IndexView
 }
