@@ -14,6 +14,21 @@ var (
 	ErrExerciseNotFound = fmt.Errorf("exercise not found")
 )
 
+func (as *AdminService) GetExerciseByID(ctx context.Context, exerciseID primitive.ObjectID) (models.Exercise, error) {
+	//Get the exercise collection
+	exerciseCollection := as.database.Collection("exercises")
+
+	// Find the exercise by ID
+	filter := bson.M{"_id": exerciseID}
+	var exercise models.Exercise
+	err := exerciseCollection.FindOne(ctx, filter).Decode(&exercise)
+	if err != nil {
+		return models.Exercise{}, fmt.Errorf("error finding exercise: %w", err)
+	}
+
+	return exercise, nil
+}
+
 func (as *AdminService) GetExercises(ctx context.Context) ([]models.Exercise, error) {
 	//Get the exercise collection
 	exerciseCollection := as.database.Collection("exercises")

@@ -11,6 +11,29 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+func (ac *AdminController) GetExerciseByID(c *gin.Context) {
+	exerciseID, err := primitive.ObjectIDFromHex(c.Param("id"))
+	if err != nil {
+		log.Printf("Error parsing ID: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+
+	exercise, err := ac.AdminService.GetExerciseByID(c.Request.Context(), exerciseID)
+	if err != nil {
+		if errors.Is(err, services.ErrExerciseNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Exercise not found"})
+			return
+		}
+
+		log.Printf("Error getting exercise: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get exercise"})
+		return
+	}
+
+	c.JSON(http.StatusOK, exercise)
+}
+
 func (ac *AdminController) GetExercises(c *gin.Context) {
 	exercises, err := ac.AdminService.GetExercises(c.Request.Context())
 	if err != nil {

@@ -238,6 +238,32 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Get Exercise by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/admin/exercises/{{exerciseId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/exercises/{{exerciseId}}"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }
