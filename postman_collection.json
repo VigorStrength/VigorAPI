@@ -264,6 +264,32 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Search Exercises by Name",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/admin/exercises/search",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/exercises/search"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }

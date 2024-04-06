@@ -30,8 +30,10 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	// TODO: Implement sort, filter, and pagination for exercises
 	adminRoutes.GET("/exercises", adminController.GetExercises)
 	adminRoutes.GET("/exercises/:id", adminController.GetExerciseByID)
+	adminRoutes.GET("/exercises/search", adminController.SearchExercisesByName)
 	adminRoutes.PUT("/exercises/:id", adminController.UpdateExercise)
 	adminRoutes.DELETE("/exercises/:id", adminController.DeleteExercise)
+	
 	
 	
 

@@ -113,3 +113,24 @@ func (as *AdminService) DeleteExercise(ctx context.Context, exerciseID primitive
 
 	return nil
 }
+
+func (as *AdminService) SearchExercisesByName(ctx context.Context, name string) ([]models.Exercise, error) {
+	//Get the exercise collection
+	exerciseCollection := as.database.Collection("exercises")
+
+	// Find all exercises that contain the name
+	filter := bson.M{"name": primitive.Regex{Pattern: name, Options: "i"}}
+	cursor, err := exerciseCollection.Find(ctx, filter)
+	if err != nil {
+		return nil, fmt.Errorf("error finding exercises: %w", err)
+	}
+	defer cursor.Close(ctx)
+
+	// Decode the exercises
+	var exercises []models.Exercise
+	if err := cursor.All(ctx, &exercises); err != nil {
+		return nil, fmt.Errorf("error decoding exercises: %w", err)
+	}
+
+	return exercises, nil
+}

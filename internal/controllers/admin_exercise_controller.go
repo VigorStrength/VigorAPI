@@ -131,3 +131,21 @@ func (ac *AdminController) DeleteExercise(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "Exercise deleted successfully"})
 }
+
+func (ac *AdminController) SearchExercisesByName(c *gin.Context) {
+	name := c.Query("name")
+
+	if name == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Name query parameter is required"})
+		return
+	}
+
+	exercises, err := ac.AdminService.SearchExercisesByName(c.Request.Context(), name)
+	if err != nil {
+		log.Printf("Error searching exercises: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to search exercises"})
+		return
+	}
+
+	c.JSON(http.StatusOK, exercises)
+}
