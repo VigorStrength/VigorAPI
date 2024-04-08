@@ -1,0 +1,628 @@
+[
+  {
+    "name": "Beginner's Full Body Strength",
+    "duration": 4,
+    "weeks": [
+      {
+        "weekNumber": 1,
+        "days": [
+          {
+            "warmUp": [
+              {
+                "exerciseIds": ["6613ee6290b42302aefa18e5"],
+                "proposedLaps": 2,
+                "restTime": 60
+              }
+            ],
+            "workout": [
+              {
+                "exerciseIds": [
+                  "6613e3987655ce5f3f0b696a",
+                  "6613e3a87655ce5f3f0b696b"
+                ],
+                "proposedLaps": 3,
+                "restTime": 90
+              }
+            ],
+            "coolDown": [
+              {
+                "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+                "proposedLaps": 1,
+                "restTime": 30
+              }
+            ],
+            "workoutTimeRange": [900, 1800]
+          }
+        ]
+      },
+      {
+        "weekNumber": 2,
+        "days": [
+          {
+            "warmUp": [
+              {
+                "exerciseIds": ["6613ee6290b42302aefa18e5"],
+                "proposedLaps": 2,
+                "restTime": 60
+              }
+            ],
+            "workout": [
+              {
+                "exerciseIds": [
+                  "6613e3b67655ce5f3f0b696c",
+                  "6613e3fa7655ce5f3f0b696e"
+                ],
+                "proposedLaps": 3,
+                "restTime": 90
+              }
+            ],
+            "coolDown": [
+              {
+                "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+                "proposedLaps": 1,
+                "restTime": 30
+              }
+            ],
+            "workoutTimeRange": [1200, 1800]
+          }
+        ]
+      },
+      {
+        "weekNumber": 3,
+        "days": [
+          {
+            "warmUp": [
+              {
+                "exerciseIds": ["6613ee6290b42302aefa18e5"],
+                "proposedLaps": 2,
+                "restTime": 60
+              }
+            ],
+            "workout": [
+              {
+                "exerciseIds": [
+                  "6613e3987655ce5f3f0b696a",
+                  "6613e3a87655ce5f3f0b696b"
+                ],
+                "proposedLaps": 4,
+                "restTime": 90
+              }
+            ],
+            "coolDown": [
+              {
+                "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+                "proposedLaps": 2,
+                "restTime": 30
+              }
+            ],
+            "workoutTimeRange": [1500, 2100]
+          }
+        ]
+      },
+      {
+        "weekNumber": 4,
+        "days": [
+          {
+            "warmUp": [
+              {
+                "exerciseIds": ["6613ee6290b42302aefa18e5"],
+                "proposedLaps": 3,
+                "restTime": 60
+              }
+            ],
+            "workout": [
+              {
+                "exerciseIds": [
+                  "6613e3b67655ce5f3f0b696c",
+                  "6613e3fa7655ce5f3f0b696e"
+                ],
+                "proposedLaps": 4,
+                "restTime": 120
+              }
+            ],
+            "coolDown": [
+              {
+                "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+                "proposedLaps": 2,
+                "restTime": 45
+              }
+            ],
+            "workoutTimeRange": [1800, 2400]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Intermediate Core & Flexibility",
+    "duration": 4,
+    "weeks": [
+      {
+        "weekNumber": 1,
+        "days": [
+          {
+            "warmUp": [
+              {
+                "exerciseIds": ["6613e3fa7655ce5f3f0b696e"],
+                "proposedLaps": 2,
+                "restTime": 60
+              }
+            ],
+            "workout": [
+              {
+                "exerciseIds": [
+                  "6613e3a87655ce5f3f0b696b",
+                  "6613ee6290b42302aefa18e6"
+                ],
+                "proposedLaps": 3,
+                "restTime": 120
+              }
+            ],
+            "coolDown": [
+              {
+                "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+                "proposedLaps": 2,
+                "restTime": 60
+              }
+            ],
+            "workoutTimeRange": [1200, 2400]
+          },
+          {
+            "warmUp": [
+              {
+                "exerciseIds": ["6613ee6290b42302aefa18e5"],
+                "proposedLaps": 2,
+                "restTime": 60
+              }
+            ],
+            "workout": [
+              {
+                "exerciseIds": [
+                  "6613e3987655ce5f3f0b696a",
+                  "6613e3b67655ce5f3f0b696c"
+                ],
+                "proposedLaps": 3,
+                "restTime": 90
+              }
+            ],
+            "coolDown": [
+              {
+                "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+                "proposedLaps": 1,
+                "restTime": 30
+              }
+            ],
+            "workoutTimeRange": [900, 1800]
+          }
+        ]
+      },
+      {
+        "weekNumber": 2,
+        "days": [
+          {
+            "warmUp": [
+              {
+                "exerciseIds": ["6613e3fa7655ce5f3f0b696e"],
+                "proposedLaps": 2,
+                "restTime": 70
+              }
+            ],
+            "workout": [
+              {
+                "exerciseIds": [
+                  "6613ee6290b42302aefa18e5",
+                  "6613e3b67655ce5f3f0b696c"
+                ],
+                "proposedLaps": 3,
+                "restTime": 100
+              }
+            ],
+            "coolDown": [
+              {
+                "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+                "proposedLaps": 2,
+                "restTime": 50
+              }
+            ],
+            "workoutTimeRange": [1300, 2200]
+          },
+          {
+            "warmUp": [
+              {
+                "exerciseIds": ["6613ee6290b42302aefa18e6"],
+                "proposedLaps": 2,
+                "restTime": 60
+              }
+            ],
+            "workout": [
+              {
+                "exerciseIds": [
+                  "6613e3a87655ce5f3f0b696b",
+                  "6613e3987655ce5f3f0b696a"
+                ],
+                "proposedLaps": 4,
+                "restTime": 120
+              }
+            ],
+            "coolDown": [
+              {
+                "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+                "proposedLaps": 1,
+                "restTime": 60
+              }
+            ],
+            "workoutTimeRange": [1500, 2300]
+          }
+        ]
+      },
+      {
+        "weekNumber": 3,
+        "days": [
+          {
+            "warmUp": [
+              {
+                "exerciseIds": ["6613e3fa7655ce5f3f0b696e"],
+                "proposedLaps": 3,
+                "restTime": 60
+              }
+            ],
+            "workout": [
+              {
+                "exerciseIds": [
+                  "6613ee6290b42302aefa18e5",
+                  "6613e3b67655ce5f3f0b696c"
+                ],
+                "proposedLaps": 4,
+                "restTime": 110
+              }
+            ],
+            "coolDown": [
+              {
+                "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+                "proposedLaps": 3,
+                "restTime": 60
+              }
+            ],
+            "workoutTimeRange": [1600, 2600]
+          },
+          {
+            "warmUp": [
+              {
+                "exerciseIds": ["6613e3987655ce5f3f0b696a"],
+                "proposedLaps": 3,
+                "restTime": 60
+              }
+            ],
+            "workout": [
+              {
+                "exerciseIds": [
+                  "6613e3a87655ce5f3f0b696b",
+                  "6613ee6290b42302aefa18e6"
+                ],
+                "proposedLaps": 5,
+                "restTime": 130
+              }
+            ],
+            "coolDown": [
+              {
+                "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+                "proposedLaps": 2,
+                "restTime": 70
+              }
+            ],
+            "workoutTimeRange": [1700, 2700]
+          }
+        ]
+      },
+      {
+        "weekNumber": 4,
+        "days": [
+          {
+            "warmUp": [
+              {
+                "exerciseIds": ["6613e3fa7655ce5f3f0b696e"],
+                "proposedLaps": 3,
+                "restTime": 70
+              }
+            ],
+            "workout": [
+              {
+                "exerciseIds": [
+                  "6613ee6290b42302aefa18e5",
+                  "6613e3b67655ce5f3f0b696c"
+                ],
+                "proposedLaps": 5,
+                "restTime": 120
+              }
+            ],
+            "coolDown": [
+              {
+                "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+                "proposedLaps": 3,
+                "restTime": 60
+              }
+            ],
+            "workoutTimeRange": [1800, 2800]
+          },
+          {
+            "warmUp": [
+              {
+                "exerciseIds": ["6613e3987655ce5f3f0b696a"],
+                "proposedLaps": 3,
+                "restTime": 70
+              }
+            ],
+            "workout": [
+              {
+                "exerciseIds": [
+                  "6613e3a87655ce5f3f0b696b",
+                  "6613ee6290b42302aefa18e6"
+                ],
+                "proposedLaps": 6,
+                "restTime": 140
+              }
+            ],
+            "coolDown": [
+              {
+                "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+                "proposedLaps": 2,
+                "restTime": 80
+              }
+            ],
+            "workoutTimeRange": [1900, 2900]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Advanced Full Body Strength",
+    "duration": 4,
+    "weeks": [
+      {
+        "weekNumber": 1,
+        "days": [
+          {
+            "warmUp": [
+              {
+                "exerciseIds": ["6613ee6290b42302aefa18e5"],
+                "proposedLaps": 2,
+                "restTime": 60
+              }
+            ],
+            "workout": [
+              {
+                "exerciseIds": [
+                  "6613e3987655ce5f3f0b696a",
+                  "6613e3a87655ce5f3f0b696b",
+                  "6613e3b67655ce5f3f0b696c"
+                ],
+                "proposedLaps": 3,
+                "restTime": 90
+              }
+            ],
+            "coolDown": [
+              {
+                "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+                "proposedLaps": 2,
+                "restTime": 60
+              }
+            ],
+            "workoutTimeRange": [1200, 2400]
+          },
+          {
+            "warmUp": [
+              {
+                "exerciseIds": ["6613e3fa7655ce5f3f0b696e"],
+                "proposedLaps": 2,
+                "restTime": 70
+              }
+            ],
+            "workout": [
+              {
+                "exerciseIds": [
+                  "6613ee6290b42302aefa18e6",
+                  "6613e3c97655ce5f3f0b696d",
+                  "6613e3fa7655ce5f3f0b696e"
+                ],
+                "proposedLaps": 3,
+                "restTime": 100
+              }
+            ],
+            "coolDown": [
+              {
+                "exerciseIds": ["6613e3987655ce5f3f0b696a"],
+                "proposedLaps": 2,
+                "restTime": 50
+              }
+            ],
+            "workoutTimeRange": [1300, 2200]
+          }
+        ]
+      },
+      {
+        "weekNumber": 2,
+        "days": [
+          {
+            "warmUp": [
+              {
+                "exerciseIds": ["6613ee6290b42302aefa18e5"],
+                "proposedLaps": 3,
+                "restTime": 60
+              }
+            ],
+            "workout": [
+              {
+                "exerciseIds": [
+                  "6613e3987655ce5f3f0b696a",
+                  "6613e3a87655ce5f3f0b696b",
+                  "6613e3b67655ce5f3f0b696c"
+                ],
+                "proposedLaps": 4,
+                "restTime": 90
+              }
+            ],
+            "coolDown": [
+              {
+                "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+                "proposedLaps": 3,
+                "restTime": 60
+              }
+            ],
+            "workoutTimeRange": [1600, 2600]
+          },
+          {
+            "warmUp": [
+              {
+                "exerciseIds": ["6613e3fa7655ce5f3f0b696e"],
+                "proposedLaps": 3,
+                "restTime": 70
+              }
+            ],
+            "workout": [
+              {
+                "exerciseIds": [
+                  "6613ee6290b42302aefa18e6",
+                  "6613e3c97655ce5f3f0b696d",
+                  "6613e3fa7655ce5f3f0b696e"
+                ],
+                "proposedLaps": 4,
+                "restTime": 100
+              }
+            ],
+            "coolDown": [
+              {
+                "exerciseIds": ["6613e3987655ce5f3f0b696a"],
+                "proposedLaps": 3,
+                "restTime": 60
+              }
+            ],
+            "workoutTimeRange": [1700, 2700]
+          }
+        ]
+      },
+      {
+        "weekNumber": 3,
+        "days": [
+          {
+            "warmUp": [
+              {
+                "exerciseIds": ["6613ee6290b42302aefa18e5"],
+                "proposedLaps": 3,
+                "restTime": 60
+              }
+            ],
+            "workout": [
+              {
+                "exerciseIds": [
+                  "6613e3987655ce5f3f0b696a",
+                  "6613e3a87655ce5f3f0b696b",
+                  "6613e3b67655ce5f3f0b696c"
+                ],
+                "proposedLaps": 5,
+                "restTime": 90
+              }
+            ],
+            "coolDown": [
+              {
+                "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+                "proposedLaps": 3,
+                "restTime": 60
+              }
+            ],
+            "workoutTimeRange": [1800, 2800]
+          },
+          {
+            "warmUp": [
+              {
+                "exerciseIds": ["6613e3fa7655ce5f3f0b696e"],
+                "proposedLaps": 3,
+                "restTime": 70
+              }
+            ],
+            "workout": [
+              {
+                "exerciseIds": [
+                  "6613ee6290b42302aefa18e6",
+                  "6613e3c97655ce5f3f0b696d",
+                  "6613e3fa7655ce5f3f0b696e"
+                ],
+                "proposedLaps": 5,
+                "restTime": 100
+              }
+            ],
+            "coolDown": [
+              {
+                "exerciseIds": ["6613e3987655ce5f3f0b696a"],
+                "proposedLaps": 3,
+                "restTime": 60
+              }
+            ],
+            "workoutTimeRange": [1900, 2900]
+          }
+        ]
+      },
+      {
+        "weekNumber": 4,
+        "days": [
+          {
+            "warmUp": [
+              {
+                "exerciseIds": ["6613ee6290b42302aefa18e5"],
+                "proposedLaps": 3,
+                "restTime": 60
+              }
+            ],
+            "workout": [
+              {
+                "exerciseIds": [
+                  "6613e3987655ce5f3f0b696a",
+                  "6613e3a87655ce5f3f0b696b",
+                  "6613e3b67655ce5f3f0b696c"
+                ],
+                "proposedLaps": 6,
+                "restTime": 90
+              }
+            ],
+            "coolDown": [
+              {
+                "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+                "proposedLaps": 3,
+                "restTime": 60
+              }
+            ],
+            "workoutTimeRange": [2000, 3000]
+          },
+          {
+            "warmUp": [
+              {
+                "exerciseIds": ["6613e3fa7655ce5f3f0b696e"],
+                "proposedLaps": 3,
+                "restTime": 70
+              }
+            ],
+            "workout": [
+              {
+                "exerciseIds": [
+                  "6613ee6290b42302aefa18e6",
+                  "6613e3c97655ce5f3f0b696d",
+                  "6613e3fa7655ce5f3f0b696e"
+                ],
+                "proposedLaps": 6,
+                "restTime": 100
+              }
+            ],
+            "coolDown": [
+              {
+                "exerciseIds": ["6613e3987655ce5f3f0b696a"],
+                "proposedLaps": 3,
+                "restTime": 60
+              }
+            ],
+            "workoutTimeRange": [2100, 3100]
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,11 +1,15 @@
 {
   "$jsonSchema": {
     "bsonType": "object",
-    "required": ["duration", "weeks"],
+    "required": ["name", "duration", "weeks"],
     "properties": {
       "_id": {
         "bsonType": "objectId",
         "description": "must be an objectId and is required"
+      },
+      "name": {
+        "bsonType": "string",
+        "description": "name of the workout plan and is required"
       },
       "duration": {
         "bsonType": "int",

@@ -31,7 +31,7 @@ type WorkoutDay struct {
 	WarmUp           []Circuit          `bson:"warmUp" json:"warmUp" binding:"required" validate:"required,dive"`
 	Workout          []Circuit          `bson:"workout" json:"workout" binding:"required" validate:"required,dive"`
 	CoolDown         []Circuit          `bson:"coolDown" json:"coolDown" binding:"required" validate:"required,dive"`
-	WorkoutTimeRange [2]int             `bson:"workoutTimeRange" json:"workoutTimeRange" binding:"required" validate:"required,dive,gte=1"` // [minTime, maxTime] in seconds.
+	WorkoutTimeRange [2]int             `bson:"workoutTimeRange" json:"workoutTimeRange" binding:"required" validate:"required,dive,gte=1,lte=7200"` // [minTime, maxTime] in seconds.
 	// Removed TotalExercises and Equipment fields
 	// Other fields...
 }
@@ -63,6 +63,7 @@ type UserWorkoutWeekStatus struct {
 
 type WorkoutPlan struct {
 	ID       primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
+	Name     string             `bson:"name" json:"name" binding:"required" validate:"required,min=5,max=50"`
 	Duration int                `bson:"duration" json:"duration" binding:"required" validate:"required,gt=0"`
 	Weeks    []WorkoutWeek      `bson:"weeks" json:"weeks" binding:"required" validate:"required,dive"`
 }

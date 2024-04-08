@@ -211,6 +211,18 @@ func main() {
 				},
 			},
 		},
+		{
+			Name:        "Create Workout Plan",
+			Method:      "POST",
+			Path:        "/api/v1/admin/workout-plans",
+			Description: "Create a new workout plan",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
 	}
 
 	// Attemp to read and update an existing collection; otherwise generate a new one

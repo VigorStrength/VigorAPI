@@ -81,6 +81,9 @@ func (ms *MongoDBService) EnsureIndexes(ctx context.Context, db MongoDatabase) e
 		"userWorkoutWeekStatus": {
 			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "workoutWeekId", Value: 1}}, Options: options.Index().SetUnique(true)},
 		},
+		"workoutPlans": {
+				{Keys: bson.M{"name": 1}, Options: options.Index().SetUnique(true)},
+		},
 		"userWorkoutPlanStatus": {
 			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "workoutPlanId", Value: 1}}, Options: options.Index().SetUnique(true)},
 		},

@@ -34,8 +34,8 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	adminRoutes.GET("/exercises/search", adminController.SearchExercisesByName)
 	adminRoutes.PUT("/exercises/:id", adminController.UpdateExercise)
 	adminRoutes.DELETE("/exercises/:id", adminController.DeleteExercise)
-	// // CRUD Workout Plans
-	// adminRoutes.POST("/workout-plans", createWorkoutPlan)
+	// CRUD Workout Plans
+	adminRoutes.POST("/workout-plans", adminController.CreateWorkoutPlan)
 	// adminRoutes.PUT("/workout-plans/:id", updateWorkoutPlan)
 	// adminRoutes.DELETE("/workout-plans/:id", deleteWorkoutPlan)
 	// adminRoutes.GET("/workout-plans", getWorkoutPlans)
