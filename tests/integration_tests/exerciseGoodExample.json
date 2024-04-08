@@ -13,7 +13,7 @@
       "Push yourself back up to the starting position."
     ],
     "time": 60,
-    "log": {
+    "proposedLog": {
       "proposedReps": 10,
       "actualReps": null,
       "proposedWeight": null,
@@ -34,7 +34,7 @@
       "Press your front heel to return to the starting position."
     ],
     "time": 60,
-    "log": {
+    "proposedLog": {
       "proposedReps": 10
     }
   },
@@ -50,7 +50,7 @@
       "Lower the weights with control back to shoulder height."
     ],
     "time": 45,
-    "log": {
+    "proposedLog": {
       "proposedReps": 8,
       "proposedWeight": 25.0
     }
@@ -68,7 +68,7 @@
       "Hold this position for the prescribed time."
     ],
     "time": 60,
-    "log": {
+    "proposedLog": {
       "proposedReps": 3,
       "proposedTime": 60
     }
@@ -86,7 +86,7 @@
       "Lower the weights back to the starting position."
     ],
     "time": 45,
-    "log": {
+    "proposedLog": {
       "proposedReps": 10,
       "proposedWeight": 30.0
     }

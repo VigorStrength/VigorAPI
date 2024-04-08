@@ -75,6 +75,25 @@ func (as *AdminService) CreateExercise(ctx context.Context, exerciseInput models
 	return nil
 }
 
+func (as *AdminService) CreateExercises(ctx context.Context, exercises []models.Exercise) error {
+	//Get the exercise collection
+	exerciseCollection := as.database.Collection("exercises")
+
+	// Convert the exercises to an array of interfaces
+	var exercisesInterface []interface{}
+	for _, exercise := range exercises {
+		exercisesInterface = append(exercisesInterface, exercise)
+	}
+
+	// Insert the exercises into the database
+	_, err := exerciseCollection.InsertMany(ctx, exercisesInterface)
+	if err != nil {
+		return fmt.Errorf("error inserting exercises: %w", err)
+	}
+
+	return nil
+}
+
 func (as *AdminService) UpdateExercise(ctx context.Context, exerciseID primitive.ObjectID, updateInput models.ExerciseUpdateInput) error {
 	//Get the exercise collection
 	exerciseCollection := as.database.Collection("exercises")
@@ -134,3 +153,4 @@ func (as *AdminService) SearchExercisesByName(ctx context.Context, name string) 
 
 	return exercises, nil
 }
+

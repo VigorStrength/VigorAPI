@@ -28,6 +28,7 @@ type MongoCollection interface {
 	Indexes() MongoIndexView
 	FindOne(ctx context.Context, filter interface{}) MongoSingleResult
 	Find(ctx context.Context, filter interface{}) (MongoCursor, error)
+	InsertMany(ctx context.Context, documents []interface{}) (MongoInsertManyResult, error)
 	InsertOne(ctx context.Context, document interface{}) (MongoInsertOneResult, error)
 	UpdateOne(ctx context.Context, filter interface{}, update interface{}) (MongoUpdateResult, error)
 	DeleteOne(ctx context.Context, filter interface{}) (MongoDeleteResult, error)
@@ -61,6 +62,10 @@ type DBService interface {
 
 type MongoInsertOneResult struct {
 	InsertedID interface{}
+}
+
+type MongoInsertManyResult struct {
+	InsertedIDs []interface{}
 }
 
 type MongoUpdateResult struct {

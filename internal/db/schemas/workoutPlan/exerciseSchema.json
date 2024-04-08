@@ -8,7 +8,7 @@
       "targetMuscles",
       "instructions",
       "time",
-      "log"
+      "proposedLog"
     ],
     "properties": {
       "_id": { "bsonType": "objectId" },
@@ -34,7 +34,7 @@
         "items": { "bsonType": "string" }
       },
       "time": { "bsonType": "int", "minimum": 30, "maximum": 300 },
-      "log": {
+      "proposedLog": {
         "bsonType": "object",
         "required": ["proposedReps"],
         "properties": {

@@ -27,12 +27,18 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	adminRoutes.Use(middlewares.RequireRole(ts, "admin"))
 	// // CRUD Exercises
 	adminRoutes.POST("/exercises", adminController.CreateExercise)
+	adminRoutes.POST("/exercises/bulk", adminController.CreateMultipleExercises)
 	// TODO: Implement sort, filter, and pagination for exercises
 	adminRoutes.GET("/exercises", adminController.GetExercises)
 	adminRoutes.GET("/exercises/:id", adminController.GetExerciseByID)
 	adminRoutes.GET("/exercises/search", adminController.SearchExercisesByName)
 	adminRoutes.PUT("/exercises/:id", adminController.UpdateExercise)
 	adminRoutes.DELETE("/exercises/:id", adminController.DeleteExercise)
+	// // CRUD Workout Plans
+	// adminRoutes.POST("/workout-plans", createWorkoutPlan)
+	// adminRoutes.PUT("/workout-plans/:id", updateWorkoutPlan)
+	// adminRoutes.DELETE("/workout-plans/:id", deleteWorkoutPlan)
+	// adminRoutes.GET("/workout-plans", getWorkoutPlans)
 	
 	
 	
@@ -109,11 +115,6 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	// userRoutes.DELETE("/groups/:groupId/members/:userId", removeGroupMember)
 	// Other group functionalities as needed (e.g, add member, join a group, having a group live workout party etc.)
 
-	// // CRUD Workout Plans
-	// adminRoutes.POST("/workout-plans", createWorkoutPlan)
-	// adminRoutes.PUT("/workout-plans/:id", updateWorkoutPlan)
-	// adminRoutes.DELETE("/workout-plans/:id", deleteWorkoutPlan)
-	// adminRoutes.GET("/workout-plans", getWorkoutPlans)
 	// // CRUD Meals
 	// adminRoutes.POST("/meals", createMeal)
 	// adminRoutes.PUT("/meals/:id", updateMeal)

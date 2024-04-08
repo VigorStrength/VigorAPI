@@ -89,6 +89,14 @@ func (mdc *mongoCollectionWrapper) Find(ctx context.Context, filter interface{})
 	return &mongoCursorWrapper{cursor: cursor}, nil
 }
 
+func (mdc *mongoCollectionWrapper) InsertMany(ctx context.Context, documents []interface{}) (MongoInsertManyResult, error) {
+	result, err := mdc.collection.InsertMany(ctx, documents)
+	if err != nil {
+		return MongoInsertManyResult{}, err
+	}
+	return MongoInsertManyResult{InsertedIDs: result.InsertedIDs}, nil
+}
+
 func (mdc *mongoCollectionWrapper) InsertOne(ctx context.Context, document interface{}) (MongoInsertOneResult, error) {
 	result, err := mdc.collection.InsertOne(ctx, document)
 	if err != nil {

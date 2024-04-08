@@ -74,6 +74,37 @@ func (ac *AdminController) CreateExercise(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Exercise created successfully"})
 }
 
+func (ac *AdminController) CreateMultipleExercises(c *gin.Context) {
+	var exercises []models.Exercise
+
+	if err := c.ShouldBindJSON(&exercises); err != nil {
+		log.Printf("Error parsing JSON: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Could not parse request body"})
+		return
+	}
+
+	for _, exercise := range exercises {
+		if err := validate.Struct(exercise); err != nil {
+			log.Printf("Error validating input: %v\n", err)
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
+			return
+		}
+	}
+
+	if err := ac.AdminService.CreateExercises(c.Request.Context(), exercises); err != nil {
+		if errors.Is(err, services.ErrExerciseAlreadyExists) {
+			c.JSON(http.StatusConflict, gin.H{"error": "Exercise already exists"})
+			return
+		}
+
+		log.Printf("Error creating exercises: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create exercises"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Exercises created successfully"})
+}
+
 func (ac *AdminController) UpdateExercise(c *gin.Context) {
 	exerciseID, err := primitive.ObjectIDFromHex(c.Param("id"))
 	if err != nil {

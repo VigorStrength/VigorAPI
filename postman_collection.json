@@ -290,6 +290,32 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Create Multiple Exercises",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/admin/exercises/bulk",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/exercises/bulk"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }

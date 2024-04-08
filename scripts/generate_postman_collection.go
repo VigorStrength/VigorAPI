@@ -140,6 +140,18 @@ func main() {
 			},
 		},
 		{
+			Name:        "Create Multiple Exercises",
+			Method:      "POST",
+			Path:        "/api/v1/admin/exercises/bulk",
+			Description: "Create multiple exercises at once",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
 			Name:        "Get Exercises",
 			Method:      "GET",
 			Path:        "/api/v1/admin/exercises",

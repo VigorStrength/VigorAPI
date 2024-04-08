@@ -9,118 +9,109 @@
       },
       "duration": {
         "bsonType": "int",
+        "minimum": 1,
         "description": "duration of the workout plan in weeks and is required"
       },
       "weeks": {
         "bsonType": "array",
+        "minItems": 1,
         "items": {
           "bsonType": "object",
           "required": ["days", "weekNumber"],
           "properties": {
             "weekNumber": {
-              "bsonType": "int"
+              "bsonType": "int",
+              "minimum": 1
             },
             "days": {
               "bsonType": "array",
+              "minItems": 1,
               "items": {
                 "bsonType": "object",
                 "required": [
                   "warmUp",
                   "workout",
                   "coolDown",
-                  "totalExercises",
-                  "totalLaps",
-                  "workoutTimeRange",
-                  "equipment",
-                  "completionStatus"
+                  "workoutTimeRange"
                 ],
                 "properties": {
                   "warmUp": {
                     "bsonType": "array",
+                    "minItems": 1,
                     "items": {
                       "bsonType": "object",
                       "required": ["exerciseIds", "proposedLaps"],
                       "properties": {
                         "exerciseIds": {
                           "bsonType": "array",
+                          "minItems": 1,
                           "items": {
                             "bsonType": "objectId"
                           }
                         },
                         "restTime": {
-                          "bsonType": "int"
+                          "bsonType": "int",
+                          "minimum": 5,
+                          "maximum": 240
                         },
                         "proposedLaps": {
-                          "bsonType": "int"
-                        },
-                        "actualLaps": {
-                          "bsonType": "int"
-                        },
-                        "completed": {
-                          "bsonType": "bool"
+                          "bsonType": "int",
+                          "minimum": 1
                         }
                       }
                     }
                   },
                   "workout": {
                     "bsonType": "array",
+                    "minItems": 1,
                     "items": {
                       "bsonType": "object",
                       "required": ["exerciseIds", "proposedLaps"],
                       "properties": {
                         "exerciseIds": {
                           "bsonType": "array",
+                          "minItems": 1,
                           "items": {
                             "bsonType": "objectId"
                           }
                         },
                         "restTime": {
-                          "bsonType": "int"
+                          "bsonType": "int",
+                          "minimum": 5,
+                          "maximum": 240
                         },
                         "proposedLaps": {
-                          "bsonType": "int"
-                        },
-                        "actualLaps": {
-                          "bsonType": "int"
-                        },
-                        "completed": {
-                          "bsonType": "bool"
+                          "bsonType": "int",
+                          "minimum": 1
                         }
                       }
                     }
                   },
                   "coolDown": {
                     "bsonType": "array",
+                    "minItems": 1,
                     "items": {
                       "bsonType": "object",
                       "required": ["exerciseIds", "proposedLaps"],
                       "properties": {
                         "exerciseIds": {
                           "bsonType": "array",
+                          "minItems": 1,
                           "items": {
                             "bsonType": "objectId"
                           }
                         },
                         "restTime": {
-                          "bsonType": "int"
+                          "bsonType": "int",
+                          "minimum": 5,
+                          "maximum": 240
                         },
                         "proposedLaps": {
-                          "bsonType": "int"
-                        },
-                        "actualLaps": {
-                          "bsonType": "int"
-                        },
-                        "completed": {
-                          "bsonType": "bool"
+                          "bsonType": "int",
+                          "minimum": 1
                         }
                       }
                     }
-                  },
-                  "totalExercises": {
-                    "bsonType": "int"
-                  },
-                  "totalLaps": {
-                    "bsonType": "int"
                   },
                   "workoutTimeRange": {
                     "bsonType": "array",
@@ -128,22 +119,11 @@
                       "bsonType": "int"
                     },
                     "minItems": 2,
-                    "maxItems": 2
-                  },
-                  "equipment": {
-                    "bsonType": "array",
-                    "items": {
-                      "bsonType": "string"
-                    }
-                  },
-                  "completionStatus": {
-                    "bsonType": "bool"
+                    "maxItems": 2,
+                    "description": "workout time range in seconds [minTime, maxTime]"
                   }
                 }
               }
-            },
-            "completedDays": {
-              "bsonType": "int"
             }
           }
         }

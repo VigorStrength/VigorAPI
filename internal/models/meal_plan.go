@@ -33,8 +33,8 @@ type Meal struct {
 	PrepTime          int                `bson:"prepTime" json:"prepTime" binding:"required"`       // Preparation time in minutes.
 	CookingTime       int                `bson:"cookingTime" json:"cookingTime" binding:"required"` // Cooking time in minutes.
 	NutritionalInfo   NutritionalInfo    `bson:"nutritionalInfo" json:"nutritionalInfo" binding:"required"`
-	Description       string             `bson:"description,omitempty" json:"description,omitempty"` // Optional.
-	NutritionalLabels []string           `bson:"nutritionalLabels" json:"nutritionalLabels"`         // E.g., GF, DF, etc.
+	Description       string             `bson:"description,omitempty" json:"description,omitempty"`          // Optional.
+	NutritionalLabels []string           `bson:"nutritionalLabels" json:"nutritionalLabels"`                  // E.g., GF, DF, etc.
 	NumberOfServings  int                `bson:"numberOfServings" json:"numberOfServings" binding:"required"` // Default is 1; can be updated.
 }
 
@@ -51,44 +51,44 @@ type UserDailyNutritionalLog struct {
 }
 
 type UserMealStatus struct {
-    ID       primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
-    UserID   primitive.ObjectID `bson:"userId" json:"userId" binding:"required"`
-    MealID   primitive.ObjectID `bson:"mealId" json:"mealId" binding:"required"`
-    Completed bool              `bson:"completed" json:"completed"`
+	ID        primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
+	UserID    primitive.ObjectID `bson:"userId" json:"userId" binding:"required"`
+	MealID    primitive.ObjectID `bson:"mealId" json:"mealId" binding:"required"`
+	Completed bool               `bson:"completed" json:"completed"`
 }
 
 // WeeklyPlan represents a weekly grouping of meals by category, used for generic meal proposals.
 type WeeklyPlan struct {
-    ID             primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
-    WeekNumber     int                `bson:"weekNumber,omitempty" json:"weekNumber,omitempty"` // Optional; not required for chef's picks.
-    Breakfast      []primitive.ObjectID `bson:"breakfast" json:"breakfast"`
-    MorningSnack   []primitive.ObjectID `bson:"morningSnack" json:"morningSnack"` // Optional, not all diets may include a morning snack.
-    Lunch          []primitive.ObjectID `bson:"lunch" json:"lunch"`
-    AfternoonSnack []primitive.ObjectID `bson:"afternoonSnack" json:"afternoonSnack"` // Optional.
-    Dinner         []primitive.ObjectID `bson:"dinner" json:"dinner"`
+	ID             primitive.ObjectID   `bson:"_id,omitempty" json:"id,omitempty"`
+	WeekNumber     int                  `bson:"weekNumber,omitempty" json:"weekNumber,omitempty"` // Optional; not required for chef's picks.
+	Breakfast      []primitive.ObjectID `bson:"breakfast" json:"breakfast"`
+	MorningSnack   []primitive.ObjectID `bson:"morningSnack" json:"morningSnack"` // Optional, not all diets may include a morning snack.
+	Lunch          []primitive.ObjectID `bson:"lunch" json:"lunch"`
+	AfternoonSnack []primitive.ObjectID `bson:"afternoonSnack" json:"afternoonSnack"` // Optional.
+	Dinner         []primitive.ObjectID `bson:"dinner" json:"dinner"`
 }
 
 // UserWeeklyPlanStatus tracks the completion status of a meal plan week for a specific user
 type UserWeeklyPlanStatus struct {
-	ID 			   primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
-	UserID 		   primitive.ObjectID `bson:"userId" json:"userId" binding:"required"`
-	WeeklyPlanId   primitive.ObjectID `bson:"weeklyPlanId" json:"weeklyPlanId" binding:"required"`
-	CompletedDays  int                `bson:"completedDays" json:"completedDays"`
+	ID            primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
+	UserID        primitive.ObjectID `bson:"userId" json:"userId" binding:"required"`
+	WeeklyPlanId  primitive.ObjectID `bson:"weeklyPlanId" json:"weeklyPlanId" binding:"required"`
+	CompletedDays int                `bson:"completedDays" json:"completedDays"`
 }
 
 type MealPlan struct {
-	ID       primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
-	Duration int 				`bson:"duration" json:"duration" binding:"required"`
-	WeeklyPlans []WeeklyPlan    `bson:"weeklyPlans" json:"weeklyPlans" binding:"required"`
+	ID          primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
+	Duration    int                `bson:"duration" json:"duration" binding:"required"`
+	WeeklyPlans []WeeklyPlan       `bson:"weeklyPlans" json:"weeklyPlans" binding:"required"`
 }
 
 type UserMealPlanStatus struct {
-	ID         primitive.ObjectID  `bson:"_id,omitempty" json:"id,omitempty"`
-	UserID 	   primitive.ObjectID  `bson:"userId" json:"userId" binding:"required"` 
-	MealPlanID primitive.ObjectID  `bson:"mealPlanId" json:"mealPlanId" binding:"required"`
-	StartDate  time.Time 		   `bson:"startDate" json:"startDate" binding:"required"`
-	CompletionDate *time.Time	   `bson:"completionDate" json:"completionDate"`
-	Completed  bool 			   `bson:"completed" json:"completed"`
+	ID             primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
+	UserID         primitive.ObjectID `bson:"userId" json:"userId" binding:"required"`
+	MealPlanID     primitive.ObjectID `bson:"mealPlanId" json:"mealPlanId" binding:"required"`
+	StartDate      time.Time          `bson:"startDate" json:"startDate" binding:"required"`
+	CompletionDate *time.Time         `bson:"completionDate" json:"completionDate"`
+	Completed      bool               `bson:"completed" json:"completed"`
 }
 
 // AI MealPlan
