@@ -223,6 +223,30 @@ func main() {
 				},
 			},
 		},
+		{
+			Name:        "Update Workout Plan",
+			Method:      "PUT",
+			Path:        "/api/v1/admin/workout-plans/:id",
+			Description: "Update an existing workout plan",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
+			Name:        "Delete Workout Plan",
+			Method:      "DELETE",
+			Path:        "/api/v1/admin/workout-plans/:id",
+			Description: "Delete an existing workout plan",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
 	}
 
 	// Attemp to read and update an existing collection; otherwise generate a new one
@@ -304,7 +328,8 @@ func createPostmanItemFromRoute(route Route) PostmanItem {
 	}
 
 	routePath := route.Path
-	routePath = strings.Replace(routePath, ":id", "{{exerciseId}}", -1)
+	routePath = strings.Replace(routePath, "exercises/:id", "exercises/{{exerciseId}}", -1)
+	routePath = strings.Replace(routePath, "workout-plans/:id", "workout-plans/{{workoutPlanId}}", -1)
 
 	item := PostmanItem{
 		Name: route.Name,

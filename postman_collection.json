@@ -342,6 +342,58 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Update Workout Plan",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/admin/workout-plans/{{workoutPlanId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/workout-plans/{{workoutPlanId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Workout Plan",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/admin/workout-plans/{{workoutPlanId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/workout-plans/{{workoutPlanId}}"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }

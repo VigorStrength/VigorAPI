@@ -8,6 +8,7 @@ import (
 	"github.com/GhostDrew11/vigor-api/internal/models"
 	"github.com/GhostDrew11/vigor-api/internal/services"
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 
@@ -37,4 +38,62 @@ func (ac *AdminController) CreateWorkoutPlan(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, gin.H{"message": "Workout plan created successfully"})
+}
+
+func (ac *AdminController) UpdateWorkoutPlan(c *gin.Context) {
+	workoutPlanID, err := primitive.ObjectIDFromHex(c.Param("id"))
+	if err != nil {
+		log.Printf("Error parsing workout plan ID: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid workout plan ID"})
+		return
+	}
+
+	var updateInput models.WorkoutPlanInput
+
+	if err := c.ShouldBindJSON(&updateInput); err != nil {
+		log.Printf("Error parsing JSON: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Could not parse request body"})
+		return
+	}
+
+	if err := validate.Struct(updateInput); err != nil {
+		log.Printf("Error validating input: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
+		return
+	}
+
+	if err := ac.AdminService.UpdateWorkoutPlan(c, workoutPlanID, updateInput); err != nil {
+		if errors.Is(err, services.ErrWorkoutPlanNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Workout plan not found"})
+			return
+		}
+
+		log.Printf("Error updating workout plan: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Workout plan updated successfully"})
+}
+
+func (ac *AdminController) DeleteWorkoutPlan(c *gin.Context) {
+	workoutPlanID, err := primitive.ObjectIDFromHex(c.Param("id"))
+	if err != nil {
+		log.Printf("Error parsing workout plan ID: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid workout plan ID"})
+		return
+	}
+
+	if err := ac.AdminService.DeleteWorkoutPlan(c, workoutPlanID); err != nil {
+		if errors.Is(err, services.ErrWorkoutPlanNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Workout plan not found"})
+			return
+		}
+
+		log.Printf("Error deleting workout plan: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Workout plan deleted successfully"})
 }
