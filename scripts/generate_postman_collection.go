@@ -224,6 +224,30 @@ func main() {
 			},
 		},
 		{
+			Name:        "Get Workout Plan by ID",
+			Method:      "GET",
+			Path:        "/api/v1/admin/workout-plans/:id",
+			Description: "Get a workout plan by its ID",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
+			Name:        "Get Workout Plans",
+			Method:      "GET",
+			Path:        "/api/v1/admin/workout-plans",
+			Description: "Get all workout plans",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
 			Name:        "Update Workout Plan",
 			Method:      "PUT",
 			Path:        "/api/v1/admin/workout-plans/:id",

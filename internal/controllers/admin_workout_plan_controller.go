@@ -11,6 +11,39 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+func (ac *AdminController) GetWorkoutPlanByID(c *gin.Context) {
+	workoutPlanID, err := primitive.ObjectIDFromHex(c.Param("id"))
+	if err != nil {
+		log.Printf("Error parsing workout plan ID: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid workout plan ID"})
+		return
+	}
+
+	workoutPlan, err := ac.AdminService.GetWorkoutPlanByID(c.Request.Context(), workoutPlanID)
+	if err != nil {
+		if errors.Is(err, services.ErrWorkoutPlanNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Workout plan not found"})
+			return
+		}
+
+		log.Printf("Error getting workout plan: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get workout plan"})
+		return
+	}
+
+	c.JSON(http.StatusOK, workoutPlan)
+}
+
+func (ac *AdminController) GetWorkoutPlans(c *gin.Context) {
+	workoutPlans, err := ac.AdminService.GetWorkoutPlans(c.Request.Context())
+	if err != nil {
+		log.Printf("Error getting workout plans: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get workout plans"})
+		return
+	}
+
+	c.JSON(http.StatusOK, workoutPlans)
+}
 
 func (ac *AdminController) CreateWorkoutPlan(c *gin.Context) {
 	var workoutPlan models.WorkoutPlan

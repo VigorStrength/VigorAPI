@@ -394,6 +394,58 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Get Workout Plan by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/admin/workout-plans/{{workoutPlanId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/workout-plans/{{workoutPlanId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Workout Plans",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/admin/workout-plans",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/workout-plans"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }

@@ -15,6 +15,38 @@ var (
 	ErrWorkoutPlanNotFound = fmt.Errorf("workout plan not found")
 )
 
+func (as *AdminService) GetWorkoutPlanByID(ctx context.Context, workoutPlanID primitive.ObjectID) (models.WorkoutPlan, error) {
+	// Get the workout plan collection
+	workoutPlanCollection := as.database.Collection("workoutPlans")
+
+	// Find the workout plan by ID
+	filter := bson.M{"_id": workoutPlanID}
+	var workoutPlan models.WorkoutPlan
+	err := workoutPlanCollection.FindOne(ctx, filter).Decode(&workoutPlan)
+	if err != nil {
+		return models.WorkoutPlan{}, fmt.Errorf("error finding workout plan: %w", err)
+	}
+
+	return workoutPlan, nil
+}
+
+func (as *AdminService) GetWorkoutPlans(ctx context.Context) ([]models.WorkoutPlan, error) {
+	workoutCollection := as.database.Collection("workoutPlans")
+
+	cursor, err := workoutCollection.Find(ctx, bson.M{})
+	if err != nil {
+		return nil, fmt.Errorf("error finding workout plans: %w", err)
+	}
+	defer cursor.Close(ctx)
+
+	var workoutPlans []models.WorkoutPlan
+	if err := cursor.All(ctx, &workoutPlans); err != nil {
+		return nil, fmt.Errorf("error decoding workout plans: %w", err)
+	}
+
+	return workoutPlans, nil
+}
+
 func (as *AdminService) CreateWorkoutPlan(ctx context.Context, workoutPlanInput models.WorkoutPlan) error {
 	// Get the workout plan collection
 	workoutPlanCollection := as.database.Collection("workoutPlans")
