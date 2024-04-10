@@ -14,9 +14,9 @@ type WorkoutWeekInput struct {
 }
 
 type WorkoutDayInput struct {
-	WarmUp 		 *[]CircuitInput `json:"warmUp,omitempty"  validate:"omitempty,dive"`
-	Workout 	 *[]CircuitInput `json:"workout,omitempty"  validate:"omitempty,dive"`
-	CoolDown 	 *[]CircuitInput `json:"coolDown,omitempty"  validate:"omitempty,dive"`
+	WarmUps 		 *[]CircuitInput `json:"warmUps,omitempty"  validate:"omitempty,dive"`
+	Workouts 	 *[]CircuitInput `json:"workouts,omitempty"  validate:"omitempty,dive"`
+	CoolDowns 	 *[]CircuitInput `json:"coolDowns,omitempty"  validate:"omitempty,dive"`
 	WorkoutTimeRange *[2]int `json:"workoutTimeRange,omitempty" validate:"omitempty,dive,gte=1,lte=7200"` // [minTime, maxTime] in seconds.
 }
 

@@ -1,0 +1,134 @@
+{
+  "name": "Beginner's Full Body Strength - Updated",
+  "duration": 4,
+  "weeks": [
+    {
+      "weekNumber": 1,
+      "days": [
+        {
+          "warmUps": [
+            {
+              "exerciseIds": ["6613ee6290b42302aefa18e5"],
+              "proposedLaps": 2,
+              "restTime": 45
+            }
+          ],
+          "workouts": [
+            {
+              "exerciseIds": [
+                "6613e3987655ce5f3f0b696a",
+                "6613e3a87655ce5f3f0b696b"
+              ],
+              "proposedLaps": 3,
+              "restTime": 75
+            }
+          ],
+          "coolDowns": [
+            {
+              "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+              "proposedLaps": 1,
+              "restTime": 30
+            }
+          ],
+          "workoutTimeRange": [900, 1800]
+        }
+      ]
+    },
+    {
+      "weekNumber": 2,
+      "days": [
+        {
+          "warmUps": [
+            {
+              "exerciseIds": ["6613ee6290b42302aefa18e5"],
+              "proposedLaps": 2,
+              "restTime": 45
+            }
+          ],
+          "workouts": [
+            {
+              "exerciseIds": [
+                "6613e3b67655ce5f3f0b696c",
+                "6613e3fa7655ce5f3f0b696e"
+              ],
+              "proposedLaps": 3,
+              "restTime": 85
+            }
+          ],
+          "coolDowns": [
+            {
+              "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+              "proposedLaps": 1,
+              "restTime": 30
+            }
+          ],
+          "workoutTimeRange": [1200, 1800]
+        }
+      ]
+    },
+    {
+      "weekNumber": 3,
+      "days": [
+        {
+          "warmUps": [
+            {
+              "exerciseIds": ["6613ee6290b42302aefa18e5"],
+              "proposedLaps": 3,
+              "restTime": 60
+            }
+          ],
+          "workouts": [
+            {
+              "exerciseIds": [
+                "6613e3987655ce5f3f0b696a",
+                "6613e3a87655ce5f3f0b696b"
+              ],
+              "proposedLaps": 4,
+              "restTime": 90
+            }
+          ],
+          "coolDowns": [
+            {
+              "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+              "proposedLaps": 2,
+              "restTime": 40
+            }
+          ],
+          "workoutTimeRange": [1500, 2100]
+        }
+      ]
+    },
+    {
+      "weekNumber": 4,
+      "days": [
+        {
+          "warmUps": [
+            {
+              "exerciseIds": ["6613ee6290b42302aefa18e5"],
+              "proposedLaps": 3,
+              "restTime": 60
+            }
+          ],
+          "workouts": [
+            {
+              "exerciseIds": [
+                "6613e3b67655ce5f3f0b696c",
+                "6613e3fa7655ce5f3f0b696e"
+              ],
+              "proposedLaps": 4,
+              "restTime": 120
+            }
+          ],
+          "coolDowns": [
+            {
+              "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+              "proposedLaps": 2,
+              "restTime": 45
+            }
+          ],
+          "workoutTimeRange": [1800, 2400]
+        }
+      ]
+    }
+  ]
+}

@@ -28,9 +28,9 @@ type UserCircuitStatus struct {
 // WorkoutDay represents a complete day's workout plan, including warm-up, workout, and cool-down.
 type WorkoutDay struct {
 	ID               primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
-	WarmUp           []Circuit          `bson:"warmUp" json:"warmUp" binding:"required" validate:"required,dive"`
-	Workout          []Circuit          `bson:"workout" json:"workout" binding:"required" validate:"required,dive"`
-	CoolDown         []Circuit          `bson:"coolDown" json:"coolDown" binding:"required" validate:"required,dive"`
+	WarmUps           []Circuit          `bson:"warmUps" json:"warmUps" binding:"required" validate:"required,dive"`
+	Workouts          []Circuit          `bson:"workouts" json:"workouts" binding:"required" validate:"required,dive"`
+	CoolDowns         []Circuit          `bson:"coolDowns" json:"coolDowns" binding:"required" validate:"required,dive"`
 	WorkoutTimeRange [2]int             `bson:"workoutTimeRange" json:"workoutTimeRange" binding:"required" validate:"required,dive,gte=1,lte=7200"` // [minTime, maxTime] in seconds.
 	// Removed TotalExercises and Equipment fields
 	// Other fields...

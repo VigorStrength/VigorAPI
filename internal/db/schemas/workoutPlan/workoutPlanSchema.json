@@ -5,7 +5,7 @@
     "properties": {
       "_id": {
         "bsonType": "objectId",
-        "description": "must be an objectId and is required"
+        "description": "must be an objectId"
       },
       "name": {
         "bsonType": "string",
@@ -23,6 +23,10 @@
           "bsonType": "object",
           "required": ["days", "weekNumber"],
           "properties": {
+            "_id": {
+              "bsonType": "objectId",
+              "description": "must be an objectId"
+            },
             "weekNumber": {
               "bsonType": "int",
               "minimum": 1
@@ -33,19 +37,27 @@
               "items": {
                 "bsonType": "object",
                 "required": [
-                  "warmUp",
-                  "workout",
-                  "coolDown",
+                  "warmUps",
+                  "workouts",
+                  "coolDowns",
                   "workoutTimeRange"
                 ],
                 "properties": {
-                  "warmUp": {
+                  "_id": {
+                    "bsonType": "objectId",
+                    "description": "must be an objectId"
+                  },
+                  "warmUps": {
                     "bsonType": "array",
                     "minItems": 1,
                     "items": {
                       "bsonType": "object",
                       "required": ["exerciseIds", "proposedLaps"],
                       "properties": {
+                        "_id": {
+                          "bsonType": "objectId",
+                          "description": "must be an objectId"
+                        },
                         "exerciseIds": {
                           "bsonType": "array",
                           "minItems": 1,
@@ -65,13 +77,17 @@
                       }
                     }
                   },
-                  "workout": {
+                  "workouts": {
                     "bsonType": "array",
                     "minItems": 1,
                     "items": {
                       "bsonType": "object",
                       "required": ["exerciseIds", "proposedLaps"],
                       "properties": {
+                        "_id": {
+                          "bsonType": "objectId",
+                          "description": "must be an objectId"
+                        },
                         "exerciseIds": {
                           "bsonType": "array",
                           "minItems": 1,
@@ -91,13 +107,17 @@
                       }
                     }
                   },
-                  "coolDown": {
+                  "coolDowns": {
                     "bsonType": "array",
                     "minItems": 1,
                     "items": {
                       "bsonType": "object",
                       "required": ["exerciseIds", "proposedLaps"],
                       "properties": {
+                        "_id": {
+                          "bsonType": "objectId",
+                          "description": "must be an objectId"
+                        },
                         "exerciseIds": {
                           "bsonType": "array",
                           "minItems": 1,
