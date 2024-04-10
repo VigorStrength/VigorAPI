@@ -8,34 +8,34 @@ import (
 
 // Ingredient represents an ingredient used in a meal, including its quantity and measurement.
 type Ingredient struct {
-	Name     string  `bson:"name" json:"name" binding:"required"`
-	Quantity *string `bson:"quantity,omitempty" json:"quantity,omitempty"` // Quantity can be nil, e.g., "to taste".
+	Name     string  `bson:"name" json:"name" binding:"required" validate:"required"`
+	Quantity *string `bson:"quantity,omitempty" json:"quantity,omitempty" validate:"omitempty,gte=0"` // Quantity can be nil, e.g., "to taste".
 }
 
 // NutritionalInfo represents the nutritional breakdown of a meal per serving.
 type NutritionalInfo struct {
-	Energy        float64 `bson:"energy" json:"energy" binding:"required"`               // In KJ or Cal.
-	Protein       float64 `bson:"protein" json:"protein" binding:"required"`             // In grams.
-	Fat           float64 `bson:"fat" json:"fat" binding:"required"`                     // In grams.
-	SaturatedFat  float64 `bson:"saturatedFat" json:"saturatedFat" binding:"required"`   // In grams.
-	Carbohydrates float64 `bson:"carbohydrates" json:"carbohydrates" binding:"required"` // In grams.
-	Sugars        float64 `bson:"sugars" json:"sugars" binding:"required"`               // In grams.
-	Fiber         float64 `bson:"fiber" json:"fiber" binding:"required"`                 // In grams.
+	Energy        float64 `bson:"energy" json:"energy" binding:"required" validate:"required"`               // In KJ or Cal.
+	Protein       float64 `bson:"protein" json:"protein" binding:"required" validate:"required"`             // In grams.
+	Fat           float64 `bson:"fat" json:"fat" binding:"required" validate:"required"`                     // In grams.
+	SaturatedFat  float64 `bson:"saturatedFat" json:"saturatedFat" binding:"required" validate:"required"`   // In grams.
+	Carbohydrates float64 `bson:"carbohydrates" json:"carbohydrates" binding:"required" validate:"required"` // In grams.
+	Sugars        float64 `bson:"sugars" json:"sugars" binding:"required" validate:"required"`               // In grams.
+	Fiber         float64 `bson:"fiber" json:"fiber" binding:"required" validate:"required"`                 // In grams.
 }
 
 // Meal represents a specific meal, including its ingredients, preparation, and nutritional information.
 type Meal struct {
 	ID                primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
-	Name              string             `bson:"name" json:"name" binding:"required"`
-	MealType          string             `bson:"mealType" json:"mealType" binding:"required"` // E.g., Breakfast, Lunch, etc.
-	Ingredients       []Ingredient       `bson:"ingredients" json:"ingredients" binding:"required"`
-	Method            []string           `bson:"method" json:"method" binding:"required"`           // Cooking instructions.
-	PrepTime          int                `bson:"prepTime" json:"prepTime" binding:"required"`       // Preparation time in minutes.
-	CookingTime       int                `bson:"cookingTime" json:"cookingTime" binding:"required"` // Cooking time in minutes.
-	NutritionalInfo   NutritionalInfo    `bson:"nutritionalInfo" json:"nutritionalInfo" binding:"required"`
-	Description       string             `bson:"description,omitempty" json:"description,omitempty"`          // Optional.
+	Name              string             `bson:"name" json:"name" binding:"required" validate:"required"`
+	MealType          string             `bson:"mealType" json:"mealType" binding:"required" validate:"required"` // E.g., Breakfast, Lunch, etc.
+	Ingredients       []Ingredient       `bson:"ingredients" json:"ingredients" binding:"required" validate:"required,dive,required"`
+	Method            []string           `bson:"method" json:"method" binding:"required" validate:"required"`           // Cooking instructions.
+	PrepTime          int                `bson:"prepTime" json:"prepTime" binding:"required" validate:"required,gte=5"`       // Preparation time in minutes.
+	CookingTime       int                `bson:"cookingTime" json:"cookingTime" binding:"required" validate:"required,gte=5"` // Cooking time in minutes.
+	NutritionalInfo   NutritionalInfo    `bson:"nutritionalInfo" json:"nutritionalInfo" binding:"required" validate:"required"`
+	Description       string             `bson:"description,omitempty" json:"description,omitempty" validate:"omitempty"`          // Optional.
 	NutritionalLabels []string           `bson:"nutritionalLabels" json:"nutritionalLabels"`                  // E.g., GF, DF, etc.
-	NumberOfServings  int                `bson:"numberOfServings" json:"numberOfServings" binding:"required"` // Default is 1; can be updated.
+	NumberOfServings  int                `bson:"numberOfServings" json:"numberOfServings" binding:"required" validate:"required,gte=1"` // Default is 1; can be updated.
 }
 
 // UserDailyNutritionalLog represents the user's daily log of nutritional intake.

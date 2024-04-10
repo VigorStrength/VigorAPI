@@ -13,13 +13,16 @@
     ],
     "properties": {
       "_id": {
-        "bsonType": "objectId"
+        "bsonType": "objectId",
+        "description": "must be an objectId and is required"
       },
       "name": {
-        "bsonType": "string"
+        "bsonType": "string",
+        "description": "name of the meal and is required"
       },
       "mealType": {
-        "bsonType": "string"
+        "bsonType": "string",
+        "description": "type of the meal (e.g., Breakfast, Lunch, etc.) and is required"
       },
       "ingredients": {
         "bsonType": "array",
@@ -28,25 +31,33 @@
           "required": ["name"],
           "properties": {
             "name": {
-              "bsonType": "string"
+              "bsonType": "string",
+              "description": "name of the ingredient and is required"
             },
             "quantity": {
-              "bsonType": "string"
+              "bsonType": "string",
+              "description": "quantity of the ingredient, can be nil, e.g., 'to taste'"
             }
           }
-        }
+        },
+        "description": "ingredients used in the meal and is required"
       },
       "method": {
         "bsonType": "array",
         "items": {
           "bsonType": "string"
-        }
+        },
+        "description": "cooking instructions for the meal and is required"
       },
       "prepTime": {
-        "bsonType": "int"
+        "bsonType": "int",
+        "minimum": 5,
+        "description": "preparation time in minutes and is required"
       },
       "cookingTime": {
-        "bsonType": "int"
+        "bsonType": "int",
+        "minimum": 5,
+        "description": "cooking time in minutes and is required"
       },
       "nutritionalInfo": {
         "bsonType": "object",
@@ -61,39 +72,51 @@
         ],
         "properties": {
           "energy": {
-            "bsonType": "double"
+            "bsonType": "double",
+            "description": "energy in KJ or Cal and is required"
           },
           "protein": {
-            "bsonType": "double"
+            "bsonType": "double",
+            "description": "protein in grams and is required"
           },
           "fat": {
-            "bsonType": "double"
+            "bsonType": "double",
+            "description": "fat in grams and is required"
           },
           "saturatedFat": {
-            "bsonType": "double"
+            "bsonType": "double",
+            "description": "saturated fat in grams and is required"
           },
           "carbohydrates": {
-            "bsonType": "double"
+            "bsonType": "double",
+            "description": "carbohydrates in grams and is required"
           },
           "sugars": {
-            "bsonType": "double"
+            "bsonType": "double",
+            "description": "sugars in grams and is required"
           },
           "fiber": {
-            "bsonType": "double"
+            "bsonType": "double",
+            "description": "fiber in grams and is required"
           }
-        }
+        },
+        "description": "nutritional breakdown of the meal per serving and is required"
       },
       "description": {
-        "bsonType": "string"
+        "bsonType": "string",
+        "description": "optional description of the meal"
       },
       "nutritionalLabels": {
         "bsonType": "array",
         "items": {
           "bsonType": "string"
-        }
+        },
+        "description": "nutritional labels for the meal, e.g., GF, DF, etc."
       },
       "numberOfServings": {
-        "bsonType": "int"
+        "bsonType": "int",
+        "minimum": 1,
+        "description": "number of servings provided by the meal and is required"
       }
     }
   }

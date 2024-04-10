@@ -38,9 +38,18 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	adminRoutes.POST("/workout-plans", adminController.CreateWorkoutPlan)
 	adminRoutes.GET("/workout-plans/:id", adminController.GetWorkoutPlanByID)
 	adminRoutes.GET("/workout-plans", adminController.GetWorkoutPlans)
+	adminRoutes.GET("/workout-plans/search", adminController.SearchWorkoutPlansByName)
 	adminRoutes.PUT("/workout-plans/:id", adminController.UpdateWorkoutPlan)
 	adminRoutes.DELETE("/workout-plans/:id", adminController.DeleteWorkoutPlan)
-	// adminRoutes.GET("/workout-plans", getWorkoutPlans)
+	// CRUD Meals
+	adminRoutes.POST("/meals", adminController.CreateMeal)
+	adminRoutes.GET("/meals/:id", adminController.GetMealByID)
+	adminRoutes.GET("/meals", adminController.GetMeals)
+	adminRoutes.GET("/meals/search", adminController.SearchMealsByName)
+	adminRoutes.DELETE("/meals/:id", adminController.DeleteMeal)
+	// adminRoutes.PUT("/meals/:id", updateMeal)
+	// adminRoutes.DELETE("/meals/:id", deleteMeal)
+	// adminRoutes.GET("/meals", getMeals)
 	
 	
 	
@@ -117,11 +126,7 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	// userRoutes.DELETE("/groups/:groupId/members/:userId", removeGroupMember)
 	// Other group functionalities as needed (e.g, add member, join a group, having a group live workout party etc.)
 
-	// // CRUD Meals
-	// adminRoutes.POST("/meals", createMeal)
-	// adminRoutes.PUT("/meals/:id", updateMeal)
-	// adminRoutes.DELETE("/meals/:id", deleteMeal)
-	// adminRoutes.GET("/meals", getMeals)
+	
 	// // CRUD Meal Plans
 	// adminRoutes.POST("/meal-plans", createMealPlan)
 	// adminRoutes.PUT("/meal-plans/:id", updateMealPlan)

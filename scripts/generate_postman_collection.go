@@ -178,7 +178,7 @@ func main() {
 		{
 			Name:        "Search Exercises by Name",
 			Method:      "GET",
-			Path:        "/api/v1/admin/exercises/search",
+			Path:        "/api/v1/admin/exercises/search?name={{exerciseName}}",
 			Description: "Search for exercises by name",
 			Headers: []RouteHeader{
 				{
@@ -248,6 +248,18 @@ func main() {
 			},
 		},
 		{
+			Name: 	  	  "Search Workout Plans by Name",
+			Method: 	  "GET",
+			Path: 		  "/api/v1/admin/workout-plans/search?name={{workoutPlanName}}",
+			Description:  "Search for workout plans by name",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
 			Name:        "Update Workout Plan",
 			Method:      "PUT",
 			Path:        "/api/v1/admin/workout-plans/:id",
@@ -264,6 +276,66 @@ func main() {
 			Method:      "DELETE",
 			Path:        "/api/v1/admin/workout-plans/:id",
 			Description: "Delete an existing workout plan",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
+			Name:        "Create Meal",
+			Method:      "POST",
+			Path:        "/api/v1/admin/meals",
+			Description: "Create a new meal",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
+			Name:        "Get Meal by ID",
+			Method:      "GET",
+			Path:        "/api/v1/admin/meals/:id",
+			Description: "Get a meal by its ID",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
+			Name: 	  	  "Search Meals by Name",
+			Method: 	  "GET",
+			Path: 		  "/api/v1/admin/meals/search?name={{mealName}}",
+			Description:  "Search for meals by name",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
+			Name:        "Get Meals",
+			Method:      "GET",
+			Path:        "/api/v1/admin/meals",
+			Description: "Get all meals",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
+			Name:        "Delete Meal",
+			Method:      "DELETE",
+			Path:        "/api/v1/admin/meals/:id",
+			Description: "Delete an existing meal",
 			Headers: []RouteHeader{
 				{
 					Key:   "Content-Type",
@@ -354,6 +426,7 @@ func createPostmanItemFromRoute(route Route) PostmanItem {
 	routePath := route.Path
 	routePath = strings.Replace(routePath, "exercises/:id", "exercises/{{exerciseId}}", -1)
 	routePath = strings.Replace(routePath, "workout-plans/:id", "workout-plans/{{workoutPlanId}}", -1)
+	routePath = strings.Replace(routePath, "meals/:id", "meals/{{mealId}}", -1)
 
 	item := PostmanItem{
 		Name: route.Name,

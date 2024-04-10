@@ -46,6 +46,24 @@ func (as *AdminService) GetWorkoutPlans(ctx context.Context) ([]models.WorkoutPl
 	return workoutPlans, nil
 }
 
+func(as *AdminService) SearchWorkoutPlansByName(ctx context.Context, name string) ([]models.WorkoutPlan, error) {
+    workoutPlanCollection := as.database.Collection("workoutPlans")
+
+    filter := bson.M{"name": primitive.Regex{Pattern: name, Options: "i"}}
+    cursor, err := workoutPlanCollection.Find(ctx, filter)
+    if err != nil {
+        return nil, fmt.Errorf("error finding workout plans by name: %w", err)
+    }
+    defer cursor.Close(ctx)
+
+    var workoutPlans []models.WorkoutPlan
+    if err := cursor.All(ctx, &workoutPlans); err != nil {
+        return nil, fmt.Errorf("error decoding workout plans: %w", err)
+    }
+
+    return workoutPlans, nil
+}
+
 func (as *AdminService) CreateWorkoutPlan(ctx context.Context, workoutPlanInput models.WorkoutPlan) error {
 	// Get the workout plan collection
 	workoutPlanCollection := as.database.Collection("workoutPlans")

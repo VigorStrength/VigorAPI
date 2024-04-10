@@ -1,0 +1,194 @@
+[
+  {
+    "name": "Quinoa and Black Bean Salad",
+    "mealType": "Lunch",
+    "ingredients": [
+      {
+        "name": "Quinoa",
+        "quantity": "1 cup"
+      },
+      {
+        "name": "Black Beans",
+        "quantity": "1 can (drained and rinsed)"
+      },
+      {
+        "name": "Corn",
+        "quantity": "1 cup"
+      },
+      {
+        "name": "Red Bell Pepper",
+        "quantity": "1 (diced)"
+      },
+      {
+        "name": "Cilantro",
+        "quantity": "1/4 cup (chopped)"
+      },
+      {
+        "name": "Lime Juice",
+        "quantity": "2 tablespoons"
+      },
+      {
+        "name": "Olive Oil",
+        "quantity": "2 tablespoons"
+      },
+      {
+        "name": "Salt",
+        "quantity": "to taste"
+      }
+    ],
+    "method": [
+      "Rinse quinoa under cold water and drain.",
+      "In a medium saucepan, combine quinoa with 2 cups of water. Bring to a boil, then cover and reduce heat to low. Simmer until quinoa is tender, about 15 minutes.",
+      "Let quinoa cool to room temperature, then fluff with a fork.",
+      "In a large bowl, combine cooled quinoa, black beans, corn, red bell pepper, and cilantro.",
+      "In a small bowl, whisk together lime juice, olive oil, and salt.",
+      "Pour dressing over quinoa mixture and toss to combine.",
+      "Serve immediately or chill in the refrigerator until serving."
+    ],
+    "prepTime": 15,
+    "cookingTime": 15,
+    "nutritionalInfo": {
+      "energy": 250,
+      "protein": 8,
+      "fat": 5,
+      "saturatedFat": 0.5,
+      "carbohydrates": 45,
+      "sugars": 3,
+      "fiber": 6
+    },
+    "description": "A fresh and zesty salad perfect for a nutritious lunch. Packed with protein from quinoa and black beans.",
+    "nutritionalLabels": ["GF", "DF", "Vegan"],
+    "numberOfServings": 4
+  },
+  {
+    "name": "Chicken and Vegetable Stir-Fry",
+    "mealType": "Dinner",
+    "ingredients": [
+      {
+        "name": "Chicken Breast",
+        "quantity": "2 (sliced)"
+      },
+      {
+        "name": "Broccoli",
+        "quantity": "1 head (cut into florets)"
+      },
+      {
+        "name": "Carrots",
+        "quantity": "2 (sliced)"
+      },
+      {
+        "name": "Red Bell Pepper",
+        "quantity": "1 (sliced)"
+      },
+      {
+        "name": "Soy Sauce",
+        "quantity": "1/4 cup"
+      },
+      {
+        "name": "Honey",
+        "quantity": "2 tablespoons"
+      },
+      {
+        "name": "Garlic",
+        "quantity": "2 cloves (minced)"
+      },
+      {
+        "name": "Ginger",
+        "quantity": "1 tablespoon (minced)"
+      },
+      {
+        "name": "Cornstarch",
+        "quantity": "1 tablespoon"
+      },
+      {
+        "name": "Water",
+        "quantity": "1/4 cup"
+      },
+      {
+        "name": "Vegetable Oil",
+        "quantity": "2 tablespoons"
+      }
+    ],
+    "method": [
+      "In a small bowl, whisk together soy sauce, honey, garlic, ginger, cornstarch, and water. Set aside.",
+      "In a large skillet or wok, heat vegetable oil over medium-high heat.",
+      "Add chicken and cook until browned, about 5 minutes.",
+      "Add broccoli, carrots, and red bell pepper to the skillet. Cook until vegetables are tender-crisp, about 5 minutes.",
+      "Pour sauce over chicken and vegetables. Cook until sauce thickens, about 2 minutes.",
+      "Serve hot over rice or noodles."
+    ],
+    "prepTime": 15,
+    "cookingTime": 15,
+    "nutritionalInfo": {
+      "energy": 300,
+      "protein": 25,
+      "fat": 10,
+      "saturatedFat": 1.5,
+      "carbohydrates": 30,
+      "sugars": 15,
+      "fiber": 5
+    },
+    "description": "A quick and easy stir-fry that's perfect for a  healthy dinner. Packed with lean protein and colorful vegetables.",
+    "nutritionalLabels": ["GF", "DF"],
+    "numberOfServings": 4
+  },
+  {
+    "name": "Banana Oat Pancakes",
+    "mealType": "Breakfast",
+    "ingredients": [
+      {
+        "name": "Bananas",
+        "quantity": "2 (mashed)"
+      },
+      {
+        "name": "Eggs",
+        "quantity": "2"
+      },
+      {
+        "name": "Oats",
+        "quantity": "1 cup"
+      },
+      {
+        "name": "Baking Powder",
+        "quantity": "1 teaspoon"
+      },
+      {
+        "name": "Cinnamon",
+        "quantity": "1 teaspoon"
+      },
+      {
+        "name": "Vanilla Extract",
+        "quantity": "1 teaspoon"
+      },
+      {
+        "name": "Maple Syrup",
+        "quantity": "to taste"
+      },
+      {
+        "name": "Butter",
+        "quantity": "for cooking"
+      }
+    ],
+    "method": [
+      "In a blender, combine bananas, eggs, oats, baking powder, cinnamon, and vanilla extract. Blend until smooth.",
+      "Heat a non-stick skillet over medium heat and add butter.",
+      "Pour pancake batter onto the skillet to form pancakes of desired size.",
+      "Cook until bubbles form on the surface of the pancakes, then flip and cook until golden brown.",
+      "Serve hot with maple syrup."
+    ],
+    "prepTime": 10,
+    "cookingTime": 10,
+    "nutritionalInfo": {
+      "energy": 200,
+      "protein": 8,
+      "fat": 5,
+      "saturatedFat": 2,
+      "carbohydrates": 30,
+      "sugars": 10,
+      "fiber": 4
+    },
+    "description": "A healthy and delicious breakfast option that's gluten-free and dairy-free. Perfect for a lazy weekend morning.",
+    "nutritionalLabels": ["GF", "DF"],
+    "numberOfServings": 2
+  }
+]

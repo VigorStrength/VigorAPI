@@ -45,6 +45,24 @@ func (ac *AdminController) GetWorkoutPlans(c *gin.Context) {
 	c.JSON(http.StatusOK, workoutPlans)
 }
 
+func (ac *AdminController) SearchWorkoutPlansByName(c *gin.Context) {
+	name := c.Query("name")
+	
+	if name == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Name query parameter is required"})
+		return
+	}
+
+	workoutPlans, err := ac.AdminService.SearchWorkoutPlansByName(c.Request.Context(), name)
+	if err != nil {
+		log.Printf("Error searching workout plans by name: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to search workout plans"})
+		return
+	}
+
+	c.JSON(http.StatusOK, workoutPlans)
+}
+
 func (ac *AdminController) CreateWorkoutPlan(c *gin.Context) {
 	var workoutPlan models.WorkoutPlan
 
