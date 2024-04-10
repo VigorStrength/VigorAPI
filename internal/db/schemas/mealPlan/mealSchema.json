@@ -67,40 +67,59 @@
           "fat",
           "saturatedFat",
           "carbohydrates",
-          "sugars",
-          "fiber"
+          "sugar",
+          "dietaryFiber",
+          "sodium",
+          "cholesterol"
         ],
         "properties": {
           "energy": {
             "bsonType": "double",
-            "description": "energy in KJ or Cal and is required"
+            "minimum": 0,
+            "description": "energy in KJ or Cal, can be zero"
           },
           "protein": {
             "bsonType": "double",
-            "description": "protein in grams and is required"
+            "minimum": 0,
+            "description": "protein in grams, can be zero"
           },
           "fat": {
             "bsonType": "double",
-            "description": "fat in grams and is required"
+            "minimum": 0,
+            "description": "fat in grams, can be zero"
           },
           "saturatedFat": {
             "bsonType": "double",
-            "description": "saturated fat in grams and is required"
+            "minimum": 0,
+            "description": "saturated fat in grams, can be zero"
           },
           "carbohydrates": {
             "bsonType": "double",
-            "description": "carbohydrates in grams and is required"
+            "minimum": 0,
+            "description": "carbohydrates in grams, can be zero"
           },
-          "sugars": {
+          "sugar": {
             "bsonType": "double",
-            "description": "sugars in grams and is required"
+            "minimum": 0,
+            "description": "sugar in grams, can be zero"
           },
-          "fiber": {
+          "dietaryFiber": {
             "bsonType": "double",
-            "description": "fiber in grams and is required"
+            "minimum": 0,
+            "description": "dietary fiber in grams, can be zero"
+          },
+          "sodium": {
+            "bsonType": "double",
+            "minimum": 0,
+            "description": "sodium in milligrams, can be zero"
+          },
+          "cholesterol": {
+            "bsonType": "double",
+            "minimum": 0,
+            "description": "cholesterol in milligrams, can be zero"
           }
         },
-        "description": "nutritional breakdown of the meal per serving and is required"
+        "description": "nutritional breakdown of the meal per serving, values can be zero"
       },
       "description": {
         "bsonType": "string",

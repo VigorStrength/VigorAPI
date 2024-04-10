@@ -1,0 +1,109 @@
+[
+  {
+    "name": "Hearty Vegetable Soup",
+    "mealType": "Dinner",
+    "ingredients": [
+      { "name": "Carrots", "quantity": "2 cups, chopped" },
+      { "name": "Celery", "quantity": "1 cup, chopped" },
+      { "name": "Onion", "quantity": "1 large, diced" },
+      { "name": "Garlic", "quantity": "3 cloves, minced" },
+      { "name": "Canned Tomatoes", "quantity": "1 can (28 oz)" },
+      { "name": "Vegetable Broth", "quantity": "4 cups" },
+      { "name": "Bay Leaves", "quantity": "2" },
+      { "name": "Salt", "quantity": "to taste" },
+      { "name": "Black Pepper", "quantity": "to taste" }
+    ],
+    "method": [
+      "Heat a large pot over medium heat. Add carrots, celery, onion, and garlic. Cook until softened, about 5 minutes.",
+      "Add canned tomatoes (with juice), vegetable broth, bay leaves, salt, and pepper. Bring to a boil.",
+      "Reduce heat to low and simmer for 30 minutes. Remove bay leaves before serving."
+    ],
+    "prepTime": 15,
+    "cookingTime": 35,
+    "nutritionalInfo": {
+      "energy": 85,
+      "protein": 2.5,
+      "fat": 0.5,
+      "saturatedFat": 0,
+      "carbohydrates": 18,
+      "sugar": 9,
+      "dietaryFiber": 4,
+      "sodium": 700,
+      "cholesterol": 0
+    },
+    "description": "A low-calorie, nutrient-dense soup that's perfect for any meal.",
+    "nutritionalLabels": ["GF", "DF", "Vegan"],
+    "numberOfServings": 4
+  },
+  {
+    "name": "Quinoa Salad with Lemon Dressing",
+    "mealType": "Lunch",
+    "ingredients": [
+      { "name": "Quinoa", "quantity": "1 cup" },
+      { "name": "Cucumber", "quantity": "1, diced" },
+      { "name": "Cherry Tomatoes", "quantity": "1 cup, halved" },
+      { "name": "Red Onion", "quantity": "1/4 cup, finely chopped" },
+      { "name": "Feta Cheese", "quantity": "1/2 cup, crumbled" },
+      { "name": "Lemon Juice", "quantity": "3 tablespoons" },
+      { "name": "Olive Oil", "quantity": "2 tablespoons" },
+      { "name": "Salt", "quantity": "to taste" },
+      { "name": "Black Pepper", "quantity": "to taste" }
+    ],
+    "method": [
+      "Rinse quinoa under cold running water. In a medium saucepan, combine quinoa with 2 cups water. Bring to a boil, then cover and simmer for 15 minutes.",
+      "Let quinoa cool, then fluff with a fork.",
+      "In a large bowl, combine quinoa, cucumber, cherry tomatoes, red onion, and feta cheese.",
+      "In a small bowl, whisk together lemon juice, olive oil, salt, and pepper. Pour over the salad and toss to combine."
+    ],
+    "prepTime": 20,
+    "cookingTime": 15,
+    "nutritionalInfo": {
+      "energy": 220,
+      "protein": 8,
+      "fat": 9,
+      "saturatedFat": 3,
+      "carbohydrates": 30,
+      "sugar": 5,
+      "dietaryFiber": 5,
+      "sodium": 400,
+      "cholesterol": 15
+    },
+    "description": "A refreshing and healthy quinoa salad, perfect for a quick lunch.",
+    "nutritionalLabels": ["GF"],
+    "numberOfServings": 4
+  },
+  {
+    "name": "Baked Salmon with Asparagus",
+    "mealType": "Dinner",
+    "ingredients": [
+      { "name": "Salmon Fillets", "quantity": "4 (6 oz each)" },
+      { "name": "Asparagus", "quantity": "1 lb" },
+      { "name": "Olive Oil", "quantity": "2 tablespoons" },
+      { "name": "Lemon", "quantity": "1, sliced" },
+      { "name": "Garlic", "quantity": "2 cloves, minced" },
+      { "name": "Salt", "quantity": "to taste" },
+      { "name": "Black Pepper", "quantity": "to taste" }
+    ],
+    "method": [
+      "Preheat oven to 400°F (200°C).",
+      "Place salmon and asparagus on a baking sheet. Drizzle with olive oil and sprinkle with garlic, salt, and pepper.",
+      "Top with lemon slices and bake for 20 minutes, until salmon is opaque and asparagus is tender."
+    ],
+    "prepTime": 10,
+    "cookingTime": 20,
+    "nutritionalInfo": {
+      "energy": 300,
+      "protein": 23,
+      "fat": 20,
+      "saturatedFat": 4,
+      "carbohydrates": 5,
+      "sugar": 2,
+      "dietaryFiber": 2,
+      "sodium": 65,
+      "cholesterol": 60
+    },
+    "description": "Simple and delicious baked salmon with asparagus.",
+    "nutritionalLabels": ["GF", "DF"],
+    "numberOfServings": 4
+  }
+]

@@ -70,6 +70,41 @@ func (as *AdminService) CreateMeal(ctx context.Context, meal models.Meal) error 
 	return nil
 }
 
+func (as *AdminService) CreateMeals(ctx context.Context, meals []models.Meal) error {
+	mealCollection := as.database.Collection("meals")
+
+	var mealInterfaces []interface{}
+	for _, meal := range meals {
+		mealInterfaces = append(mealInterfaces, meal)
+	}
+
+	_, err := mealCollection.InsertMany(ctx, mealInterfaces)
+	if err != nil {
+		return fmt.Errorf("error inserting meals: %w", err)
+	}
+
+	return nil
+}
+
+func (as *AdminService) UpdateMeal(ctx context.Context, mealID primitive.ObjectID, updateInput models.MealUpdateInput) error {
+	mealCollection := as.database.Collection("meals")
+	filter := bson.M{"_id": mealID}
+
+	updateDoc := as.parser.StructToBson(updateInput)
+
+	update := bson.M{"$set": updateDoc}
+	result, err := mealCollection.UpdateOne(ctx, filter, update)
+	if err != nil {
+		return fmt.Errorf("error updating meal: %w", err)
+	}
+
+	if result.MatchedCount == 0 {
+		return ErrMealNotFound
+	}
+
+	return nil
+}
+
 func (as *AdminService) DeleteMeal(ctx context.Context, mealID primitive.ObjectID) error {
 	mealCollection := as.database.Collection("meals")
 

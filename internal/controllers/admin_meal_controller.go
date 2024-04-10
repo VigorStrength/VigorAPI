@@ -75,6 +75,72 @@ func (ac *AdminController) CreateMeal(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"message": "Meal created successfully"})
 }
 
+func (ac *AdminController) CreateMultipleMeals(c *gin.Context) {
+	var meals []models.Meal
+
+	if err := c.ShouldBindJSON(&meals); err != nil {
+		log.Printf("Error parsing JSON: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Could not parse request body"})
+		return
+	}
+
+	for _,meal := range meals {
+		if err := validate.Struct(meal); err != nil {
+			log.Printf("Error validating input: %v\n", err)
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
+			return
+		}
+	}
+
+	if err := ac.AdminService.CreateMeals(c.Request.Context(), meals); err != nil {
+		if errors.Is(err, services.ErrMealAlreadyExists) {
+			c.JSON(http.StatusConflict, gin.H{"error": "Meal already exists"})
+			return
+		}
+
+		log.Printf("Error creating multiple meals: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create meals"})
+		return
+	}
+
+	c.JSON(http.StatusCreated, gin.H{"message": "Meals created successfully"})
+}
+
+func (ac *AdminController) UpdateMeal(c *gin.Context) {
+	mealID, err := primitive.ObjectIDFromHex(c.Param("id"))
+	if err != nil {
+		log.Printf("Error parsing ID: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+
+	var updateInput models.MealUpdateInput
+	if err := c.ShouldBindJSON(&updateInput); err != nil {
+		log.Printf("Error parsing JSON: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Could not parse request body"})
+		return
+	}
+
+	if err := validate.Struct(updateInput); err != nil {
+		log.Printf("Error validating input: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
+		return
+	}
+
+	if err := ac.AdminService.UpdateMeal(c.Request.Context(), mealID, updateInput); err != nil {
+		if errors.Is(err, services.ErrMealNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Meal not found"})
+			return
+		}
+
+		log.Printf("Error updating meal: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update meal"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Meal updated successfully"})
+}
+
 func (ac *AdminController) DeleteMeal(c *gin.Context) {
 	mealID, err := primitive.ObjectIDFromHex(c.Param("id"))
 	if err != nil {

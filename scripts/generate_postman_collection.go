@@ -142,7 +142,7 @@ func main() {
 		{
 			Name:        "Create Multiple Exercises",
 			Method:      "POST",
-			Path:        "/api/v1/admin/exercises/bulk",
+			Path:        "/api/v1/admin/exercises/bulk-insert",
 			Description: "Create multiple exercises at once",
 			Headers: []RouteHeader{
 				{
@@ -296,10 +296,34 @@ func main() {
 			},
 		},
 		{
+			Name:        "Create Multiple Meals",
+			Method:      "POST",
+			Path:        "/api/v1/admin/meals/bulk-insert",
+			Description: "Create multiple meals at once",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
 			Name:        "Get Meal by ID",
 			Method:      "GET",
 			Path:        "/api/v1/admin/meals/:id",
 			Description: "Get a meal by its ID",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
+			Name:        "Get Meals",
+			Method:      "GET",
+			Path:        "/api/v1/admin/meals",
+			Description: "Get all meals",
 			Headers: []RouteHeader{
 				{
 					Key:   "Content-Type",
@@ -320,10 +344,10 @@ func main() {
 			},
 		},
 		{
-			Name:        "Get Meals",
-			Method:      "GET",
-			Path:        "/api/v1/admin/meals",
-			Description: "Get all meals",
+			Name:        "Update Meal",
+			Method:      "PUT",
+			Path:        "/api/v1/admin/meals/:id",
+			Description: "Update an existing meal",
 			Headers: []RouteHeader{
 				{
 					Key:   "Content-Type",

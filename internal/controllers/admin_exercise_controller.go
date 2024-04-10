@@ -114,7 +114,6 @@ func (ac *AdminController) UpdateExercise(c *gin.Context) {
 	}
 
 	var updateInput models.ExerciseUpdateInput
-
 	if err := c.ShouldBindJSON(&updateInput); err != nil {
 		log.Printf("Error parsing JSON: %v\n", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Could not parse request body"})

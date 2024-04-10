@@ -21,8 +21,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/auth/admin/register",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/auth/admin/register"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/auth/admin/register"
+          ]
         }
       },
       "response": []
@@ -43,8 +47,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/auth/admin/login",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/auth/admin/login"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/auth/admin/login"
+          ]
         }
       },
       "response": []
@@ -65,8 +73,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/auth/user/register",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/auth/user/register"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/auth/user/register"
+          ]
         }
       },
       "response": []
@@ -87,8 +99,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/auth/user/login",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/auth/user/login"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/auth/user/login"
+          ]
         }
       },
       "response": []
@@ -109,8 +125,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/auth/refresh",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/auth/refresh"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/auth/refresh"
+          ]
         }
       },
       "response": []
@@ -131,8 +151,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/exercises",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/exercises"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/exercises"
+          ]
         }
       },
       "response": []
@@ -153,8 +177,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/exercises/{{exerciseId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/exercises/{{exerciseId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/exercises/{{exerciseId}}"
+          ]
         }
       },
       "response": []
@@ -175,8 +203,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/exercises/{{exerciseId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/exercises/{{exerciseId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/exercises/{{exerciseId}}"
+          ]
         }
       },
       "response": []
@@ -197,8 +229,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/exercises",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/exercises"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/exercises"
+          ]
         }
       },
       "response": []
@@ -219,8 +255,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/exercises/{{exerciseId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/exercises/{{exerciseId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/exercises/{{exerciseId}}"
+          ]
         }
       },
       "response": []
@@ -241,8 +281,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/exercises/search?name={{exerciseName}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/exercises/search?name={{exerciseName}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/exercises/search?name={{exerciseName}}"
+          ]
         }
       },
       "response": []
@@ -262,9 +306,13 @@
           "raw": "{}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/v1/admin/exercises/bulk",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/exercises/bulk"]
+          "raw": "{{baseUrl}}/api/v1/admin/exercises/bulk-insert",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/exercises/bulk-insert"
+          ]
         }
       },
       "response": []
@@ -285,8 +333,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/workout-plans",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/workout-plans"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/workout-plans"
+          ]
         }
       },
       "response": []
@@ -307,8 +359,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/workout-plans/{{workoutPlanId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/workout-plans/{{workoutPlanId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/workout-plans/{{workoutPlanId}}"
+          ]
         }
       },
       "response": []
@@ -329,8 +385,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/workout-plans/{{workoutPlanId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/workout-plans/{{workoutPlanId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/workout-plans/{{workoutPlanId}}"
+          ]
         }
       },
       "response": []
@@ -351,8 +411,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/workout-plans/{{workoutPlanId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/workout-plans/{{workoutPlanId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/workout-plans/{{workoutPlanId}}"
+          ]
         }
       },
       "response": []
@@ -373,8 +437,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/workout-plans",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/workout-plans"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/workout-plans"
+          ]
         }
       },
       "response": []
@@ -395,7 +463,9 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/workout-plans/search?name={{workoutPlanName}}",
-          "host": ["{{baseUrl}}"],
+          "host": [
+            "{{baseUrl}}"
+          ],
           "path": [
             "/api/v1/admin/workout-plans/search?name={{workoutPlanName}}"
           ]
@@ -419,8 +489,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/meals",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/meals"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meals"
+          ]
         }
       },
       "response": []
@@ -441,8 +515,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/meals/{{mealId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/meals/{{mealId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meals/{{mealId}}"
+          ]
         }
       },
       "response": []
@@ -463,8 +541,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/meals",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/meals"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meals"
+          ]
         }
       },
       "response": []
@@ -485,8 +567,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/meals/{{mealId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/meals/{{mealId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meals/{{mealId}}"
+          ]
         }
       },
       "response": []
@@ -507,8 +593,64 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/meals/search?name={{mealName}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/meals/search?name={{mealName}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meals/search?name={{mealName}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Multiple Meals",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/admin/meals/bulk-insert",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meals/bulk-insert"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Meal",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/admin/meals/{{mealId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meals/{{mealId}}"
+          ]
         }
       },
       "response": []
