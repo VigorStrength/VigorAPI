@@ -3,6 +3,7 @@
     "bsonType": "object",
     "required": [
       "name",
+      "imageURL",
       "mealType",
       "ingredients",
       "method",
@@ -19,6 +20,10 @@
       "name": {
         "bsonType": "string",
         "description": "name of the meal and is required"
+      },
+      "imageURL": {
+        "bsonType": "string",
+        "description": "URL of the image of the meal and is required"
       },
       "mealType": {
         "bsonType": "string",

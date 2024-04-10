@@ -2,6 +2,7 @@ package models
 
 type MealUpdateInput struct {
 	Name              *string    `json:"name" validate:"omitempty"`
+	ImageURL          *string    `json:"imageURL" validate:"omitempty,url"`
 	MealType          *string    `json:"mealType" validate:"omitempty"`
 	Ingredients       *[]IngredientUpdateInput `json:"ingredients" validate:"omitempty,dive,omitempty"`
 	Method            *[]string  `json:"method" validate:"omitempty"`

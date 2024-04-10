@@ -25,6 +25,7 @@ type NutritionalInfo struct {
 type Meal struct {
 	ID                primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
 	Name              string             `bson:"name" json:"name" binding:"required" validate:"required"`
+	ImageURL          string             `bson:"imageURL" json:"imageURL" binding:"required" validate:"required,url"`
 	MealType          string             `bson:"mealType" json:"mealType" binding:"required" validate:"required"` // E.g., Breakfast, Lunch, etc.
 	Ingredients       []Ingredient       `bson:"ingredients" json:"ingredients" binding:"required" validate:"required,dive,required"`
 	Method            []string           `bson:"method" json:"method" binding:"required" validate:"required"`           // Cooking instructions.

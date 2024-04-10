@@ -1,6 +1,7 @@
 [
   {
     "name": "Hearty Vegetable Soup",
+    "imageURL": "https://images.unsplash.com/photo-1565299636920-0e9f7b3d4e0e",
     "mealType": "Dinner",
     "ingredients": [
       { "name": "Carrots", "quantity": "2 cups, chopped" },
@@ -37,6 +38,7 @@
   },
   {
     "name": "Quinoa Salad with Lemon Dressing",
+    "imageURL": "https://images.unsplash.com/photo-1565299636920-0e9f7b3d4e0e",
     "mealType": "Lunch",
     "ingredients": [
       { "name": "Quinoa", "quantity": "1 cup" },
@@ -74,6 +76,7 @@
   },
   {
     "name": "Baked Salmon with Asparagus",
+    "imageURL": "https://images.unsplash.com/photo-1565299636920-0e9f7b3d4e0e",
     "mealType": "Dinner",
     "ingredients": [
       { "name": "Salmon Fillets", "quantity": "4 (6 oz each)" },
