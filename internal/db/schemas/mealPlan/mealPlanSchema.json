@@ -1,49 +1,70 @@
 {
   "$jsonSchema": {
-    "title": "MealPlan",
-    "description": "Schema for a generic meal plan template",
     "bsonType": "object",
-    "required": ["duration", "weeklyPlans"],
+    "required": ["name", "duration", "weeklyPlans"],
     "properties": {
       "_id": {
         "bsonType": "objectId",
-        "description": "must be an objectId"
+        "description": "Unique identifier for the meal plan"
+      },
+      "name": {
+        "bsonType": "string",
+        "description": "Name of the meal plan"
       },
       "duration": {
         "bsonType": "int",
+        "minimum": 1,
         "description": "Duration of the meal plan in weeks"
       },
       "weeklyPlans": {
         "bsonType": "array",
+        "minItems": 1,
         "items": {
           "bsonType": "object",
-          "required": ["weekNumber", "breakfast", "lunch", "dinner"],
+          "required": ["dailyPlans"],
           "properties": {
             "_id": {
-              "bsonType": "objectId"
+              "bsonType": "objectId",
+              "description": "Unique identifier for the weekly plan"
             },
             "weekNumber": {
-              "bsonType": "int"
+              "bsonType": "int",
+              "minimum": 1,
+              "description": "Numerical identifier for the week within the meal plan"
             },
-            "breakfast": {
+            "dailyPlans": {
               "bsonType": "array",
-              "items": { "bsonType": "objectId" }
-            },
-            "morningSnack": {
-              "bsonType": "array",
-              "items": { "bsonType": "objectId" }
-            },
-            "lunch": {
-              "bsonType": "array",
-              "items": { "bsonType": "objectId" }
-            },
-            "afternoonSnack": {
-              "bsonType": "array",
-              "items": { "bsonType": "objectId" }
-            },
-            "dinner": {
-              "bsonType": "array",
-              "items": { "bsonType": "objectId" }
+              "minItems": 1,
+              "items": {
+                "bsonType": "object",
+                "required": ["breakfast", "lunch", "dinner"],
+                "properties": {
+                  "_id": {
+                    "bsonType": "objectId",
+                    "description": "Unique identifier for the daily plan"
+                  },
+                  "breakfast": {
+                    "bsonType": "objectId",
+                    "description": "Reference to breakfast meal"
+                  },
+                  "morningSnack": {
+                    "bsonType": "objectId",
+                    "description": "Reference to morning snack meal (optional)"
+                  },
+                  "lunch": {
+                    "bsonType": "objectId",
+                    "description": "Reference to lunch meal"
+                  },
+                  "afternoonSnack": {
+                    "bsonType": "objectId",
+                    "description": "Reference to afternoon snack meal (optional)"
+                  },
+                  "dinner": {
+                    "bsonType": "objectId",
+                    "description": "Reference to dinner meal"
+                  }
+                }
+              }
             }
           }
         }

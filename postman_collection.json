@@ -654,6 +654,32 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Create Meal Plan",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/admin/meal-plans",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meal-plans"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }

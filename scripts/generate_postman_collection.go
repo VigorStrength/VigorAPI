@@ -367,6 +367,18 @@ func main() {
 				},
 			},
 		},
+		{
+			Name:        "Create Meal Plan",
+			Method:      "POST",
+			Path:        "/api/v1/admin/meal-plans",
+			Description: "Create a new meal plan",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
 	}
 
 	// Attemp to read and update an existing collection; otherwise generate a new one
