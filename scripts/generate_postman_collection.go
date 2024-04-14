@@ -379,6 +379,42 @@ func main() {
 				},
 			},
 		},
+		{
+			Name:        "Get Meal Plan by ID",
+			Method:      "GET",
+			Path:        "/api/v1/admin/meal-plans/:id",
+			Description: "Get a meal plan by its ID",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
+			Name:        "Get Meal Plans",
+			Method:      "GET",
+			Path:        "/api/v1/admin/meal-plans",
+			Description: "Get all meal plans",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
+			Name:        "Delete Meal Plan",
+			Method:      "DELETE",
+			Path:        "/api/v1/admin/meal-plans/:id",
+			Description: "Delete an existing meal plan",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
 	}
 
 	// Attemp to read and update an existing collection; otherwise generate a new one
@@ -463,6 +499,7 @@ func createPostmanItemFromRoute(route Route) PostmanItem {
 	routePath = strings.Replace(routePath, "exercises/:id", "exercises/{{exerciseId}}", -1)
 	routePath = strings.Replace(routePath, "workout-plans/:id", "workout-plans/{{workoutPlanId}}", -1)
 	routePath = strings.Replace(routePath, "meals/:id", "meals/{{mealId}}", -1)
+	routePath = strings.Replace(routePath, "meal-plans/:id", "meal-plans/{{mealPlanId}}", -1)
 
 	item := PostmanItem{
 		Name: route.Name,

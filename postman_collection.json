@@ -680,6 +680,84 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Get Meal Plan by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/admin/meal-plans/{{mealPlanId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meal-plans/{{mealPlanId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Meal Plans",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/admin/meal-plans",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meal-plans"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Meal Plan",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/admin/meal-plans/{{mealPlanId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meal-plans/{{mealPlanId}}"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }

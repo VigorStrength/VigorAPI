@@ -51,6 +51,9 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	adminRoutes.DELETE("/meals/:id", adminController.DeleteMeal)
 	// CRUD Meal Plans
 	adminRoutes.POST("/meal-plans", adminController.CreateMealPlan)
+	adminRoutes.GET("/meal-plans/:id", adminController.GetMealPlanByID)
+	adminRoutes.GET("/meal-plans", adminController.GetMealPlans)
+	adminRoutes.DELETE("/meal-plans/:id", adminController.DeleteMealPlan)
 	// adminRoutes.PUT("/meal-plans/:id", updateMealPlan)
 	// adminRoutes.DELETE("/meal-plans/:id", deleteMealPlan)
 	// adminRoutes.GET("/meal-plans", getMealPlans)

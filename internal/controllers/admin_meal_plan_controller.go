@@ -8,7 +8,42 @@ import (
 	"github.com/GhostDrew11/vigor-api/internal/models"
 	"github.com/GhostDrew11/vigor-api/internal/services"
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
+
+func (ac *AdminController) GetMealPlanByID(c *gin.Context) {
+	mealPlanID, err := primitive.ObjectIDFromHex(c.Param("id"))
+	if err != nil {
+		log.Printf("Error parsing meal plan ID: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid meal plan ID"})
+		return
+	}
+
+	mealPlan, err := ac.AdminService.GetMealPlanByID(c.Request.Context(), mealPlanID)
+	if err != nil {
+		if errors.Is(err, services.ErrMealPlanNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Meal plan not found"})
+			return
+		}
+
+		log.Printf("Error getting meal plan: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get meal plan"})
+		return
+	}
+
+	c.JSON(http.StatusOK, mealPlan)
+}
+
+func (ac *AdminController) GetMealPlans(c *gin.Context) {
+	mealPlans, err := ac.AdminService.GetMealPlans(c.Request.Context())
+	if err != nil {
+		log.Printf("Error getting meal plans: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get meal plans"})
+		return
+	}
+
+	c.JSON(http.StatusOK, mealPlans)
+}
 
 func (ac *AdminController) CreateMealPlan(c *gin.Context) {
 	var mealPlan models.MealPlan
@@ -37,4 +72,26 @@ func (ac *AdminController) CreateMealPlan(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, gin.H{"message": "Meal plan created successfully"})
+}
+
+func (ac *AdminController) DeleteMealPlan(c *gin.Context) {
+	mealPlanID, err := primitive.ObjectIDFromHex(c.Param("id"))
+	if err != nil {
+		log.Printf("Error parsing meal plan ID: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid meal plan ID"})
+		return
+	}
+
+	if err := ac.AdminService.DeleteMealPlan(c.Request.Context(), mealPlanID); err != nil {
+		if errors.Is(err, services.ErrMealPlanNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Meal plan not found"})
+			return
+		}
+
+		log.Printf("Error deleting meal plan: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete meal plan"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Meal plan deleted successfully"})
 }
