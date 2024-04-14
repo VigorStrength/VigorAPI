@@ -45,6 +45,24 @@ func (ac *AdminController) GetMealPlans(c *gin.Context) {
 	c.JSON(http.StatusOK, mealPlans)
 }
 
+func (ac *AdminController) SearchMealPlansByName(c *gin.Context) {
+	name := c.Query("name")
+
+	if name == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Name query parameter is required"})
+		return
+	}
+
+	mealPlans, err := ac.AdminService.SearchMealPlansByName(c.Request.Context(), name)
+	if err != nil {
+		log.Printf("Error searching meal plans by name: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to search meal plans"})
+		return
+	}
+
+	c.JSON(http.StatusOK, mealPlans)
+}
+
 func (ac *AdminController) CreateMealPlan(c *gin.Context) {
 	var mealPlan models.MealPlan
 

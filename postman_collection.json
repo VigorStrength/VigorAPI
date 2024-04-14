@@ -758,6 +758,32 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Search Meal Plans by Name",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/admin/meal-plans/search?name={{mealPlanName}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meal-plans/search?name={{mealPlanName}}"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }

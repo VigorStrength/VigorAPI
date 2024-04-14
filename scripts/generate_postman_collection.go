@@ -404,6 +404,18 @@ func main() {
 			},
 		},
 		{
+			Name: 	  	  "Search Meal Plans by Name",
+			Method: 	  "GET",
+			Path: 		  "/api/v1/admin/meal-plans/search?name={{mealPlanName}}",
+			Description:  "Search for meal plans by name",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
 			Name:        "Delete Meal Plan",
 			Method:      "DELETE",
 			Path:        "/api/v1/admin/meal-plans/:id",
