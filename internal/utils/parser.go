@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type DefaultParser struct {}
@@ -41,6 +42,13 @@ func (p *DefaultParser) StructToBson(v interface{}) bson.M {
 }
 
 func processPtrField(field reflect.Value, jsonTag string, doc *bson.M, p *DefaultParser) {
+	if field.Elem().Type() == reflect.TypeOf(primitive.ObjectID{}) {
+		if !field.Elem().IsZero() {
+			(*doc)[jsonTag] = field.Elem().Interface()
+		}
+		return
+	} 
+
 	if field.Elem().Kind() == reflect.Slice || field.Elem().Kind() == reflect.Array {
 		(*doc)[jsonTag] = processSliceOrArray(field.Elem(), p)
 	} else if field.Elem().Kind() == reflect.Struct {
@@ -55,7 +63,7 @@ func processSliceOrArray(val reflect.Value, p *DefaultParser) []interface{} {
     var result []interface{}
     for j := 0; j < val.Len(); j++ {
         elem := val.Index(j)
-        if elem.Kind() == reflect.Ptr && !elem.IsNil() {
+        if elem.Kind() == reflect.Ptr && !elem.IsNil() && elem.Elem().Kind() == reflect.Struct {
             result = append(result, p.StructToBson(elem.Elem().Interface()))
         } else if elem.Kind() == reflect.Struct {
             result = append(result, p.StructToBson(elem.Interface()))

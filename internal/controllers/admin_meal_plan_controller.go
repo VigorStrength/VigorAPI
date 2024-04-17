@@ -92,6 +92,43 @@ func (ac *AdminController) CreateMealPlan(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"message": "Meal plan created successfully"})
 }
 
+func (ac *AdminController) UpdateMealPlan(c *gin.Context) {
+	mealPlanID, err := primitive.ObjectIDFromHex(c.Param("id"))
+	if err != nil {
+		log.Printf("Error parsing meal plan ID: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid meal plan ID"})
+		return
+	}
+
+	var mealPlan models.MealPlanUpdateInput
+
+	if err := c.ShouldBindJSON(&mealPlan); err != nil {
+		log.Printf("Error binding meal plan: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if err := validate.Struct(mealPlan); err != nil {
+		log.Printf("Error validating meal plan: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if err := ac.AdminService.UpdateMealPlan(c.Request.Context(), mealPlanID, mealPlan); err != nil {
+		if errors.Is(err, services.ErrMealPlanNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Meal plan not found"})
+			return
+		}
+
+		log.Printf("Error updating meal plan: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update meal plan"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Meal plan updated successfully"})
+}
+
+
 func (ac *AdminController) DeleteMealPlan(c *gin.Context) {
 	mealPlanID, err := primitive.ObjectIDFromHex(c.Param("id"))
 	if err != nil {

@@ -416,10 +416,34 @@ func main() {
 			},
 		},
 		{
+			Name:        "Update Meal Plan",
+			Method:      "PUT",
+			Path:        "/api/v1/admin/meal-plans/:id",
+			Description: "Update an existing meal plan",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
 			Name:        "Delete Meal Plan",
 			Method:      "DELETE",
 			Path:        "/api/v1/admin/meal-plans/:id",
 			Description: "Delete an existing meal plan",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
+			Name:       "Get Users",
+			Method:     "GET",
+			Path:       "/api/v1/admin/users",
+			Description: "Get all users",
 			Headers: []RouteHeader{
 				{
 					Key:   "Content-Type",

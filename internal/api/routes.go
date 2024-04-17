@@ -54,10 +54,11 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	adminRoutes.GET("/meal-plans/:id", adminController.GetMealPlanByID)
 	adminRoutes.GET("/meal-plans", adminController.GetMealPlans)
 	adminRoutes.GET("/meal-plans/search", adminController.SearchMealPlansByName)
+	adminRoutes.PUT("/meal-plans/:id", adminController.UpdateMealPlan)
 	adminRoutes.DELETE("/meal-plans/:id", adminController.DeleteMealPlan)
-	// adminRoutes.PUT("/meal-plans/:id", updateMealPlan)
-	// adminRoutes.DELETE("/meal-plans/:id", deleteMealPlan)
-	// adminRoutes.GET("/meal-plans", getMealPlans)
+	// CRUD Admins Users
+	adminRoutes.GET("/users", adminController.GetUsers)
+	// other admin routes as needed(eg list users with active subscriptions, list users with pending subscriptions, list of sales, other analytics etc.)
 	
 	// User routes
 	userRoutes := apiRoot.Group("/users")
@@ -131,12 +132,10 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	// userRoutes.DELETE("/groups/:groupId/members/:userId", removeGroupMember)
 	// Other group functionalities as needed (e.g, add member, join a group, having a group live workout party etc.)
 
-	// // CRUD Admins
+	// // CRUD Super Admins
 	// adminRoutes.POST("/admins", createAdmin)
 	// adminRoutes.PUT("/admins/:id", updateAdmin)
 	// adminRoutes.DELETE("/admins/:id", deleteAdmin)
 	// adminRoutes.GET("/admins", getAdmins)
-	// // CRUD Users
-	// adminRoutes.GET("/users", getUsers)
-	// other admin routes as needed(eg list users with active subscriptions, list users with pending subscriptions, list of sales, other analytics etc.)
+	
 }
