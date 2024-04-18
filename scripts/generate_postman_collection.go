@@ -451,6 +451,18 @@ func main() {
 				},
 			},
 		},
+		{
+			Name:       "Get User Profile",
+			Method:     "GET",
+			Path:       "/api/v1/users/profile",
+			Description: "Get the user's profile information",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
 	}
 
 	// Attemp to read and update an existing collection; otherwise generate a new one

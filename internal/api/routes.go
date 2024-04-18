@@ -64,7 +64,7 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	userRoutes := apiRoot.Group("/users")
 	userRoutes.Use(middlewares.RequireRole(ts, "user"))
 	// CRUD User data
-	// userRoutes.GET("/profile", getUserProfile)
+	userRoutes.GET("/profile", userController.GetUserProfile)
 	// userRoutes.PUT("/profile", updateUserProfile)
 	// userRoutes.GET("/preferences", getUserPreferences)
 	// userRoutes.PUT("/preferences", updateUserPreferences)

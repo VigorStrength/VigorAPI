@@ -836,6 +836,32 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Get User Profile",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/users/profile",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/users/profile"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }

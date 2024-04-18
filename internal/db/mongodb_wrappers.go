@@ -77,8 +77,8 @@ func (mdc *mongoCollectionWrapper) Indexes() MongoIndexView {
 	return &mongoIndexViewWrapper{indexView: mdc.collection.Indexes()}
 }
 
-func (mdc *mongoCollectionWrapper) FindOne(ctx context.Context, filter interface{}) MongoSingleResult {
-	return &mongoSingleResultWrapper{singleResult: mdc.collection.FindOne(ctx, filter)}
+func (mdc *mongoCollectionWrapper) FindOne(ctx context.Context, filter interface{}, opts ...*options.FindOneOptions) MongoSingleResult {
+	return &mongoSingleResultWrapper{singleResult: mdc.collection.FindOne(ctx, filter, opts...)}
 }
 
 func (mdc *mongoCollectionWrapper) Find(ctx context.Context, filter interface{}) (MongoCursor, error) {
