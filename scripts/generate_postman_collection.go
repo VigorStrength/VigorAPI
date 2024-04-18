@@ -475,6 +475,18 @@ func main() {
 				},
 			},
 		},
+		{
+			Name:       "Get User Subscription",
+			Method:     "GET",
+			Path:       "/api/v1/users/subscription",
+			Description: "Get the user's subscription information",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
 	}
 
 	// Attemp to read and update an existing collection; otherwise generate a new one
