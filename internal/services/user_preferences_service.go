@@ -11,11 +11,11 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func (us *UserService) GetUserProfile(ctx context.Context, userID primitive.ObjectID) (*models.UserProfile, error) {
+func (us *UserService) GetUserPreferences(ctx context.Context, userID primitive.ObjectID) (*models.SystemPreferences, error) {
 	userCollection := us.database.Collection("users")
 	var user models.User
 
-	projection := bson.M{"profileInformation": 1}
+	projection := bson.M{"preferences": 1}
 	filter := bson.M{"_id": userID}
 	opts := options.FindOne().SetProjection(projection)
 	if err := userCollection.FindOne(ctx, filter, opts).Decode(&user); err != nil {
@@ -23,8 +23,8 @@ func (us *UserService) GetUserProfile(ctx context.Context, userID primitive.Obje
 			return nil, ErrUserNotFound
 		}
 
-		return nil, fmt.Errorf("error returning user profile informations: %w", err)
+		return nil, fmt.Errorf("error returning user preferences: %w", err)
 	}
 
-	return &user.ProfileInformation, nil
+	return user.SystemPreferences, nil
 }

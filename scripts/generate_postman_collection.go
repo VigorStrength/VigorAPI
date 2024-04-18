@@ -463,6 +463,18 @@ func main() {
 				},
 			},
 		},
+		{
+			Name:       "Get User Preferences",
+			Method:     "GET",
+			Path:       "/api/v1/users/preferences",
+			Description: "Get the user's preferences",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
 	}
 
 	// Attemp to read and update an existing collection; otherwise generate a new one

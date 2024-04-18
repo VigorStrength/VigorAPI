@@ -10,7 +10,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (uc *UserController) GetUserProfile(c *gin.Context) {
+func (uc *UserController) GetUserPreferences(c *gin.Context) {
 	userID, exists := c.Get("userId")
 	if !exists {
 		log.Printf("Error retrieving userID from context\n")
@@ -18,7 +18,6 @@ func (uc *UserController) GetUserProfile(c *gin.Context) {
 		return
 	}
 
-	
 	objID, ok := userID.(primitive.ObjectID)
 	if !ok {
 		log.Printf("Error converting userID from type interface {} to primitive.ObjectID\n")
@@ -26,17 +25,17 @@ func (uc *UserController) GetUserProfile(c *gin.Context) {
 		return
 	}
 
-	userProfile, err := uc.UserService.GetUserProfile(c.Request.Context(), objID)
+	userPreferences, err := uc.UserService.GetUserPreferences(c.Request.Context(), objID)
 	if err != nil {
 		if errors.Is(err, services.ErrUserNotFound) {
 			c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
 			return
 		}
 
-		log.Printf("Error getting user profile: %v\n", err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get user profile"})
+		log.Printf("Error getting user preferences: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get user preferences"})
 		return
 	}
 
-	c.JSON(http.StatusOK, userProfile)
+	c.JSON(http.StatusOK, userPreferences)
 }

@@ -12,6 +12,7 @@ import (
 )
 
 var (
+	ErrUserNotFound = errors.New("user not found")
 	ErrUserAlreadyExists = errors.New("user already exists")
 	ErrUsernameAlreadyTaken = errors.New("username already taken")
 	ErrInvalidUserCredentials = errors.New("invalid email or password")
