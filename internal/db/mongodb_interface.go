@@ -26,8 +26,9 @@ type MongoDatabase interface {
 type MongoCollection interface {
 	CountDocuments(ctx context.Context, filter interface{}) (int64, error)
 	Indexes() MongoIndexView
-	FindOne(ctx context.Context, filter interface{}, opts ...*options.FindOneOptions) MongoSingleResult
 	Find(ctx context.Context, filter interface{}) (MongoCursor, error)
+	FindOne(ctx context.Context, filter interface{}, opts ...*options.FindOneOptions) MongoSingleResult
+	FindOneAndUpdate(ctx context.Context, filter interface{}, update interface{}, opts ...*options.FindOneAndUpdateOptions) MongoSingleResult
 	InsertMany(ctx context.Context, documents []interface{}) (MongoInsertManyResult, error)
 	InsertOne(ctx context.Context, document interface{}) (MongoInsertOneResult, error)
 	UpdateOne(ctx context.Context, filter interface{}, update interface{}) (MongoUpdateResult, error)

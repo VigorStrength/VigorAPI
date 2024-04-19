@@ -21,10 +21,11 @@ var (
 type UserService struct {
 	database db.MongoDatabase
 	hasher utils.HashPasswordService
+	parser utils.ParserService
 }
 
-func NewUserService(database db.MongoDatabase, hasher utils.HashPasswordService) *UserService {
-	return &UserService{database: database, hasher: hasher}
+func NewUserService(database db.MongoDatabase, hasher utils.HashPasswordService, parser utils.ParserService) *UserService {
+	return &UserService{database: database, hasher: hasher, parser: parser}
 }
 
 func (us *UserService) RegisterUser(ctx context.Context, input models.UserRegistrationInput) error {

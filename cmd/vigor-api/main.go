@@ -55,7 +55,7 @@ func main() {
 	parser := &utils.DefaultParser{}
 	jwtService := utils.NewJWTService(cfg.JWTSecretKey, handler)
 	adminService := services.NewAdminService(database, hasher, parser)
-	userService := services.NewUserService(database, hasher)
+	userService := services.NewUserService(database, hasher, parser)
 
 	// Set up your Gin router
 	router := gin.Default()

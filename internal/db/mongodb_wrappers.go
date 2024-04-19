@@ -77,16 +77,20 @@ func (mdc *mongoCollectionWrapper) Indexes() MongoIndexView {
 	return &mongoIndexViewWrapper{indexView: mdc.collection.Indexes()}
 }
 
-func (mdc *mongoCollectionWrapper) FindOne(ctx context.Context, filter interface{}, opts ...*options.FindOneOptions) MongoSingleResult {
-	return &mongoSingleResultWrapper{singleResult: mdc.collection.FindOne(ctx, filter, opts...)}
-}
-
 func (mdc *mongoCollectionWrapper) Find(ctx context.Context, filter interface{}) (MongoCursor, error) {
 	cursor, err := mdc.collection.Find(ctx, filter)
 	if err != nil {
 		return nil, err
 	}
 	return &mongoCursorWrapper{cursor: cursor}, nil
+}
+
+func (mdc *mongoCollectionWrapper) FindOne(ctx context.Context, filter interface{}, opts ...*options.FindOneOptions) MongoSingleResult {
+	return &mongoSingleResultWrapper{singleResult: mdc.collection.FindOne(ctx, filter, opts...)}
+}
+
+func (mdc *mongoCollectionWrapper) FindOneAndUpdate(ctx context.Context, filter interface{}, update interface{}, opts ...*options.FindOneAndUpdateOptions) MongoSingleResult {
+	return &mongoSingleResultWrapper{singleResult: mdc.collection.FindOneAndUpdate(ctx, filter, update, opts...)}
 }
 
 func (mdc *mongoCollectionWrapper) InsertMany(ctx context.Context, documents []interface{}) (MongoInsertManyResult, error) {

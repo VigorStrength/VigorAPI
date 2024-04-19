@@ -65,7 +65,7 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	userRoutes.Use(middlewares.RequireRole(ts, "user"))
 	// CRUD User data
 	userRoutes.GET("/profile", userController.GetUserProfile)
-	// userRoutes.PUT("/profile", updateUserProfile)
+	userRoutes.PUT("/profile", userController.UpdateUserProfile)
 	userRoutes.GET("/preferences", userController.GetUserPreferences)
 	// userRoutes.PUT("/preferences", updateUserPreferences)
 	userRoutes.GET("/subscription", userController.GetUserSubsctiption)
@@ -136,6 +136,5 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	// adminRoutes.POST("/admins", createAdmin)
 	// adminRoutes.PUT("/admins/:id", updateAdmin)
 	// adminRoutes.DELETE("/admins/:id", deleteAdmin)
-	// adminRoutes.GET("/admins", getAdmins)
-	
+	// adminRoutes.GET("/admins", getAdmins)	
 }

@@ -914,6 +914,32 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Update User Profile",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/users/profile",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/users/profile"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }

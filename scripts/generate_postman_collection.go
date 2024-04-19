@@ -464,6 +464,18 @@ func main() {
 			},
 		},
 		{
+			Name:       "Update User Profile",
+			Method:     "PUT",
+			Path:       "/api/v1/users/profile",
+			Description: "Update the user's profile information",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
 			Name:       "Get User Preferences",
 			Method:     "GET",
 			Path:       "/api/v1/users/preferences",
