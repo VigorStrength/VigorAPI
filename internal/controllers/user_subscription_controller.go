@@ -63,7 +63,7 @@ func (uc *UserController) UpdateUserSubscription(c *gin.Context) {
 		return
 	}
 
-	_, err := uc.UserService.UpdateUserSubscription(c.Request.Context(), objID, updateInput)
+	userSubscription, err := uc.UserService.UpdateUserSubscription(c.Request.Context(), objID, updateInput)
 	if err != nil {
 		if errors.Is(err, services.ErrUserNotFound) {
 			c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
@@ -75,5 +75,5 @@ func (uc *UserController) UpdateUserSubscription(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "User subscription updated successfully"})
+	c.JSON(http.StatusOK, gin.H{"message": "User subscription updated successfully", "data": userSubscription})
 }

@@ -488,6 +488,18 @@ func main() {
 			},
 		},
 		{
+			Name:       "Update User Preferences",
+			Method:     "PUT",
+			Path:       "/api/v1/users/preferences",
+			Description: "Update the user's preferences",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
 			Name:       "Get User Subscription",
 			Method:     "GET",
 			Path:       "/api/v1/users/subscription",

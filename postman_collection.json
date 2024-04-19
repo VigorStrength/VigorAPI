@@ -966,6 +966,32 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Update User Preferences",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/users/preferences",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/users/preferences"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }

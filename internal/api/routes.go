@@ -67,7 +67,7 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	userRoutes.GET("/profile", userController.GetUserProfile)
 	userRoutes.PUT("/profile", userController.UpdateUserProfile)
 	userRoutes.GET("/preferences", userController.GetUserPreferences)
-	// userRoutes.PUT("/preferences", updateUserPreferences)
+	userRoutes.PUT("/preferences", userController.UpdateUserSystemPreferences)
 	userRoutes.GET("/subscription", userController.GetUserSubsctiption)
 	userRoutes.PUT("/subscription", userController.UpdateUserSubscription)
 	// userRoutes.DELETE("/subscription", cancelUserSubscription)

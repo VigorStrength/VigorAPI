@@ -70,7 +70,7 @@ func (uc *UserController) UpdateUserProfile(c *gin.Context) {
 		return
 	}
 
-	_, err := uc.UserService.UpdateUserProfile(c.Request.Context(), objID, updateInput)
+	userProfile, err := uc.UserService.UpdateUserProfile(c.Request.Context(), objID, updateInput)
 	if err != nil {
 		if errors.Is(err, services.ErrUserNotFound) {
 			log.Printf("Error updating user profile: %v\n", err)
@@ -83,5 +83,5 @@ func (uc *UserController) UpdateUserProfile(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "User profile updated successfully"})
+	c.JSON(http.StatusOK, gin.H{"message": "User profile updated successfully", "data": userProfile})
 }
