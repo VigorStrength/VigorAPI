@@ -69,7 +69,7 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	userRoutes.GET("/preferences", userController.GetUserPreferences)
 	// userRoutes.PUT("/preferences", updateUserPreferences)
 	userRoutes.GET("/subscription", userController.GetUserSubsctiption)
-	// userRoutes.PUT("/subscription", updateUserSubscription)
+	userRoutes.PUT("/subscription", userController.UpdateUserSubscription)
 	// userRoutes.DELETE("/subscription", cancelUserSubscription)
 	// userRoutes.DELETE("/account", deleteUserAccount)
 	// // other user routes as needed(eg list user workout plans, list user meal plans, list user progress, other analytics etc.)

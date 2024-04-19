@@ -1,5 +1,16 @@
 package models
 
+import "time"
+
+type UserSubscriptionUpdateInput struct {
+	Type *string `json:"type" validate:"omitempty"`
+	Status *string `json:"status" validate:"omitempty"`
+	StartDate *time.Time `json:"startDate" validate:"omitempty"`
+	EndDate *time.Time `json:"endDate" validate:"omitempty"`
+	NextRenewalDate *time.Time `json:"nextRenewalDate" validate:"omitempty"`
+	IsActive *bool `json:"isActive" validate:"omitempty"`
+}
+
 type UserProfileUpdateInput struct {
 	Username *string `json:"username" validate:"omitempty"`
 	ProfilePicture *string `json:"profilePicture" validate:"omitempty,url"`
@@ -39,4 +50,12 @@ type LifestyleUpdateInput struct {
 
 type CycleInformationUpdateInput struct {
 	ReproductiveStage *string `json:"reproductiveStage" validate:"omitempty"`
+}
+
+type SystemPreferencesUpdateInput struct {
+	Language *string `json:"language" validate:"omitempty"`
+	TimeZone *string `json:"timeZone" validate:"omitempty"`
+	DisplayMode *string `json:"displayMode" validate:"omitempty"`
+	MeasurementSystem *string `json:"measurementSystem" validate:"omitempty"`
+	AllowReadReceipt *bool `json:"allowReadReceipt" validate:"omitempty"`
 }

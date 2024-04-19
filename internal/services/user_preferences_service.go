@@ -28,3 +28,23 @@ func (us *UserService) GetUserPreferences(ctx context.Context, userID primitive.
 
 	return user.SystemPreferences, nil
 }
+
+// func mergeUserSystemPrefencesUpdates(existingPreferences models.SystemPreferences, updateInput models.SystemPreferencesUpdateInput) models.SystemPreferences {
+// 	if updateInput.Language != nil {
+// 		existingPreferences.Language = *updateInput.Language
+// 	}
+// 	if updateInput.T != nil {
+// 		existingPreferences.TimeZone = *updateInput.TimeZone
+// 	}
+// 	if updateInput.DisplayMode != nil {
+// 		existingPreferences.DisplayMode = *updateInput.DisplayMode
+// 	}
+// 	if updateInput.MeasurementSystem != nil {
+// 		existingPreferences.MeasurementSystem = *updateInput.MeasurementSystem
+// 	}
+// 	if updateInput.AllowReadReceipt != nil {
+// 		existingPreferences.AllowReadReceipt = *updateInput.AllowReadReceipt
+// 	}
+
+// 	return existingPreferences
+// }

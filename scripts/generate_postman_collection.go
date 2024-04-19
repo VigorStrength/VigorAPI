@@ -499,6 +499,18 @@ func main() {
 				},
 			},
 		},
+		{
+			Name:       "Update User Subscription",
+			Method:     "PUT",
+			Path:       "/api/v1/users/subscription",
+			Description: "Update the user's subscription information",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
 	}
 
 	// Attemp to read and update an existing collection; otherwise generate a new one

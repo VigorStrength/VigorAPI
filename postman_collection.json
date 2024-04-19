@@ -940,6 +940,32 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Update User Subscription",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/users/subscription",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/users/subscription"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }
