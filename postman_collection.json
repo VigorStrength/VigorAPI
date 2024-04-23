@@ -992,6 +992,32 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Cancel User Subscription",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/users/subscription/cancel",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/users/subscription/cancel"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }

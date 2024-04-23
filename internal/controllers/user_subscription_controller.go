@@ -77,3 +77,33 @@ func (uc *UserController) UpdateUserSubscription(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "User subscription updated successfully", "data": userSubscription})
 }
+
+func (uc *UserController) CancelUserSubscription(c *gin.Context) {
+	userID, exists := c.Get("userId")
+	if !exists {
+		log.Printf("Error retrieving userID from context\n")
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Failed to retrieve user ID from context"})
+		return
+	}
+
+	objID, ok := userID.(primitive.ObjectID)
+	if !ok {
+		log.Printf("Error converting userID from type interface {} to primitive.ObjectID\n")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to convert user ID to string"})
+		return
+	}
+
+	userSubscription, err := uc.UserService.CancelUserSubscription(c.Request.Context(), objID)
+	if err != nil {
+		if errors.Is(err, services.ErrUserNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+			return
+		}
+
+		log.Printf("Error cancelling user subscription: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to cancel user subscription"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "User subscription cancelled successfully", "data": userSubscription})
+}

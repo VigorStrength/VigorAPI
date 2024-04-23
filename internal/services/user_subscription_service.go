@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/GhostDrew11/vigor-api/internal/models"
 	"go.mongodb.org/mongo-driver/bson"
@@ -54,6 +55,44 @@ func (us *UserService) UpdateUserSubscription(ctx context.Context, userID primit
 	return &updatedUser.Subscription, nil
 }
 
+func (us *UserService) CancelUserSubscription(ctx context.Context, userID primitive.ObjectID) (*models.UserSubscription, error) {
+	userCollection := us.database.Collection("users")
+	filter := bson.M{"_id": userID}
+
+	currentTime := time.Now()
+	updateDoc := bson.M{
+		"$set": bson.M{
+			"subscription.nextRenewalDate": nil,
+		},
+	}
+
+	var user models.User
+	if err := userCollection.FindOne(ctx, filter).Decode(&user); err != nil {
+		if err == mongo.ErrNoDocuments {
+			return nil, ErrUserNotFound
+		}
+		return nil, fmt.Errorf("error fetching user for subscription cancellation: %w", err)
+	}
+
+	if user.Subscription.EndDate != nil && currentTime.After(*user.Subscription.EndDate) {
+		updateDoc["$set"].(bson.M)["subscription.isActive"] = false
+		updateDoc["$set"].(bson.M)["subscription.Status"] = "inactive"
+	} else {
+		updateDoc["$set"].(bson.M)["subscription.Status"] = "cancelled"
+	}
+
+	opts := options.FindOneAndUpdate().SetReturnDocument(options.After) 
+    var updatedUser models.User
+    if err := userCollection.FindOneAndUpdate(ctx, filter, updateDoc, opts).Decode(&updatedUser); err != nil {
+        if err == mongo.ErrNoDocuments {
+            return nil, ErrUserNotFound
+        }
+        return nil, fmt.Errorf("error updating subscription: %w", err)
+    }
+
+    return &updatedUser.Subscription, nil
+}
+
 func mergeUserSubscriptionUpdates(existingSubscription models.UserSubscription, updateInput models.UserSubscriptionUpdateInput) models.UserSubscription {
 	if updateInput.Type != nil {
 		existingSubscription.Type = *updateInput.Type
@@ -66,6 +105,9 @@ func mergeUserSubscriptionUpdates(existingSubscription models.UserSubscription, 
 	}
 	if updateInput.EndDate != nil {
 		existingSubscription.EndDate = updateInput.EndDate
+	}
+	if updateInput.NextRenewalDate != nil {
+		existingSubscription.NextRenewalDate = updateInput.NextRenewalDate
 	}
 	if updateInput.IsActive != nil {
 		existingSubscription.IsActive = *updateInput.IsActive

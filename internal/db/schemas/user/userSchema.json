@@ -61,8 +61,16 @@
             "description": "subscription end date, if any"
           },
           "nextRenewalDate": {
-            "bsonType": "date",
-            "description": "indicates the next schedule renewal date of the subscription, if applicable"
+            "oneOf": [
+              {
+                "bsonType": "date",
+                "description": "indicates the next schedule renewal date of the subscription, if applicable"
+              },
+              {
+                "bsonType": "null",
+                "description": "can be null when there is no upcoming renewal"
+              }
+            ]
           },
           "isActive": {
             "bsonType": "bool",

@@ -523,6 +523,19 @@ func main() {
 				},
 			},
 		},
+		{
+			Name:       "Cancel User Subscription",
+			Method:     "PUT",
+			Path:       "/api/v1/users/subscription/cancel",
+			Description: "Cancel the user's subscription",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+
+		},
 	}
 
 	// Attemp to read and update an existing collection; otherwise generate a new one
