@@ -15,7 +15,7 @@ func (us *UserService) GetUserPreferences(ctx context.Context, userID primitive.
 	userCollection := us.database.Collection("users")
 	var user models.User
 
-	projection := bson.M{"preferences": 1}
+	projection := bson.M{"systemPreferences": 1}
 	filter := bson.M{"_id": userID}
 	opts := options.FindOne().SetProjection(projection)
 	if err := userCollection.FindOne(ctx, filter, opts).Decode(&user); err != nil {
