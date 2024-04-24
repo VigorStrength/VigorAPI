@@ -1018,6 +1018,32 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Join Workout Plan",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/users/workout-plans/{{workoutPlanId}}/join",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/users/workout-plans/{{workoutPlanId}}/join"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }

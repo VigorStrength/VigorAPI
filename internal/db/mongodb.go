@@ -70,16 +70,16 @@ func (ms *MongoDBService) EnsureIndexes(ctx context.Context, db MongoDatabase) e
 			{Keys: bson.M{"name": 1}, Options: options.Index().SetUnique(true)},
 		},
 		"userExerciseStatus": {
-			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "exerciseId", Value: 1}}, Options: options.Index().SetUnique(true)},
+			{Keys: bson.D{{Key: "userId", Value: 1},{Key: "exerciseId", Value: 1}, {Key: "circuitId", Value: 1},{Key: "workoutPlanId", Value: 1}}, Options: options.Index().SetUnique(true)},
 		},
 		"userCircuitStatus": {
-			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "circuitId", Value: 1}}, Options: options.Index().SetUnique(true)},
+			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "circuitId", Value: 1},{Key: "workoutDayId", Value: 1},{Key: "workoutPlanId", Value: 1}}, Options: options.Index().SetUnique(true)},
 		},
 		"userWorkoutDayStatus": {
-			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "workoutDayId", Value: 1}}, Options: options.Index().SetUnique(true)},
+			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "workoutDayId", Value: 1},{Key: "workoutWeekId", Value: 1}, {Key: "workoutPlanId", Value: 1}}, Options: options.Index().SetUnique(true)},
 		},
 		"userWorkoutWeekStatus": {
-			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "workoutWeekId", Value: 1}}, Options: options.Index().SetUnique(true)},
+			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "workoutWeekId", Value: 1},{Key: "workoutPlanId", Value: 1}}, Options: options.Index().SetUnique(true)},
 		},
 		"workoutPlans": {
 				{Keys: bson.M{"name": 1}, Options: options.Index().SetUnique(true)},
