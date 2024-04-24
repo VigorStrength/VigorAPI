@@ -1,7 +1,13 @@
 {
   "$jsonSchema": {
     "bsonType": "object",
-    "required": ["userId", "exerciseId", "completed", "completedLogs"],
+    "required": [
+      "userId",
+      "exerciseId",
+      "circuitId",
+      "workkoutPlanId",
+      "completedLogs"
+    ],
     "properties": {
       "userId": {
         "bsonType": "objectId",
@@ -10,6 +16,14 @@
       "exerciseId": {
         "bsonType": "objectId",
         "description": "must be an objectId and is required"
+      },
+      "circuitId": {
+        "bsonType": "objectId",
+        "description": "must be an objectId and is optional"
+      },
+      "workoutPlanId": {
+        "bsonType": "objectId",
+        "description": "must be an objectId and is optional"
       },
       "completed": {
         "bsonType": "bool",

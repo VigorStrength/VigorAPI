@@ -3,7 +3,7 @@
     "title": "UserWorkoutPlanStatus",
     "description": "Schema for user's progress on a workout plan.",
     "bsonType": "object",
-    "required": ["userId", "workoutPlanId", "startDate", "completed"],
+    "required": ["userId", "workoutPlanId", "startDate"],
     "properties": {
       "_id": {
         "bsonType": "objectId",

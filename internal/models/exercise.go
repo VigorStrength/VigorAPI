@@ -15,13 +15,6 @@ type Exercise struct {
 	ProposedLog     ExerciseLog        `bson:"proposedLog" json:"proposedLog" validate:"required"`
 }
 
-type UserExerciseStatus struct {
-	UserID        primitive.ObjectID `bson:"userId" json:"userId" binding:"required" validate:"required"`
-	ExerciseID    primitive.ObjectID `bson:"exerciseId" json:"exerciseId" binding:"required" validate:"required"`
-	Completed     bool               `bson:"completed" json:"completed" binding:"required" validate:"omitempty"`
-	CompletedLogs []ExerciseLog      `bson:"completedLogs" json:"completedLogs" binding:"required" validate:"required,dive,required"`
-}
-
 // ExerciseLog represents the logging of exercises, including proposed logs and actual user logs.
 type ExerciseLog struct {
 	SetNumber      *int     `bson:"setNumber,omitempty" json:"setNumber,omitempty" validate:"omitempty"`

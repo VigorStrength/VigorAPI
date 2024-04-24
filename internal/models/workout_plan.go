@@ -1,8 +1,6 @@
 package models
 
 import (
-	"time"
-
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -17,14 +15,6 @@ type Circuit struct {
 	// Completed    bool                 `bson:"completed" json:"completed"`
 }
 
-// UserCircuitStatus tracks the completion status of a circuit for a specific user.
-type UserCircuitStatus struct {
-	ID        primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
-	UserID    primitive.ObjectID `bson:"userId" json:"userId" binding:"required"`
-	CircuitID primitive.ObjectID `bson:"circuitId" json:"circuitId" binding:"required"`
-	Completed bool               `bson:"completed" json:"completed"`
-}
-
 // WorkoutDay represents a complete day's workout plan, including warm-up, workout, and cool-down.
 type WorkoutDay struct {
 	ID               primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
@@ -36,14 +26,6 @@ type WorkoutDay struct {
 	// Other fields...
 }
 
-// UserWorkoutDayStatus tracks the completion status of a workout day for a specific user.
-type UserWorkoutDayStatus struct {
-	ID           primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
-	UserID       primitive.ObjectID `bson:"userId" json:"userId" binding:"required"`
-	WorkoutDayID primitive.ObjectID `bson:"workoutDayId" json:"workoutDayId" binding:"required"`
-	Completed    bool               `bson:"completed" json:"completed"`
-}
-
 // WorkoutWeek represents a single week within a workout plan, containing multiple workout days.
 type WorkoutWeek struct {
 	ID         primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
@@ -53,29 +35,11 @@ type WorkoutWeek struct {
 	// CompletedDays int          `bson:"completedDays" json:"completedDays"` // Derived by counting days with CompletionStatus true.
 }
 
-// UserWorkoutWeekStatus tracks the completion status of a workout week for a specific user.
-type UserWorkoutWeekStatus struct {
-	ID            primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
-	UserID        primitive.ObjectID `bson:"userId" json:"userId" binding:"required"`
-	WorkoutWeekID primitive.ObjectID `bson:"workoutWeekId" json:"workoutWeekId" binding:"required"`
-	CompletedDays int                `bson:"completedDays" json:"completedDays"`
-}
-
 type WorkoutPlan struct {
 	ID       primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
 	Name     string             `bson:"name" json:"name" binding:"required" validate:"required,min=5,max=50"`
 	Duration int                `bson:"duration" json:"duration" binding:"required" validate:"required,gt=0"`
 	Weeks    []WorkoutWeek      `bson:"weeks" json:"weeks" binding:"required" validate:"required,dive"`
-}
-
-type UserWorkoutPlanStatus struct {
-	ID             primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
-	UserID         primitive.ObjectID `bson:"userId" json:"userId" binding:"required"`               // Reference to the User
-	WorkoutPlanID  primitive.ObjectID `bson:"workoutPlanId" json:"workoutPlanId" binding:"required"` // Reference to the WorkoutPlan
-	StartDate      time.Time          `bson:"startDate" json:"startDate" binding:"required"`
-	CompletionDate *time.Time         `bson:"completionDate" json:"completionDate"` // nil if not completed
-	Completed      bool               `bson:"completed" json:"completed"`
-	// More fields as necessary to track progress, such as completed workouts or weeks
 }
 
 // AI WorkoutPlan

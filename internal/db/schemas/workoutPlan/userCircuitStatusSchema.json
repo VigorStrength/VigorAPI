@@ -1,7 +1,7 @@
 {
   "$jsonSchema": {
     "bsonType": "object",
-    "required": ["userId", "circuitId", "completed"],
+    "required": ["userId", "circuitId", "workoutDayId", "workoutPlanId"],
     "properties": {
       "_id": {
         "bsonType": "objectId"
@@ -13,6 +13,14 @@
       "circuitId": {
         "bsonType": "objectId",
         "description": "Circuit ID that the status is tracked for."
+      },
+      "workoutDayId": {
+        "bsonType": "objectId",
+        "description": "Workout day ID that the status is tracked for."
+      },
+      "workoutPlanId": {
+        "bsonType": "objectId",
+        "description": "Workout plan ID that the status is tracked for."
       },
       "completed": {
         "bsonType": "bool",
