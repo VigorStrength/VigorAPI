@@ -12,6 +12,7 @@ import (
 
 var (
 	ErrCircuitNotFound = fmt.Errorf("user circuit not found")
+	ErrWrokoutWeekNotFound = fmt.Errorf("user workout week not found")
 	ErrAlreadyJoinded = fmt.Errorf("user has already joined this workout plan")
 	ErrExerciseAlreadyCompleted = fmt.Errorf("exercise has already been completed")
 )
@@ -66,40 +67,71 @@ func (us *UserService) JoinWorkoutPlan(ctx context.Context, userID, workoutPlanI
 	return nil
 }
 
-func (us *UserService) MarkExerciseAsCompleted(ctx context.Context, userID, exerciseID primitive.ObjectID, logs []models.UserExerciseLogInput) error {
-	circuitID, workoutPlanID, err := us.getCircuitAndPlanID(ctx, exerciseID)
-	if err != nil {
-		return fmt.Errorf("error getting circuit and workout plan IDs: %w", err)
-	}
-
-	filter := bson.M{
-		"userId":     userID,
-		"exerciseId": exerciseID,
-		"circuitId":  circuitID,
-		"workoutPlanId": workoutPlanID,
-	}
-	var userExerciseStatus models.UserExerciseStatus
-	if err := us.database.Collection("userExerciseStatus").FindOne(ctx, filter).Decode(&userExerciseStatus); err != nil {
+func (us *UserService) MarkExerciseAsCompleted(ctx context.Context, userID, exerciseID, circuitID primitive.ObjectID, logs []models.UserExerciseLogInput) error {
+    
+	workoutPlanID, err := us.getAndValidateCircuit(ctx, circuitID)
+    if err != nil {
 		if err == mongo.ErrNoDocuments {
-			return ErrExerciseNotFound
+			return  ErrCircuitNotFound
 		}
-		return fmt.Errorf("error retrieving exercise status: %w", err)
-	}
-	
-	// log.Printf("UserExerciseStatus: %t\n", userExerciseStatus.Completed)
-	if userExerciseStatus.Completed {
-		return ErrExerciseAlreadyCompleted
-	}
-	
-	update := bson.M{
-		"$set": bson.M{"completed": true},
-		"$push": bson.M{"completedLogs": bson.M{"$each": logs}},
+
+        return fmt.Errorf("error getting workout plan ID from circuit: %w", err)
+    }
+
+    filter := bson.M{
+        "userId":     userID,
+        "exerciseId": exerciseID,
+        "circuitId":  circuitID,
+        "workoutPlanId": workoutPlanID,
+    }
+    var userExerciseStatus models.UserExerciseStatus
+    if err := us.database.Collection("userExerciseStatus").FindOne(ctx, filter).Decode(&userExerciseStatus); err != nil {
+        if err == mongo.ErrNoDocuments {
+            return ErrExerciseNotFound
+        }
+        return fmt.Errorf("error retrieving exercise status: %w", err)
+    }
+    
+    if userExerciseStatus.Completed {
+        return ErrExerciseAlreadyCompleted
+    }
+    
+    update := bson.M{
+        "$set": bson.M{"completed": true},
+        "$push": bson.M{"completedLogs": bson.M{"$each": logs}},
+    }
+
+    if _, err := us.database.Collection("userExerciseStatus").UpdateOne(ctx, filter, update); err != nil {
+        return fmt.Errorf("error updating exercise status: %w", err)
+    }
+
+    return us.checkAndUpdateCircuitStatus(ctx, userID, circuitID, workoutPlanID)
+}
+
+func (us *UserService) GetWorkoutPlanProgress(ctx context.Context, userID, workoutPlanID primitive.ObjectID) (float64, error) {
+	totalDays, err := us.database.Collection("userWorkoutDayStatus").CountDocuments(ctx, bson.M{"userId": userID, "workoutPlanId": workoutPlanID})
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return 0, ErrWorkoutPlanNotFound
+		}
+		return 0, fmt.Errorf("error counting workout days: %w", err)
 	}
 
-	if _, err := us.database.Collection("userExerciseStatus").UpdateOne(ctx, filter, update); err != nil {
-		return fmt.Errorf("error updating exercise status: %w", err)
+	completedDays, err := us.database.Collection("userWorkoutDayStatus").CountDocuments(ctx, bson.M{"userId": userID, "workoutPlanId": workoutPlanID, "completed": true})
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return 0, ErrWorkoutPlanNotFound
+		}
+		
+		return 0, fmt.Errorf("error counting completed workout days: %w", err)
 	}
 
-	return us.checkAndUpdateCircuitStatus(ctx, userID, circuitID, workoutPlanID)
+	if totalDays == 0 {
+		return 0, nil
+	}
+
+	progress := float64(completedDays) / float64(totalDays) * 100
+
+	return progress, nil
 }
 

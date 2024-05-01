@@ -73,6 +73,13 @@ func (uc *UserController) CompleteExercise(c *gin.Context) {
 		return
 	}
 
+	circuitID, err := primitive.ObjectIDFromHex(c.Param("circuitId"))
+    if err != nil {
+        log.Printf("Error parsing circuit ID: %v\n", err)
+        c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid circuit ID"})
+        return
+    }
+
 	var logs []models.UserExerciseLogInput
 	if err := c.ShouldBindJSON(&logs); err != nil {
 		log.Printf("Error parsing JSON: %v\n", err)
@@ -80,10 +87,20 @@ func (uc *UserController) CompleteExercise(c *gin.Context) {
 		return
 	}
 
-	err = uc.UserService.MarkExerciseAsCompleted(c.Request.Context(), objID, exerciseID, logs)
+	err = uc.UserService.MarkExerciseAsCompleted(c.Request.Context(), objID, exerciseID, circuitID, logs)
 	if err != nil {
 		if errors.Is(err, services.ErrExerciseNotFound) {
-			c.JSON(http.StatusNotFound, gin.H{"error": "User exercise not found"})
+			c.JSON(http.StatusNotFound, gin.H{"error": "User exercise status not found"})
+			return
+		}
+
+		if errors.Is(err, services.ErrExerciseAlreadyCompleted) {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Exercise has already been completed"})
+			return
+		}
+
+		if errors.Is(err, services.ErrCircuitNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "User circuit status not found"})
 			return
 		}
 
@@ -93,6 +110,43 @@ func (uc *UserController) CompleteExercise(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "Exercise marked as completed"})
+}
+
+func(uc *UserController) GetWorkoutPlanProgress(c *gin.Context) {
+	userID, exists := c.Get("userId")
+	if !exists {
+		log.Printf("Error retrieving userID from context\n")
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Failed to retrieve user ID from context"})
+		return
+	}
+
+	objID, ok := userID.(primitive.ObjectID)
+	if !ok {
+		log.Printf("Error converting userID from type interface{} to primitive.ObjectID\n")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to convert user ID to string"})
+		return
+	}
+
+	workoutPlanID, err := primitive.ObjectIDFromHex(c.Param("workoutPlanId"))
+	if err != nil {
+		log.Printf("Error parsing workout plan ID: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid workout plan ID"})
+		return
+	}
+
+	progress, err := uc.UserService.GetWorkoutPlanProgress(c.Request.Context(), objID, workoutPlanID)
+	if err != nil {
+		if errors.Is(err, services.ErrWorkoutPlanNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "User workout plan status not found"})
+			return
+		}
+
+		log.Printf("Error getting workout plan progress: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get workout plan progress"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"progress": progress})
 }
 
 

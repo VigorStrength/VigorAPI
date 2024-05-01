@@ -1060,12 +1060,38 @@
           "raw": "{}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/v1/users/exercises/{{exerciseId}}/complete",
+          "raw": "{{baseUrl}}/api/v1/users/exercises/{{exerciseId}}/complete/{{circuitId}}",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
-            "/api/v1/users/exercises/{{exerciseId}}/complete"
+            "/api/v1/users/exercises/{{exerciseId}}/complete/{{circuitId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get User Workout Plan Progress",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/users/workout-plans/{{workoutPlanId}}/progress",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/users/workout-plans/{{workoutPlanId}}/progress"
           ]
         }
       },

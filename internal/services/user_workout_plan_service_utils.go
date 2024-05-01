@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/GhostDrew11/vigor-api/internal/models"
 	"go.mongodb.org/mongo-driver/bson"
@@ -10,13 +11,14 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-func (us *UserService) getCircuitAndPlanID(ctx context.Context, exerciseID primitive.ObjectID) (primitive.ObjectID, primitive.ObjectID, error) {
-    var exercise models.UserExerciseStatus
-    err := us.database.Collection("userExerciseStatus").FindOne(ctx, bson.M{"exerciseId": exerciseID}).Decode(&exercise)
-    if err != nil {
-        return primitive.NilObjectID, primitive.NilObjectID, fmt.Errorf("error finding user's exercise: %w", err)
-    }
-    return exercise.CircuitID, exercise.WorkoutPlanID, nil
+func (us *UserService) getAndValidateCircuit(ctx context.Context, circuitID primitive.ObjectID) (primitive.ObjectID, error) {
+	var userCircuitStatus models.UserCircuitStatus
+	err := us.database.Collection("userCircuitStatus").FindOne(ctx, bson.M{"circuitId": circuitID}).Decode(&userCircuitStatus)
+	if err != nil {
+		return primitive.NilObjectID, err
+	}
+
+	return userCircuitStatus.WorkoutPlanID, nil
 }
 
 func (us *UserService) getWorkoutDayID(ctx context.Context, circuitID primitive.ObjectID) (primitive.ObjectID, error) {
@@ -38,6 +40,16 @@ func (us *UserService) getWeekID(ctx context.Context, workoutDayID primitive.Obj
 		return primitive.NilObjectID, fmt.Errorf("error finding user's workout day: %w", err)
 	}
 	return userWorkoutDay.WorkoutWeekID, nil
+}
+
+func (us *UserService) incrementWorkoutWeekCompletedDays(ctx context.Context, userID, workoutWeekID, workoutPlanID primitive.ObjectID) error {
+	filter := bson.M{"userId": userID, "workoutWeekId": workoutWeekID, "workoutPlanId": workoutPlanID}
+	update := bson.M{"$inc": bson.M{"completedDays": 1}}
+	if _, err := us.database.Collection("userWorkoutWeekStatus").UpdateOne(ctx, filter, update); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (us *UserService) checkAndUpdateCircuitStatus(ctx context.Context, userID, circuitID, workoutPlanID primitive.ObjectID) error {
@@ -82,6 +94,15 @@ func (us *UserService) checkAndUpdateDayStatus(ctx context.Context, userID, work
 		if err != nil {
 			return fmt.Errorf("error getting weekID from day: %w", err)
 		}
+
+		if err := us.incrementWorkoutWeekCompletedDays(ctx, userID, weekID, workoutPlanID); err != nil {
+			if err == mongo.ErrNoDocuments {
+				return ErrWrokoutWeekNotFound
+			}
+
+			return fmt.Errorf("error incrementing workout week completed days: %w", err)
+		}
+
 		return us.checkAndUpdateWeekStatus(ctx, userID, weekID, workoutPlanID)
 	}
 
@@ -117,7 +138,7 @@ func (us *UserService) checkAndUpdateWorkoutPlanStatus(ctx context.Context, user
 
 	if count == 0 {
 		filter := bson.M{"userId": userID, "workoutPlanId": workoutPlanID}
-		update := bson.M{"$set": bson.M{"completed": true}}
+		update := bson.M{"$set": bson.M{"completionDate": time.Now() ,"completed": true, }}
 		if _, err := us.database.Collection("userWorkoutPlanStatus").UpdateOne(ctx, filter, update); err != nil {
 			return fmt.Errorf("error updating workout plan status: %w", err)
 		}
