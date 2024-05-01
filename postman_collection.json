@@ -1044,6 +1044,32 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Complete Exercise",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/users/exercises/{{exerciseId}}/complete",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/users/exercises/{{exerciseId}}/complete"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }

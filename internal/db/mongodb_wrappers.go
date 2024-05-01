@@ -37,8 +37,20 @@ func (m *mongoClientWrapper) Disconnect(ctx context.Context) error {
 	return m.client.Disconnect(ctx)
 }
 
+func (m *mongoClientWrapper) StartSession(opts ...*options.SessionOptions) (mongo.Session, error) {
+	session, err := m.client.StartSession(opts...)
+	if err != nil {
+		return nil, err
+	}
+	return session, nil
+}
+
 type mongoDatabaseWrapper struct {
 	database *mongo.Database
+}
+
+func (md *mongoDatabaseWrapper) Client() MongoClient {
+	return NewMongoClientWrapper(md.database.Client())
 }
 
 func (md *mongoDatabaseWrapper) CreateCollection(ctx context.Context, name string, opts ...*options.CreateCollectionOptions) error {
@@ -161,3 +173,4 @@ func (mcw *mongoCursorWrapper) Close(ctx context.Context) error {
 func (mcw *mongoCursorWrapper) Err() error {
 	return mcw.cursor.Err()
 }
+

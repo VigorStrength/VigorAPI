@@ -3,7 +3,6 @@ package services
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"github.com/GhostDrew11/vigor-api/internal/models"
 	"go.mongodb.org/mongo-driver/bson"
@@ -12,42 +11,95 @@ import (
 )
 
 var (
+	ErrCircuitNotFound = fmt.Errorf("user circuit not found")
 	ErrAlreadyJoinded = fmt.Errorf("user has already joined this workout plan")
+	ErrExerciseAlreadyCompleted = fmt.Errorf("exercise has already been completed")
 )
 
 func (us *UserService) JoinWorkoutPlan(ctx context.Context, userID, workoutPlanID primitive.ObjectID) error {
+	var workoutPlan models.WorkoutPlan
 	workoutPlanCollection := us.database.Collection("workoutPlans")
-	userWorkoutPlanCollection := us.database.Collection("userWorkoutPlans")
-	filter := bson.M{"_id": workoutPlanID}
-
-	if err := workoutPlanCollection.FindOne(ctx, filter).Err(); err != nil {
+	err := workoutPlanCollection.FindOne(ctx, bson.M{"_id": workoutPlanID}).Decode(&workoutPlan)
+	if err != nil {
 		if err == mongo.ErrNoDocuments {
 			return ErrWorkoutPlanNotFound
 		}
-
 		return fmt.Errorf("error finding workout plan: %w", err)
 	}
 
-	userWorkoutPlanFilter := bson.M{"userId": userID, "workoutPlanId": workoutPlanID}
-	count, err := userWorkoutPlanCollection.CountDocuments(ctx, userWorkoutPlanFilter)
-	if err != nil {
-		return fmt.Errorf("error checking if user already joined the workout plan: %w", err)
-	}
-	if count > 0 {
-		return ErrAlreadyJoinded
-	}
-
-	userWorkoutPlanStatus := models.UserWorkoutPlanStatus{
-		ID: 		  primitive.NewObjectID(),
-		UserID:       userID,
-		WorkoutPlanID: workoutPlanID,
-		StartDate:    time.Now(),
-		Completed:    false,
+	userWorkoutPlanStatus := models.NewUserWorkoutPlanStatus(userID, workoutPlanID)
+	if _, err := us.database.Collection("userWorkoutPlanStatus").InsertOne(ctx, userWorkoutPlanStatus); err != nil {
+		if mongo.IsDuplicateKeyError(err) {
+			return ErrAlreadyJoinded
+		}
+		return fmt.Errorf("error inserting user workout plan status: %w", err)
 	}
 
-	if _, err := userWorkoutPlanCollection.InsertOne(ctx, userWorkoutPlanStatus); err != nil {
-		return fmt.Errorf("error joining workout plan: %w", err)
+	for _, week := range workoutPlan.Weeks {
+		userWeekStatus := models.NewUserWorkoutWeekStatus(userID, week.ID, workoutPlanID)
+		if _, err := us.database.Collection("userWorkoutWeekStatus").InsertOne(ctx, userWeekStatus); err != nil {
+			return fmt.Errorf("error inserting user workout week status: %w", err)
+		}
+
+		for _, day := range week.Days {
+			userDayStatus := models.NewUserWorkoutDayStatus(userID, day.ID, week.ID, workoutPlanID)
+			if _, err := us.database.Collection("userWorkoutDayStatus").InsertOne(ctx, userDayStatus); err != nil {
+				return fmt.Errorf("error inserting user workout day status: %w", err)
+			}
+
+			for _, circuit := range append(day.WarmUps, append(day.Workouts, day.CoolDowns...)...) {
+				userCircuitStatus := models.NewUserCircuitStatus(userID, circuit.ID, day.ID, workoutPlanID)
+				if _, err := us.database.Collection("userCircuitStatus").InsertOne(ctx, userCircuitStatus); err != nil {
+					return fmt.Errorf("error inserting user circuit status: %w", err)
+				}
+
+				for _, exerciseID := range circuit.ExerciseIDs {
+					userExerciseStatus := models.NewUserExerciseStatus(userID, exerciseID, circuit.ID, workoutPlanID)
+					if _, err := us.database.Collection("userExerciseStatus").InsertOne(ctx, userExerciseStatus); err != nil {
+						return fmt.Errorf("error inserting user exercise status: %w", err)
+					}
+				}
+			}
+		}
 	}
 
 	return nil
 }
+
+func (us *UserService) MarkExerciseAsCompleted(ctx context.Context, userID, exerciseID primitive.ObjectID, logs []models.UserExerciseLogInput) error {
+	circuitID, workoutPlanID, err := us.getCircuitAndPlanID(ctx, exerciseID)
+	if err != nil {
+		return fmt.Errorf("error getting circuit and workout plan IDs: %w", err)
+	}
+
+	filter := bson.M{
+		"userId":     userID,
+		"exerciseId": exerciseID,
+		"circuitId":  circuitID,
+		"workoutPlanId": workoutPlanID,
+	}
+	var userExerciseStatus models.UserExerciseStatus
+	if err := us.database.Collection("userExerciseStatus").FindOne(ctx, filter).Decode(&userExerciseStatus); err != nil {
+		if err == mongo.ErrNoDocuments {
+			return ErrExerciseNotFound
+		}
+		return fmt.Errorf("error retrieving exercise status: %w", err)
+	}
+	
+	// log.Printf("UserExerciseStatus: %t\n", userExerciseStatus.Completed)
+	if userExerciseStatus.Completed {
+		return ErrExerciseAlreadyCompleted
+	}
+	
+	update := bson.M{
+		"$set": bson.M{"completed": true},
+		"$push": bson.M{"completedLogs": bson.M{"$each": logs}},
+	}
+
+	if _, err := us.database.Collection("userExerciseStatus").UpdateOne(ctx, filter, update); err != nil {
+		return fmt.Errorf("error updating exercise status: %w", err)
+	}
+
+	return us.checkAndUpdateCircuitStatus(ctx, userID, circuitID, workoutPlanID)
+}
+

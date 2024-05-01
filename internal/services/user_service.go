@@ -9,6 +9,7 @@ import (
 	"github.com/GhostDrew11/vigor-api/internal/models"
 	"github.com/GhostDrew11/vigor-api/internal/utils"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 var (
@@ -22,6 +23,10 @@ type UserService struct {
 	database db.MongoDatabase
 	hasher utils.HashPasswordService
 	parser utils.ParserService
+}
+
+func (us *UserService) StartSession() (mongo.Session, error) {
+	return us.database.Client().StartSession()
 }
 
 func NewUserService(database db.MongoDatabase, hasher utils.HashPasswordService, parser utils.ParserService) *UserService {

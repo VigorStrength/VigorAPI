@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/GhostDrew11/vigor-api/internal/models"
 	"github.com/GhostDrew11/vigor-api/internal/services"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -49,3 +50,116 @@ func (uc *UserController) JoinWorkoutPlan(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "Successfully joined workout plan"})
 }
+
+func (uc *UserController) CompleteExercise(c *gin.Context) {
+	userID, exists := c.Get("userId")
+	if !exists {
+		log.Printf("Error retrieving userID from context\n")
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Failed to retrieve user ID from context"})
+		return
+	}
+
+	objID, ok := userID.(primitive.ObjectID)
+	if !ok {
+		log.Printf("Error converting userID from type interface{} to primitive.ObjectID\n")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to convert user ID to string"})
+		return
+	}
+
+	exerciseID, err := primitive.ObjectIDFromHex(c.Param("exerciseId"))
+	if err != nil {
+		log.Printf("Error parsing exercise ID: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid exercise ID"})
+		return
+	}
+
+	var logs []models.UserExerciseLogInput
+	if err := c.ShouldBindJSON(&logs); err != nil {
+		log.Printf("Error parsing JSON: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Could not parse request body"})
+		return
+	}
+
+	err = uc.UserService.MarkExerciseAsCompleted(c.Request.Context(), objID, exerciseID, logs)
+	if err != nil {
+		if errors.Is(err, services.ErrExerciseNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "User exercise not found"})
+			return
+		}
+
+		log.Printf("Error marking user exercise as completed: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to mark user exercise as completed"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Exercise marked as completed"})
+}
+
+
+
+// func (uc *UserController) CompleteExercise(c *gin.Context) {
+// 	userID, exits := c.Get("userId")
+// 	if !exits {
+// 		log.Printf("Error retrieving userID from context\n")
+// 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Failed to retrieve user ID from context"})
+// 		return
+// 	}
+
+// 	objID, ok := userID.(primitive.ObjectID)
+// 	if !ok {
+// 		log.Printf("Error converting userID from type interface {} to primitive.ObjectID\n")
+// 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to convert user ID to string"})
+// 		return
+// 	}
+
+// 	exerciseID, err := primitive.ObjectIDFromHex(c.Param("exerciseId"))
+// 	if err != nil {
+// 		log.Printf("Error parsing exercise ID: %v\n", err)
+// 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid exercise ID"})
+// 		return
+// 	}
+
+// 	//Transaction integrity to ensure that all updates within our cascading update either comple successfully or rollback together avoiding data inconsistency(userExerciseStatus, userCircuitStatus, userWorkoutDayStatus, userWorkoutWeekStatus, userWorkoutPlanStatus)
+// 	session, err := uc.UserService.StartSession()
+// 	if err != nil {
+// 		log.Printf("Error starting session: %v\n", err)
+// 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to start session"})
+// 		return
+// 	}
+// 	defer session.EndSession(c.Request.Context())
+
+// 	var logs []models.UserExerciseLogInput
+// 	if err := c.ShouldBindJSON(&logs); err != nil {
+// 		log.Printf("Error parsing JSON: %v\n", err)
+// 		c.JSON(http.StatusBadRequest, gin.H{"error": "Could not parse request body"})
+// 		return
+// 	}
+
+// 	err = mongo.WithSession(c.Request.Context(), session, func(sc mongo.SessionContext) error {
+// 		if err := session.StartTransaction(); err != nil {
+// 			return err
+// 		}
+
+// 		if err := uc.UserService.MarkExerciseAsCompleted(sc, objID, exerciseID, logs); err != nil {
+// 			return err
+// 		}
+
+// 		if err := session.CommitTransaction(sc); err != nil {
+// 			return err
+// 		}
+
+// 		return nil
+// 	})
+// 	if err != nil {
+// 		if errors.Is(err, services.ErrExerciseNotFound) {
+// 			c.JSON(http.StatusNotFound, gin.H{"error": "User exercise not found"})
+// 			return
+// 		}
+
+// 		log.Printf("Error marking user exercise as completed: %v\n", err)
+// 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to mark user exercise as completed"})
+// 		return
+// 	}
+	
+// 	c.JSON(http.StatusOK, gin.H{"message": "Exercise marked as completed"})
+// }

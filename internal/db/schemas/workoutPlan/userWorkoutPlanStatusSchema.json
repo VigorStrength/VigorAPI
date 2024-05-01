@@ -22,8 +22,16 @@
         "description": "Start date of the workout plan"
       },
       "completionDate": {
-        "bsonType": "date",
-        "description": "Completion date of the workout plan"
+        "oneOf": [
+          {
+            "bsonType": "date",
+            "description": "Completion date of the workout plan"
+          },
+          {
+            "bsonType": "null",
+            "description": "Null if the workout plan is not yet completed"
+          }
+        ]
       },
       "completed": {
         "bsonType": "bool",
