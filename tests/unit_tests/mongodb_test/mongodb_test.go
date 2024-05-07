@@ -25,8 +25,6 @@ func TestConnectDB(t *testing.T) {
 	mockIndexName := "mockIndexName"
 	service := db.NewMongoDBService(mockClient)
 	
-
-	mockClient.On("Connect", ctx, mock.AnythingOfType("[]*options.ClientOptions")).Return(mockClient, nil)
 	mockClient.On("Ping", ctx, mock.AnythingOfType("*readpref.ReadPref")).Return(nil)
 	mockClient.On("Database", cfg.DatabaseName, mock.AnythingOfType("[]*options.DatabaseOptions")).Return(mockDB)
 	

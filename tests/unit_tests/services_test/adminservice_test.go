@@ -5,6 +5,7 @@ import (
 	"errors"
 	"testing"
 
+	"github.com/GhostDrew11/vigor-api/internal/db"
 	"github.com/GhostDrew11/vigor-api/internal/models"
 	"github.com/GhostDrew11/vigor-api/internal/services"
 	"github.com/GhostDrew11/vigor-api/internal/utils"
@@ -18,23 +19,26 @@ import (
 func TestRegisterAdminSuccess(t *testing.T){
 	ctx := context.Background()
 	 
+	mockDB := new(MockMongoDatabase)
 	mockCollection := new(MockMongoCollection)
 	hasher := &utils.DefaultHasher{}
-	adminService := services.NewAdminService(mockCollection, hasher)
-
+	parser := &utils.DefaultParser{}
+	adminService := services.NewAdminService(mockDB, hasher, parser)
 	input := models.AdminRegistrationInput{
 		Email: "admin@vigor.com",
 		Password: "securepassword",
 	}
 	filter := bson.M{"email": input.Email}
-
+	mockInsertOneResult := new(db.MongoInsertOneResult)
+	
+	mockDB.On("Collection", mock.AnythingOfType("string")).Return(mockCollection)
 	mockCollection.On("CountDocuments", ctx, filter).Return(int64(0), nil)
-	mockCollection.On("InsertOne", ctx, mock.AnythingOfType("models.Admin")).Return(nil, nil)
+	mockCollection.On("InsertOne", ctx, mock.AnythingOfType("models.Admin")).Return(*mockInsertOneResult, nil)
 
 	err := adminService.RegisterAdmin(ctx, input)
 
 	assert.NoError(t, err)
-	mockCollection.AssertExpectations(t)
+	mockDB.AssertExpectations(t)
 }
 
 func TestRegisterAdminFailure_CheckingAdmin(t *testing.T){
@@ -44,11 +48,14 @@ func TestRegisterAdminFailure_CheckingAdmin(t *testing.T){
 		Password: "securepassword",
 	}
 	filter := bson.M{"email": input.Email}
+	mockDB := new(MockMongoDatabase)
 	mockCollection := new(MockMongoCollection)
 	mockHasher := new(MockHasher)
+	mockParser := new(MockParser)
 
-	adminService := services.NewAdminService(mockCollection, mockHasher)
+	adminService := services.NewAdminService(mockDB, mockHasher, mockParser)
 
+	mockDB.On("Collection", mock.AnythingOfType("string")).Return(mockCollection)
 	mockCollection.On("CountDocuments", ctx, filter).Return(int64(0), errors.New("error checking if admin already exists"))
 
 	err := adminService.RegisterAdmin(ctx, input)
@@ -64,11 +71,14 @@ func TestRegisterAdminFailure_AdminAlreadyExists(t *testing.T){
 		Password: "securepassword",
 	}
 	filter := bson.M{"email": input.Email}
+	mockDB := new(MockMongoDatabase)
 	mockCollection := new(MockMongoCollection)
 	mockHasher := new(MockHasher)
+	mockParser := new(MockParser)
 
-	adminService := services.NewAdminService(mockCollection, mockHasher)
+	adminService := services.NewAdminService(mockDB, mockHasher, mockParser)
 
+	mockDB.On("Collection", mock.AnythingOfType("string")).Return(mockCollection)
 	mockCollection.On("CountDocuments", ctx, filter).Return(int64(1), nil)
 
 	err := adminService.RegisterAdmin(ctx, input)
@@ -84,13 +94,16 @@ func TestRegisterAdminFailure_InsertingOne(t *testing.T){
 		Password: "securepassword",
 	}
 	filter := bson.M{"email": input.Email}
+	mockDB := new(MockMongoDatabase)
 	mockCollection := new(MockMongoCollection)
 	mockHasher := new(MockHasher)
+	mockParser := new(MockParser)
 
-	adminService := services.NewAdminService(mockCollection, mockHasher)
+	adminService := services.NewAdminService(mockDB, mockHasher, mockParser)
 
+	mockDB.On("Collection", mock.AnythingOfType("string")).Return(mockCollection)
 	mockCollection.On("CountDocuments", ctx, filter).Return(int64(0), nil)
-	mockCollection.On("InsertOne", ctx, mock.AnythingOfType("models.Admin")).Return(nil, errors.New("error inserting admin"))
+	mockCollection.On("InsertOne", ctx, mock.AnythingOfType("models.Admin")).Return(*new(db.MongoInsertOneResult), errors.New("error inserting admin"))
 
 	err := adminService.RegisterAdmin(ctx, input)
 	assert.Error(t, err)
@@ -100,17 +113,19 @@ func TestRegisterAdminFailure_InsertingOne(t *testing.T){
 
 func TestGetAdminByEmailSuccess(t *testing.T){
 	ctx := context.Background()
-	 
+	mockDB := new(MockMongoDatabase)
 	mockCollection := new(MockMongoCollection)
 	mockMongoSingleResult := new(MockMongoSingleResult)
 	mockHasher := new(MockHasher)
-	adminService := services.NewAdminService(mockCollection, mockHasher)
+	mockParser := new(MockParser)
+	adminService := services.NewAdminService(mockDB, mockHasher, mockParser)
 
 	email := "testadmin@vigor.com"
 	password := "securepassword"
 	filter := bson.M{"email": email}
 
-	mockCollection.On("FindOne", ctx, filter).Return(mockMongoSingleResult)
+	mockDB.On("Collection", mock.AnythingOfType("string")).Return(mockCollection)
+	mockCollection.On("FindOne", ctx, filter, mock.AnythingOfType("[]*options.FindOneOptions")).Return(mockMongoSingleResult)
 	mockMongoSingleResult.On("Err").Return(nil)
 	mockMongoSingleResult.On("Decode", mock.AnythingOfType("*models.Admin")).Return(nil)
 	mockHasher.On("CheckPasswordHash", password, mock.AnythingOfType("string")).Return(true)
@@ -127,16 +142,19 @@ func TestGetAdminByEmailSuccess(t *testing.T){
 func TestGetAdminByEmailFailure_FindingAdmin(t *testing.T){
 	ctx := context.Background()
 	 
+	mockDB := new(MockMongoDatabase)
 	mockCollection := new(MockMongoCollection)
 	mockMongoSingleResult := new(MockMongoSingleResult)
 	mockHasher := new(MockHasher)
-	adminService := services.NewAdminService(mockCollection, mockHasher)
+	mockParser := new(MockParser)
+	adminService := services.NewAdminService(mockDB, mockHasher, mockParser)
 
 	email := "testadmin@vigor.com"
 	password := "securepassword"
 	filter := bson.M{"email": email}
 
-	mockCollection.On("FindOne", ctx, filter).Return(mockMongoSingleResult)
+	mockDB.On("Collection", mock.AnythingOfType("string")).Return(mockCollection)
+	mockCollection.On("FindOne", ctx, filter, mock.AnythingOfType("[]*options.FindOneOptions")).Return(mockMongoSingleResult)
 	mockMongoSingleResult.On("Err").Return(errors.New("an error"))
 
 	_, err := adminService.GetAdminByEmail(ctx, email, password)
@@ -150,16 +168,19 @@ func TestGetAdminByEmailFailure_FindingAdmin(t *testing.T){
 func TestGetAdminByEmailFailure_DecodingResult(t *testing.T){
 	ctx := context.Background()
 	 
+	mockDB := new(MockMongoDatabase)
 	mockCollection := new(MockMongoCollection)
 	mockMongoSingleResult := new(MockMongoSingleResult)
 	mockHasher := new(MockHasher)
-	adminService := services.NewAdminService(mockCollection, mockHasher)
+	mockParser := new(MockParser)
+	adminService := services.NewAdminService(mockDB, mockHasher, mockParser)
 
 	email := "testadmin@vigor.com"
 	password := "securepassword"
 	filter := bson.M{"email": email}
 
-	mockCollection.On("FindOne", ctx, filter).Return(mockMongoSingleResult)
+	mockDB.On("Collection", mock.AnythingOfType("string")).Return(mockCollection)
+	mockCollection.On("FindOne", ctx, filter, mock.AnythingOfType("[]*options.FindOneOptions")).Return(mockMongoSingleResult)
 	mockMongoSingleResult.On("Err").Return(nil)
 	mockMongoSingleResult.On("Decode", mock.AnythingOfType("*models.Admin")).Return(errors.New("another error"))
 
@@ -174,16 +195,19 @@ func TestGetAdminByEmailFailure_DecodingResult(t *testing.T){
 func TestGetAdminByEmailFailure_CheckingPassword(t *testing.T){
 	ctx := context.Background()
 	 
+	mockDB := new(MockMongoDatabase)
 	mockCollection := new(MockMongoCollection)
 	mockMongoSingleResult := new(MockMongoSingleResult)
 	mockHasher := new(MockHasher)
-	adminService := services.NewAdminService(mockCollection, mockHasher)
+	mockParser := new(MockParser)
+	adminService := services.NewAdminService(mockDB, mockHasher, mockParser)
 
 	email := "testadmin@vigor.com"
 	password := "securepassword"
 	filter := bson.M{"email": email}
 
-	mockCollection.On("FindOne", ctx, filter).Return(mockMongoSingleResult)
+	mockDB.On("Collection", mock.AnythingOfType("string")).Return(mockCollection)
+	mockCollection.On("FindOne", ctx, filter, mock.AnythingOfType("[]*options.FindOneOptions")).Return(mockMongoSingleResult)
 	mockMongoSingleResult.On("Err").Return(nil)
 	mockMongoSingleResult.On("Decode", mock.AnythingOfType("*models.Admin")).Return(nil)
 	mockHasher.On("CheckPasswordHash", password, mock.AnythingOfType("string")).Return(false)

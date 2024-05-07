@@ -18,17 +18,17 @@ import (
 
 type MockJWTService struct {
 	mock.Mock
-	utils.JWTService
+	utils.TokenService
 }
 
-func (m *MockJWTService) GenerateAccessToken(userId primitive.ObjectID, email string) (string, error) {
-	args := m.Called(userId, email)
+func (m *MockJWTService) GenerateAccessToken(userId primitive.ObjectID, email, role string) (string, error) {
+	args := m.Called(userId, email, role)
 	// tokenStr, _ := args.String(0)
 	return args.String(0), args.Error(1)
 }
 
-func (m *MockJWTService) GenerateRefreshToken(userId primitive.ObjectID, email string) (string, error) {
-	args := m.Called(userId, email)
+func (m *MockJWTService) GenerateRefreshToken(userId primitive.ObjectID, email, role string ) (string, error) {
+	args := m.Called(userId, email, role)
 	return args.String(0), args.Error(1)
 }
 
@@ -66,7 +66,7 @@ func TestRequireRoleMiddlewareSuccess(t *testing.T) {
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/test", nil)
-	req.Header.Set("Authorization", tokenString)
+	req.Header.Set("Authorization","Bearer " + tokenString)
 
 	router.ServeHTTP(w, req)
 
@@ -108,7 +108,7 @@ func TestRequireRoleMiddlewareFailureTokenVerification(t *testing.T) {
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/test", nil)
-	req.Header.Set("Authorization", invalidTokenString)
+	req.Header.Set("Authorization","Bearer " + invalidTokenString)
 
 	router.ServeHTTP(w, req)
 
@@ -144,7 +144,7 @@ func TestRequireRoleMiddlewareFailureRoleMismatch(t *testing.T) {
 
 	w := httptest.NewRecorder()
     req, _ := http.NewRequest("GET", "/test", nil)
-	req.Header.Set("Authorization", tokenString)
+	req.Header.Set("Authorization","Bearer " + tokenString)
 
 	router.ServeHTTP(w, req)
 	assert.Equal(t, http.StatusForbidden, w.Code)
@@ -157,6 +157,7 @@ func TestRefreshHandlerMiddlewareSuccess(t *testing.T) {
 	mockJWTService := new(MockJWTService)
 	userId := primitive.NewObjectID()
 	email := "test@example.com"
+	role := "admin"
 
 	refreshToken := "refreshTokenDummy"
 	newAccessToken := "newAccessTokenDummy"
@@ -165,14 +166,15 @@ func TestRefreshHandlerMiddlewareSuccess(t *testing.T) {
 	claims := &utils.Claims{
 		UserId: userId,
 		Email:  email,
+		Role:  role,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(1 * time.Hour)),
 		},
 	}
 
 	mockJWTService.On("VerifyToken", refreshToken).Return(claims, nil)
-	mockJWTService.On("GenerateAccessToken", userId, email).Return(newAccessToken, nil)
-	mockJWTService.On("GenerateRefreshToken", userId, email).Return(newRefreshToken, nil)
+	mockJWTService.On("GenerateAccessToken", userId, email, role).Return(newAccessToken, nil)
+	mockJWTService.On("GenerateRefreshToken", userId, email, role).Return(newRefreshToken, nil)
 
 	router.POST("/refresh", middlewares.RefreshHandler(mockJWTService))
 
@@ -231,18 +233,20 @@ func TestRefreshHandlerMiddlewareFailureTokenGeneration(t *testing.T) {
 	mockJWTService := new(MockJWTService)
 	userId := primitive.NewObjectID()
 	email := "test@example.com"
+	role := "admin"
 
 	refreshToken := "refreshTokenDummy"
 	claims := &utils.Claims{
 		UserId: userId,
 		Email:  email,
+		Role:  role,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(1 * time.Hour)),
 		},
 	}
 
 	mockJWTService.On("VerifyToken", refreshToken).Return(claims, nil)
-	mockJWTService.On("GenerateAccessToken", userId, email).Return("", errors.New("Unable to generate access token"))
+	mockJWTService.On("GenerateAccessToken", userId, email, role).Return("", errors.New("Unable to generate access token"))
 
 	router.POST("/refresh", middlewares.RefreshHandler(mockJWTService))
 
