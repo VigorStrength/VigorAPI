@@ -18,21 +18,19 @@ type Config struct {
 	JWTSecretKey string
 }
 
-func LoadConfig(useDefaults bool) (*Config, error) {
+func LoadConfig() (*Config, error) {
 	viper.AutomaticEnv()
-
-	// Set the default values
-	if useDefaults {
-		viper.SetDefault("VIGOR_DB_URI", "mongodb://localhost:27017")
-		viper.SetDefault("VIGOR_DB_NAME", "Vigor_Production")
-		viper.SetDefault("JWT_SECRET_KEY", "your_default_secret")
-	}
 
 	// Check for test environment
 	environment := viper.GetString("VIGOR_ENV")
 	if environment == "test" {
 		viper.Set("VIGOR_DB_URI", "mongodb://localhost:27017")
 		viper.Set("VIGOR_DB_NAME", "Vigor_Test")
+	} 
+	if environment == "dev" {
+		viper.Set("VIGOR_DB_URI", "mongodb://localhost:27017")
+		viper.Set("VIGOR_DB_NAME", "Vigor_Dev")
+		viper.SetDefault("JWT_SECRET_KEY", "your_default_secret")
 	}
 
 	// Retrieve the actual values considering environment variables

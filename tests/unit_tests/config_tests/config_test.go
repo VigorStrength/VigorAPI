@@ -26,7 +26,7 @@ func TestLoadConfigSuccess(t *testing.T) {
 		JWTSecretKey: "VigorSuperSecretKey",
 	}
 
-	got, err := config.LoadConfig(false)
+	got, err := config.LoadConfig()
 	assert.NoError(t, err, "LoadConfig() should not error")
 	assert.Equal(t, want, got, "LoadConfig() should return the expected configuration.")
 }
@@ -74,7 +74,7 @@ func TestLoadConfigFailureMissingJWTSecretKey(t *testing.T) {
 		os.Unsetenv("VIGOR_DB_NAME")
 	}()
 
-	_, err := config.LoadConfig(false)
+	_, err := config.LoadConfig()
 
 	assert.Error(t, err, "LoadConfig() should error due to missing secret key")
 	assert.Equal(t, config.ErrMissingSecretKey, err)
