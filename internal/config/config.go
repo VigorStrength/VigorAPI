@@ -21,6 +21,11 @@ type Config struct {
 func LoadConfig() (*Config, error) {
 	viper.AutomaticEnv()
 
+	// Set default values for development and test environments
+	viper.SetDefault("VIGOR_DB_URI", "")
+	viper.SetDefault("VIGOR_DB_NAME", "")
+	viper.SetDefault("JWT_SECRET_KEY", "")
+
 	// Check for test environment
 	environment := viper.GetString("VIGOR_ENV")
 	if environment == "test" {
