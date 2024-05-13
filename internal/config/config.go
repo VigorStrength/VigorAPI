@@ -24,7 +24,7 @@ func LoadConfig(useDefaults bool) (*Config, error) {
 	// Set the default values
 	if useDefaults {
 		viper.SetDefault("VIGOR_DB_URI", "mongodb://localhost:27017")
-		viper.SetDefault("VIGOR_DB_NAME", "Vigor_Production")
+		viper.SetDefault("VIGOR_DB_NAME", "Vigor_Dev")
 		viper.SetDefault("JWT_SECRET_KEY", "your_default_secret")
 	}
 
