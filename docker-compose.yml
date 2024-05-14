@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  vigor-api:
+    build:
+      context: .
+      args:
+        - VIGOR_ENV=${VIGOR_ENV}
+    ports:
+      - "8080:8080"
+    environment:
+      VIGOR_DB_URI: ${VIGOR_DB_URI}
+      VIGOR_DB_NAME: ${VIGOR_DB_NAME}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: ${VIGOR_DB_NAME}
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:

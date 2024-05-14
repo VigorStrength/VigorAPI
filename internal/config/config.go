@@ -31,11 +31,12 @@ func LoadConfig() (*Config, error) {
 	if environment == "test" {
 		viper.Set("VIGOR_DB_URI", "mongodb://localhost:27017")
 		viper.Set("VIGOR_DB_NAME", "Vigor_Test")
+		viper.Set("JWT_SECRET_KEY", "your_test_default_secret")
 	} 
 	if environment == "dev" {
 		viper.Set("VIGOR_DB_URI", "mongodb://localhost:27017")
 		viper.Set("VIGOR_DB_NAME", "Vigor_Dev")
-		viper.SetDefault("JWT_SECRET_KEY", "your_default_secret")
+		viper.Set("JWT_SECRET_KEY", "your_default_secret")
 	}
 
 	// Retrieve the actual values considering environment variables

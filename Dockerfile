@@ -25,4 +25,4 @@ WORKDIR /root/
 COPY --from=builder /app/vigor-api .
 
 # Command to run the executable
-CMD ["/app/vigor-api"]
+CMD ["/root/vigor-api"]
