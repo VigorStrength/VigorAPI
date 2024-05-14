@@ -117,6 +117,10 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "Refresh-Token",
+            "value": "{{refreshToken}}"
           }
         ],
         "body": {

@@ -14,6 +14,7 @@ import (
 	"github.com/GhostDrew11/vigor-api/internal/db"
 	"github.com/GhostDrew11/vigor-api/internal/services"
 	"github.com/GhostDrew11/vigor-api/internal/utils"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -59,6 +60,19 @@ func main() {
 
 	// Set up your Gin router
 	router := gin.Default()
+
+	// Set up CORS middleware
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:    []string{"*"}, //Allow all origins for the moment to be adjusted once the frontend is deployed
+		AllowMethods:    []string{"GET", "POST", "PUT", "DELETE"},
+		AllowHeaders:    []string{"Origin", "Content-length", "Content-Type", "Authorization", "RefreshToken", "Accept", "Accept-Encoding", "User-Agent", "Host", "Connection",
+		"Postman-Token", // Included Postman-Token to allow testing with Postman, remove in production,
+		},
+		ExposeHeaders:   []string{"Content-Length"},
+		AllowCredentials: true,
+		AllowWildcard: true,
+		MaxAge: 12 * time.Hour,
+	}))
 
 	// Set up your routes
 	api.SetupRoutes(router, jwtService, *userService, *adminService)

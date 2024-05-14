@@ -125,6 +125,10 @@ func main() {
 					Key:   "Content-Type",
 					Value: "application/json",
 				},
+				{
+					Key:  "Refresh-Token",
+					Value: "{{refreshToken}}",
+				},
 			},
 		},
 		{
