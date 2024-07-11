@@ -116,9 +116,9 @@ func main() {
 			},
 		},
 		{
-			Name:        "Refresh Token",
+			Name:        "Refresh Access Token",
 			Method:      "POST",
-			Path:        "/api/v1/auth/refresh",
+			Path:        "/api/v1/auth/refreshAccessToken",
 			Description: "Refresh the access token",
 			Headers: []RouteHeader{
 				{
@@ -127,6 +127,22 @@ func main() {
 				},
 				{
 					Key:  "Refresh-Token",
+					Value: "{{refreshToken}}",
+				},
+			},
+		},
+		{
+			Name:        "Renew Refresh Token",
+			Method:      "POST",
+			Path:		 "/api/v1/auth/renewRefreshToken",
+			Description: "Renew the refresh token",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+				{
+					Key: "Refresh-Token",
 					Value: "{{refreshToken}}",
 				},
 			},

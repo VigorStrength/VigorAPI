@@ -20,7 +20,8 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
     authRoutes.POST("/admin/login", adminController.Login)       
     authRoutes.POST("/user/register", userController.Register)   
     authRoutes.POST("/user/login", userController.Login)        
-	authRoutes.POST("/refresh", middlewares.RefreshHandler(ts))
+	authRoutes.POST("/refreshAccessToken", middlewares.RefreshAccessTokenHandler(ts))
+	authRoutes.POST("/renewRefreshToken", middlewares.RenewRefreshTokenHandler(ts))
 
 	// Admin routes
 	adminRoutes := apiRoot.Group("/admin")
