@@ -9,13 +9,25 @@ import (
 
 func RequireRole(ts utils.TokenService, requiredRoles ...string) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		token := ctx.GetHeader("Authorization")
-		if token == "" {
-			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "Unauthorized"})
-			return
-		}
+		var token string
 
-		token = token[7:] // Remove "Bearer " from the token
+		// Check if Authorization header is present
+		authorizationHeader := ctx.GetHeader("Authorization")
+		if authorizationHeader != "" { 
+			token = authorizationHeader[7:] // Remove "Bearer " from the token
+		} else {
+			// Check if Refresh-Token header is present
+			refreshTokenHeader := ctx.GetHeader("Refresh-Token")
+			if refreshTokenHeader != "" {
+				token := refreshTokenHeader
+				if len(token) > 7 && token[:7] == "Bearer " {
+					token = token[7:]
+				}
+			} else {
+				ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "Unauthorized"})
+				return
+			}
+		}
 
 		claims, err := ts.VerifyToken(token)
 		if err != nil {
@@ -59,21 +71,14 @@ func RefreshHandler(ts utils.TokenService) gin.HandlerFunc {
 			return
 		}
 
-		newAccessToken, err := ts.GenerateAccessToken(claims.UserId, claims.Email, claims.Role)
-		if err != nil {
-			ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": "Failed to generate new access token"})
-			return
-		}
-
 		newRefreshToken, err := ts.GenerateRefreshToken(claims.UserId, claims.Email, claims.Role)
 		if err != nil {
 			ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": "Failed to generate new refresh token"})
 			return
 		}
 
-		// Return new tokens to the client
+		// Return new refresh toke to the client
 		ctx.JSON(http.StatusOK, gin.H{
-			"accessToken": newAccessToken,
 			"refreshToken": newRefreshToken,
 		})
 	}
