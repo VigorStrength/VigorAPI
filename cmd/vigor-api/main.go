@@ -18,6 +18,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+
+	firebase "firebase.google.com/go"
+	"google.golang.org/api/option"
 )
 
 func main() {
@@ -49,6 +52,19 @@ func main() {
 
 	// Initialize database 
 	database := dbService.Client.Database(cfg.DatabaseName)
+
+	// Initialize Firebase Admin SDK
+	opt := option.WithCredentialsFile("vigorStrengthAppAuth.json")
+	firebaseApp, err := firebase.NewApp(context.Background(), nil, opt)
+	if err != nil {
+		log.Fatalf("Failed to initialize Firebase app: %v\n", err)
+	}
+
+	// Initialize Firebase Auth
+	firebaseAuth, err := firebaseApp.Auth(context.Background())
+	if err != nil {
+		log.Fatalf("Failed to initialize Firebase Auth: %v\n", err)
+	}
 	
 	// Create required services
 	handler := &utils.DefaultJWTHandler{}
@@ -75,7 +91,7 @@ func main() {
 	}))
 
 	// Set up your routes
-	api.SetupRoutes(router, jwtService, *userService, *adminService)
+	api.SetupRoutes(router, jwtService, *userService, *adminService, firebaseAuth)
 
 	server := &http.Server{
 		Addr:    ":8080",

@@ -7,6 +7,12 @@ type LoginDetails struct {
 	Password string `json:"password"`
 }
 
+type UserFirebaseLoginDetails struct {
+	Email   string `json:"email" binding:"required" `
+	Password string `json:"password" binding:"required" `
+	IDToken string `json:"idToken" binding:"required" `
+}
+
 type AdminRegistrationInput struct {
 	Email    string `json:"email" binding:"required" validate:"required,email,endswith=@vigor.com"`
 	Password string `json:"password" binding:"required" validate:"required,min=8,max=12"`

@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "vigorstrengthapp",
+  "private_key_id": "4c295521fdfbdd1f310c7bc23be340608e666193",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDA1VhxOBIDXLSe\ntbj0Kn4cg/8AL0gJwqbLguAY6sWDcXQ61NGatfYSYMR/xgGsYGWJuR/cVWlmkyPl\nNKBpUTgH/w97fqxj7+vtsPKDHU7eQPJ7Jh/L0I/9sC3Q3LAhOWd+ZfIbjy+PeG3G\nIFqFsvuI4qmy9Yc81PQVcjT3XOR3QxRKEi+Kaz/lkOyNVOmP2K75xQ317V8KtdGE\nI2jd02bJfFp4DVI4YyiROKRGGuDqWcPxSE0B2vqsNF1N9OiRNX0M2GCIEyeIyOOg\nJk5yEYnK7mqB2U65y+VEBi9ikETEoVqzNnd7Q1RzbQXe/UZV3QhP1TXp+a6RC7nz\nHYg7kLPFAgMBAAECggEAG4Eiuw1sFlIuChgx8BOyhrc2E0zrKcc7mroJZExyTTAM\ny8potjg/h7oJNQ9lVDSwru76kicVoFWa8FmsCrGUvCE/kFYOWTfSr0XGpXhz9CQP\n4gxbSystqpnrQwgDUE3biu4YFSG8fyqGf9TEDJ9tnMX1vgqi1kSqpvdyAhlcFf15\nsxmj0W9/6GZC3Ej3INwJlLJkunJXVZxSCiUCTEJiAScRvjQAFk5VeKKdHI2mgPyl\nluPtb5KsaVCmkVHWlNC1XVWxq1Sgu1xG3UfMGtGjQc8Zvg6G9CU6HkXaLRpa4bip\nmgnYftoV7T8Mj6kw6YYXlkflPdHq/qbbIVS5orN8MQKBgQD9i6lffWcdibJMD3yY\nBkWFQa5TVg8C134ts+Xsn+sK/JA7FwTcYjMIe3m50Yf+HqgO5NKPVE8plftp31HD\nq30wwwEbL0+FQTD2VTq7KM7QutkE7GyJsq9eUuXQ1JQQjhGoBk4AqsmaciT/SHVx\nvqCSlZotWBJt68GUXblTVPbpdQKBgQDCszn9w2gnNYDx7+SeCDRVMfqa+GgQdvP6\nXmMknLNFGmcmwk8rqM+ki9xEZObSwdu+ONiDpzsKl2ic8nhzny98Js/wJ3s3Tyif\netd9m1SlJ4s3zaC4mncUVlOMgM+/5swvdJizX6mR0fxloFW2KKL4chM6F5QEXBcZ\nEdvwuYUHEQKBgQDKwLyZF/c1r79dA6VnDNzbS0LUcaVfaGQGuC3No7SZ/I56MlY4\nxm55AgS9i8lsdad/AY1AAPOtFbsPVv5TsvdR3x8rVhIJRbCZzF5C/McmM8UIIuhI\n1RNYIoKVFOmys2l7LE+ESQ8e6tibLJ5+byqJDglU6XETZcxPkQN6mB87YQKBgQC/\nBzRVy9yr463xMssfVrNqB5B3blREG0IEG4mwyWKG4YHloG4nSwj3zBXAsTNcA8KD\nX6jnezPNj4KfwrL11nCzoi0Q1tvpB2y3FMLLRZUGOcc5aDJSDZPaS1zMFTJAecVK\npl6QV8K7BMlcOLT/9dz4YIyGyc17fZNYEJK4HH3t0QKBgGOSbSQbMsKe1w8mWbyC\naXIGli+6FeYNAax5blZnm4sk+vXQ1C7YR4H37JCDK+9b66goW5vZ+OSHUtTBAtcY\ndzbS/oXyleUbwaiiT2h9yZc3Pz0VN7Pu/YrXnRQEmFYqFla0YyWNpr+KwFyKmqgU\nJVXsu6lMrn6ZnYOEon+s6ZAa\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-mvk4p@vigorstrengthapp.iam.gserviceaccount.com",
+  "client_id": "108128444670046419226",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-mvk4p%40vigorstrengthapp.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

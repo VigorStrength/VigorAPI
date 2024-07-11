@@ -6,13 +6,15 @@ import (
 	"github.com/GhostDrew11/vigor-api/internal/services"
 	"github.com/GhostDrew11/vigor-api/internal/utils"
 	"github.com/gin-gonic/gin"
+	"firebase.google.com/go/auth"
 )
 
-func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services.UserService, adminService services.AdminService) {
+func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services.UserService, adminService services.AdminService, firebaseAuth *auth.Client) {
 	// API root
 	apiRoot := router.Group("/api/v1")
 	adminController := controllers.NewAdminController(adminService, ts)
 	userController := controllers.NewUserController(userService, ts)
+	userFireBaseController := controllers.NewUserFireBaseController(userService, firebaseAuth)
 
 	// Auth routes
 	authRoutes := apiRoot.Group("/auth")
@@ -71,6 +73,7 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	userRoutes.GET("/subscription", userController.GetUserSubsctiption)
 	userRoutes.PUT("/subscription", userController.UpdateUserSubscription)
 	userRoutes.PUT("/subscription/cancel", userController.CancelUserSubscription)
+
 	// userRoutes.DELETE("/account", deleteUserAccount)
 	// // other user routes as needed(eg list user workout plans, list user meal plans, list user progress, other analytics etc.)
 
@@ -140,4 +143,10 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	// adminRoutes.PUT("/admins/:id", updateAdmin)
 	// adminRoutes.DELETE("/admins/:id", deleteAdmin)
 	// adminRoutes.GET("/admins", getAdmins)	
+
+	// Testing Firebase 
+	firebaseRoutes := apiRoot.Group("/firebase")
+	firebaseRoutes.POST("/user/login", userFireBaseController.LoginUser)
+	// firebaseRoutes.Use(middlewares.FirebaseRequireRole(firebaseAuth, "user"))
+
 }

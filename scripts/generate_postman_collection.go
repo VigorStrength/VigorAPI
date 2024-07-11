@@ -576,6 +576,18 @@ func main() {
 				},
 			},
 		},
+		{
+			Name: 	  "Login User with Firebase",
+			Method:   "POST",
+			Path:    "/api/v1/firebase/user/login",
+			Description: "Login as a user using Firebase Auth",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
 	}
 
 	// Attemp to read and update an existing collection; otherwise generate a new one
