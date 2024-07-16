@@ -52,13 +52,13 @@ To be determined, not yet entirely set up.
    go mod tidy
 ```
 
-1. Start the server with live reloading
+2. Start the server with live reloading
 
 ```sh
     air
 ```
 
-1. Start the server without live reloading:
+3. Start the server without live reloading:
 
 ```sh
     go run main.go
