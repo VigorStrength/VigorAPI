@@ -20,7 +20,7 @@ This backend, built with Go, Gin, and MongoDB, serves as the backbone for both t
 Clone this project to your local machine:
 
 ```sh
-git clone https://github.com/yourusername/vigor-backend.git
+    git clone https://github.com/yourusername/vigor-backend.git
 ```
 
 ### Setup
@@ -71,7 +71,7 @@ To be determined, not yet entirely set up.
 Run unit tests:
 
 ```sh
-go test -v ./tests/unit_tests/"desired subdirectory"
+    go test -v ./tests/unit_tests/"desired subdirectory"
 ```
 
 ### On Postman
