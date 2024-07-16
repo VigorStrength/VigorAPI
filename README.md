@@ -33,6 +33,8 @@ Clone this project to your local machine:
    - `VIGOR_DB_NAME`
    - `JWT_SECRET_KEY`
 
+   You can use the files **.env.development** and **.env.staging** as example on how to locally setup environment variables globally on your computer.
+
 2. Configure the `.air.toml` file:
    Ensure that you correctly set up the environment under the `env` key:
    - For development: `VIGOR_ENV=dev`
@@ -48,21 +50,21 @@ To be determined, not yet entirely set up.
 
 1. Install dependencies:
 
-```sh
+   ```sh
    go mod tidy
-```
+   ```
 
 2. Start the server with live reloading
 
-```sh
-    air
-```
+   ```sh
+       air
+   ```
 
 3. Start the server without live reloading:
 
-```sh
-    go run main.go
-```
+   ```sh
+       go run main.go
+   ```
 
 ## Tests
 
@@ -76,7 +78,7 @@ Run unit tests:
 
 ### On Postman
 
-To generate postamn_collection.json file, run:
+To generate **postamn_collection.json** file, run:
 
 ```sh
     go run scripts/generate_postman_collection.go
