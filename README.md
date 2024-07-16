@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This backend, built with Go, Gin, and MongoDB, serves as the backbone for both the users' mobile app and the SaaS CRM administrators' platform. The project leverages technology to modernize fitness, allowing users to improve their fitness by monitoring workouts, nutrition, and activities. Administrators can seamlessly generate workout and nutritional plans, monitor sales, and manage other tasks. The project is developed with three environments: development, production, and staging.
+This backend, built with Go, Gin, and MongoDB, serves as the backbone for both the users' mobile app and the SaaS CRM administrators' platform. The project leverages technology to modernize fitness, allowing users to improve their fitness through monitoring workouts, nutrition, and activities. Administrators can seamlessly generate workout and nutritional plans, monitor sales, and manage other tasks. The project is developed with three environments: development, production, and staging.
 
 ## Technologies Used
 
@@ -20,7 +20,7 @@ This backend, built with Go, Gin, and MongoDB, serves as the backbone for both t
 Clone this project to your local machine:
 
 ```sh
-git clone https://github.com/yourusername/vigor-backend.git
+git clone <repository-link>
 ```
 
 ### Setup
