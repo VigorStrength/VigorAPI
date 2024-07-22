@@ -61,6 +61,10 @@ func main() {
 	// Set up your Gin router
 	router := gin.Default()
 
+	// Use Logger and Recovery middleware
+	router.Use(gin.Logger())
+	router.Use(gin.Recovery())
+
 	// Set up CORS middleware
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:    []string{"*"}, //Allow all origins for the moment to be adjusted once the frontend is deployed

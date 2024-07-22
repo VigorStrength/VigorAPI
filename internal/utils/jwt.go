@@ -49,7 +49,7 @@ func (j *JWTService) GenerateAccessToken(userId primitive.ObjectID, email, role 
 }
 
 func (j *JWTService) GenerateRefreshToken(userId primitive.ObjectID, email, role string) (string, error) {
-    refreshTokenExp := time.Now().Add(24 * time.Hour) // Or use a configuration
+    refreshTokenExp := time.Now().Add(168 * time.Hour) // Or use a configuration
     claims := Claims{
         UserId: userId,
         Email:  email,
