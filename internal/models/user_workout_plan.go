@@ -94,16 +94,18 @@ type UserWorkoutPlanStatus struct {
 	ID             primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
 	UserID         primitive.ObjectID `bson:"userId" json:"userId" binding:"required"`               // Reference to the User
 	WorkoutPlanID  primitive.ObjectID `bson:"workoutPlanId" json:"workoutPlanId" binding:"required"` // Reference to the WorkoutPlan
+	WorkoutPlanName string 		   `bson:"workoutPlanName" json:"workoutPlanName" binding:"required"`
 	StartDate      time.Time          `bson:"startDate" json:"startDate" binding:"required"`
 	CompletionDate *time.Time         `bson:"completionDate" json:"completionDate"` // nil if not completed
 	Completed      bool               `bson:"completed" json:"completed"`
 	// More fields as necessary to track progress, such as completed workouts or weeks
 }
 
-func NewUserWorkoutPlanStatus(userID, workoutPlanID primitive.ObjectID) UserWorkoutPlanStatus {
+func NewUserWorkoutPlanStatus(userID, workoutPlanID primitive.ObjectID, workoutPlanName string) UserWorkoutPlanStatus {
 	return UserWorkoutPlanStatus{
 		UserID:        userID,
 		WorkoutPlanID: workoutPlanID,
+		WorkoutPlanName: workoutPlanName,
 		StartDate:     time.Now(),
 		Completed:     false,
 	}

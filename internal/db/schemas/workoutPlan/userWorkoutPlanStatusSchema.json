@@ -17,6 +17,10 @@
         "bsonType": "objectId",
         "description": "Reference to the WorkoutPlan"
       },
+      "workoutPlanName": {
+        "bsonType": "string",
+        "description": "Name of the workout plan"
+      },
       "startDate": {
         "bsonType": "date",
         "description": "Start date of the workout plan"

@@ -15,7 +15,23 @@ var (
 	ErrWrokoutWeekNotFound = fmt.Errorf("user workout week not found")
 	ErrAlreadyJoinded = fmt.Errorf("user has already joined this workout plan")
 	ErrExerciseAlreadyCompleted = fmt.Errorf("exercise has already been completed")
+	ErrActiveWorkoutPlanNotFound = fmt.Errorf("the user hasn't joined any workout plan with that ID")
 )
+
+func (us *UserService) GetActiveWorkoutPlan(ctx context.Context, userID primitive.ObjectID) (*models.UserWorkoutPlanStatus, error) {
+	var activeWorkoutPlan models.UserWorkoutPlanStatus
+	userWorkoutPlanStatusCollection := us.database.Collection("userWorkoutPlanStatus")
+	filter := bson.M{"userId": userID, "completed": false}
+	err := userWorkoutPlanStatusCollection.FindOne(ctx, filter).Decode(&activeWorkoutPlan)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return nil, ErrActiveWorkoutPlanNotFound
+		}
+		return nil, fmt.Errorf("error finding active workout plan: %w", err)
+	}
+
+	return &activeWorkoutPlan, nil
+}
 
 func (us *UserService) JoinWorkoutPlan(ctx context.Context, userID, workoutPlanID primitive.ObjectID) error {
 	var workoutPlan models.WorkoutPlan
@@ -28,7 +44,7 @@ func (us *UserService) JoinWorkoutPlan(ctx context.Context, userID, workoutPlanI
 		return fmt.Errorf("error finding workout plan: %w", err)
 	}
 
-	userWorkoutPlanStatus := models.NewUserWorkoutPlanStatus(userID, workoutPlanID)
+	userWorkoutPlanStatus := models.NewUserWorkoutPlanStatus(userID, workoutPlanID, workoutPlan.Name)
 	if _, err := us.database.Collection("userWorkoutPlanStatus").InsertOne(ctx, userWorkoutPlanStatus); err != nil {
 		if mongo.IsDuplicateKeyError(err) {
 			return ErrAlreadyJoinded

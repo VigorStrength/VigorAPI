@@ -569,6 +569,18 @@ func main() {
 			},
 		},
 		{
+			Name:       "Get Active Workout Plan",
+			Method:     "GET",
+			Path: 	 	"/api/v1/users/workout-plans/active",
+			Description: "Get the user's active workout plan",
+			Headers: []RouteHeader{
+				{
+					Key:  "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
 			Name:       "Complete Exercise",
 			Method:     "POST",
 			Path:       "/api/v1/users/exercises/:exerciseId/complete/:circuitId",

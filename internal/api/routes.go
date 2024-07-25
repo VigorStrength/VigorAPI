@@ -78,6 +78,7 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	// // Progress tracking routes
 	// User Workout Plan
 	userRoutes.POST("/workout-plans/:workoutPlanId/join", userController.JoinWorkoutPlan)
+	userRoutes.GET("/workout-plans/active", userController.GetActiveWorkoutPlan)
 	userRoutes.POST("/exercises/:exerciseId/complete/:circuitId", userController.CompleteExercise)
 	userRoutes.GET("/workout-plans/:workoutPlanId/progress", userController.GetWorkoutPlanProgress)
 	// userRoutes.POST("/workout-plans/:workoutPlanId/progress", createWorkoutPlanProgress)
