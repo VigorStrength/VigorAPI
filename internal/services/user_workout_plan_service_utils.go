@@ -103,6 +103,10 @@ func (us *UserService) checkAndUpdateDayStatus(ctx context.Context, userID, work
 			return fmt.Errorf("error incrementing workout week completed days: %w", err)
 		}
 
+		if err := us.updateWorkoutPlanProgress(ctx, userID, workoutPlanID); err != nil {
+			return fmt.Errorf("error updating workout plan progress: %w", err)
+		}
+
 		return us.checkAndUpdateWeekStatus(ctx, userID, weekID, workoutPlanID)
 	}
 
@@ -145,4 +149,48 @@ func (us *UserService) checkAndUpdateWorkoutPlanStatus(ctx context.Context, user
 	}
 
 	return nil
+}
+
+func (us *UserService) updateWorkoutPlanProgress(ctx context.Context,userID, workoutPlanID primitive.ObjectID) error {
+	completedDays, totalDays, err := us.progressUtil(ctx, userID, workoutPlanID)
+	if err != nil {
+		if err == ErrWorkoutPlanNotFound {
+			return err
+		}
+		return fmt.Errorf("error getting workout plan progress: %w", err)
+	}
+
+	if totalDays == 0 {
+		return nil
+	} 
+		
+	progress := completedDays / totalDays * 100
+	filter := bson.M{"userId": userID, "workoutPlanId": workoutPlanID}
+	update := bson.M{"$set": bson.M{"progress": progress}}
+	if _, err := us.database.Collection("userWorkoutPlanStatus").UpdateOne(ctx, filter, update); err != nil {
+		return fmt.Errorf("error updating workout plan progress: %w", err)
+	}
+
+	return nil
+}
+
+func (us *UserService) progressUtil(ctx context.Context, userID, workoutPlanID primitive.ObjectID) (float64, float64, error) {
+	totalDays, err := us.database.Collection("userWorkoutDayStatus").CountDocuments(ctx, bson.M{"userId": userID, "workoutPlanId": workoutPlanID})
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return 0, 0, ErrWorkoutPlanNotFound
+		}
+		return 0, 0, fmt.Errorf("error counting workout days: %w", err)
+	}
+
+	completedDays, err := us.database.Collection("userWorkoutDayStatus").CountDocuments(ctx, bson.M{"userId": userID, "workoutPlanId": workoutPlanID, "completed": true})
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return 0, 0, ErrWorkoutPlanNotFound
+		}
+
+		return 0, 0, fmt.Errorf("error counting completed workout days: %w", err)
+	}
+
+	return float64(totalDays), float64(completedDays), nil
 }

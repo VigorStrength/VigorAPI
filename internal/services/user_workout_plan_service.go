@@ -31,27 +31,18 @@ func (us *UserService) GetActiveWorkoutPlan(ctx context.Context, userID primitiv
 	}
 
 	//Combining it with progress from the workoutPlan to have be just as one call to the server
-	totalDays, err := us.database.Collection("userWorkoutDayStatus").CountDocuments(ctx, bson.M{"userId": userID, "workoutPlanId": activeWorkoutPlan.WorkoutPlanID})
+	totalDays, completedDays, err := us.progressUtil(ctx, userID, activeWorkoutPlan.WorkoutPlanID)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
-			return nil, ErrWorkoutPlanNotFound
+			return nil, ErrActiveWorkoutPlanNotFound
 		}
-		return nil, fmt.Errorf("error counting workout days: %w", err)
-	}
-
-	completedDays, err := us.database.Collection("userWorkoutDayStatus").CountDocuments(ctx, bson.M{"userId": userID, "workoutPlanId": activeWorkoutPlan.WorkoutPlanID, "completed": true})
-	if err != nil {
-		if err == mongo.ErrNoDocuments {
-			return nil, ErrWorkoutPlanNotFound
-		}
-		
-		return nil, fmt.Errorf("error counting completed workout days: %w", err)
+		return nil, fmt.Errorf("error getting progress: %w", err)
 	}
 
 	if totalDays == 0 {
 		activeWorkoutPlan.Progress = 0
 	} else {
-		activeWorkoutPlan.Progress = float64(completedDays) / float64(totalDays) * 100
+		activeWorkoutPlan.Progress = completedDays / totalDays * 100
 	}
 
 	return &activeWorkoutPlan, nil
