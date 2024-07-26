@@ -886,12 +886,12 @@
           "raw": "{}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/v1/users/profile",
+          "raw": "{{baseUrl}}/api/v1/user/profile",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
-            "/api/v1/users/profile"
+            "/api/v1/user/profile"
           ]
         }
       },
@@ -912,12 +912,12 @@
           "raw": "{}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/v1/users/preferences",
+          "raw": "{{baseUrl}}/api/v1/user/preferences",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
-            "/api/v1/users/preferences"
+            "/api/v1/user/preferences"
           ]
         }
       },
@@ -938,12 +938,12 @@
           "raw": "{}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/v1/users/subscription",
+          "raw": "{{baseUrl}}/api/v1/user/subscription",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
-            "/api/v1/users/subscription"
+            "/api/v1/user/subscription"
           ]
         }
       },
@@ -964,12 +964,12 @@
           "raw": "{}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/v1/users/profile",
+          "raw": "{{baseUrl}}/api/v1/user/profile",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
-            "/api/v1/users/profile"
+            "/api/v1/user/profile"
           ]
         }
       },
@@ -990,12 +990,12 @@
           "raw": "{}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/v1/users/subscription",
+          "raw": "{{baseUrl}}/api/v1/user/subscription",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
-            "/api/v1/users/subscription"
+            "/api/v1/user/subscription"
           ]
         }
       },
@@ -1016,12 +1016,12 @@
           "raw": "{}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/v1/users/preferences",
+          "raw": "{{baseUrl}}/api/v1/user/preferences",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
-            "/api/v1/users/preferences"
+            "/api/v1/user/preferences"
           ]
         }
       },
@@ -1042,12 +1042,12 @@
           "raw": "{}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/v1/users/subscription/cancel",
+          "raw": "{{baseUrl}}/api/v1/user/subscription/cancel",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
-            "/api/v1/users/subscription/cancel"
+            "/api/v1/user/subscription/cancel"
           ]
         }
       },
@@ -1068,12 +1068,12 @@
           "raw": "{}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/v1/users/workout-plans/{{workoutPlanId}}/join",
+          "raw": "{{baseUrl}}/api/v1/user/workout-plans/{{workoutPlanId}}/join",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
-            "/api/v1/users/workout-plans/{{workoutPlanId}}/join"
+            "/api/v1/user/workout-plans/{{workoutPlanId}}/join"
           ]
         }
       },
@@ -1094,38 +1094,12 @@
           "raw": "{}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/v1/users/exercises/{{exerciseId}}/complete/{{circuitId}}",
+          "raw": "{{baseUrl}}/api/v1/user/exercises/{{exerciseId}}/complete/{{circuitId}}",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
-            "/api/v1/users/exercises/{{exerciseId}}/complete/{{circuitId}}"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Get User Workout Plan Progress",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{}"
-        },
-        "url": {
-          "raw": "{{baseUrl}}/api/v1/users/workout-plans/{{workoutPlanId}}/progress",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "/api/v1/users/workout-plans/{{workoutPlanId}}/progress"
+            "/api/v1/user/exercises/{{exerciseId}}/complete/{{circuitId}}"
           ]
         }
       },
@@ -1146,12 +1120,12 @@
           "raw": "{}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/v1/users/workout-plans/active",
+          "raw": "{{baseUrl}}/api/v1/user/workout-plans/active",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
-            "/api/v1/users/workout-plans/active"
+            "/api/v1/user/workout-plans/active"
           ]
         }
       },

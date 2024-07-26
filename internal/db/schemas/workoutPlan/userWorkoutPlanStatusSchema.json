@@ -25,6 +25,10 @@
         "bsonType": "date",
         "description": "Start date of the workout plan"
       },
+      "progress": {
+        "bsonType": "double",
+        "description": "Progress of the workout plan"
+      },
       "completionDate": {
         "oneOf": [
           {

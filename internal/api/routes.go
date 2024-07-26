@@ -62,7 +62,7 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	// other admin routes as needed(eg list users with active subscriptions, list users with pending subscriptions, list of sales, other analytics etc.)
 	
 	// User routes
-	userRoutes := apiRoot.Group("/users")
+	userRoutes := apiRoot.Group("/user")
 	userRoutes.Use(middlewares.RequireRole(ts, "user"))
 	// CRUD User data
 	userRoutes.GET("/profile", userController.GetUserProfile)
@@ -80,7 +80,8 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	userRoutes.POST("/workout-plans/:workoutPlanId/join", userController.JoinWorkoutPlan)
 	userRoutes.GET("/workout-plans/active", userController.GetActiveWorkoutPlan)
 	userRoutes.POST("/exercises/:exerciseId/complete/:circuitId", userController.CompleteExercise)
-	userRoutes.GET("/workout-plans/:workoutPlanId/progress", userController.GetWorkoutPlanProgress)
+	// Merged with GetActiveWorkoutPlan
+	// userRoutes.GET("/workout-plans/:workoutPlanId/progress", userController.GetWorkoutPlanProgress)
 	// userRoutes.POST("/workout-plans/:workoutPlanId/progress", createWorkoutPlanProgress)
 	// userRoutes.GET("/workout-plans/:workoutPlanId/progress", getWorkoutPlanProgress)
 	// userRoutes.PUT("/workout-plans/:workoutPlanId/progress", updateWorkoutPlanProgress)

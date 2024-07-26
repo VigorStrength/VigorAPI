@@ -474,7 +474,7 @@ func main() {
 		{
 			Name:       "Get User Profile",
 			Method:     "GET",
-			Path:       "/api/v1/users/profile",
+			Path:       "/api/v1/user/profile",
 			Description: "Get the user's profile information",
 			Headers: []RouteHeader{
 				{
@@ -486,7 +486,7 @@ func main() {
 		{
 			Name:       "Update User Profile",
 			Method:     "PUT",
-			Path:       "/api/v1/users/profile",
+			Path:       "/api/v1/user/profile",
 			Description: "Update the user's profile information",
 			Headers: []RouteHeader{
 				{
@@ -498,7 +498,7 @@ func main() {
 		{
 			Name:       "Get User Preferences",
 			Method:     "GET",
-			Path:       "/api/v1/users/preferences",
+			Path:       "/api/v1/user/preferences",
 			Description: "Get the user's preferences",
 			Headers: []RouteHeader{
 				{
@@ -510,7 +510,7 @@ func main() {
 		{
 			Name:       "Update User Preferences",
 			Method:     "PUT",
-			Path:       "/api/v1/users/preferences",
+			Path:       "/api/v1/user/preferences",
 			Description: "Update the user's preferences",
 			Headers: []RouteHeader{
 				{
@@ -522,7 +522,7 @@ func main() {
 		{
 			Name:       "Get User Subscription",
 			Method:     "GET",
-			Path:       "/api/v1/users/subscription",
+			Path:       "/api/v1/user/subscription",
 			Description: "Get the user's subscription information",
 			Headers: []RouteHeader{
 				{
@@ -534,7 +534,7 @@ func main() {
 		{
 			Name:       "Update User Subscription",
 			Method:     "PUT",
-			Path:       "/api/v1/users/subscription",
+			Path:       "/api/v1/user/subscription",
 			Description: "Update the user's subscription information",
 			Headers: []RouteHeader{
 				{
@@ -546,7 +546,7 @@ func main() {
 		{
 			Name:       "Cancel User Subscription",
 			Method:     "PUT",
-			Path:       "/api/v1/users/subscription/cancel",
+			Path:       "/api/v1/user/subscription/cancel",
 			Description: "Cancel the user's subscription",
 			Headers: []RouteHeader{
 				{
@@ -559,7 +559,7 @@ func main() {
 		{
 			Name:       "Join Workout Plan",
 			Method:     "POST",
-			Path:       "/api/v1/users/workout-plans/:workoutPlanId/join",
+			Path:       "/api/v1/user/workout-plans/:workoutPlanId/join",
 			Description: "Join a workout plan",
 			Headers: []RouteHeader{
 				{
@@ -571,7 +571,7 @@ func main() {
 		{
 			Name:       "Get Active Workout Plan",
 			Method:     "GET",
-			Path: 	 	"/api/v1/users/workout-plans/active",
+			Path: 	 	"/api/v1/user/workout-plans/active",
 			Description: "Get the user's active workout plan",
 			Headers: []RouteHeader{
 				{
@@ -583,20 +583,8 @@ func main() {
 		{
 			Name:       "Complete Exercise",
 			Method:     "POST",
-			Path:       "/api/v1/users/exercises/:exerciseId/complete/:circuitId",
+			Path:       "/api/v1/user/exercises/:exerciseId/complete/:circuitId",
 			Description: "Mark an exercise as completed",
-			Headers: []RouteHeader{
-				{
-					Key:   "Content-Type",
-					Value: "application/json",
-				},
-			},
-		},
-		{
-			Name:       "Get User Workout Plan Progress",
-			Method:     "GET",
-			Path:       "/api/v1/users/workout-plans/:workoutPlanId/progress",
-			Description: "Get the user's progress for a workout plan",
 			Headers: []RouteHeader{
 				{
 					Key:   "Content-Type",

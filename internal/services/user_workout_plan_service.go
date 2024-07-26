@@ -30,6 +30,30 @@ func (us *UserService) GetActiveWorkoutPlan(ctx context.Context, userID primitiv
 		return nil, fmt.Errorf("error finding active workout plan: %w", err)
 	}
 
+	//Combining it with progress from the workoutPlan to have be just as one call to the server
+	totalDays, err := us.database.Collection("userWorkoutDayStatus").CountDocuments(ctx, bson.M{"userId": userID, "workoutPlanId": activeWorkoutPlan.WorkoutPlanID})
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return nil, ErrWorkoutPlanNotFound
+		}
+		return nil, fmt.Errorf("error counting workout days: %w", err)
+	}
+
+	completedDays, err := us.database.Collection("userWorkoutDayStatus").CountDocuments(ctx, bson.M{"userId": userID, "workoutPlanId": activeWorkoutPlan.WorkoutPlanID, "completed": true})
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return nil, ErrWorkoutPlanNotFound
+		}
+		
+		return nil, fmt.Errorf("error counting completed workout days: %w", err)
+	}
+
+	if totalDays == 0 {
+		activeWorkoutPlan.Progress = 0
+	} else {
+		activeWorkoutPlan.Progress = float64(completedDays) / float64(totalDays) * 100
+	}
+
 	return &activeWorkoutPlan, nil
 }
 
@@ -124,30 +148,30 @@ func (us *UserService) MarkExerciseAsCompleted(ctx context.Context, userID, exer
     return us.checkAndUpdateCircuitStatus(ctx, userID, circuitID, workoutPlanID)
 }
 
-func (us *UserService) GetWorkoutPlanProgress(ctx context.Context, userID, workoutPlanID primitive.ObjectID) (float64, error) {
-	totalDays, err := us.database.Collection("userWorkoutDayStatus").CountDocuments(ctx, bson.M{"userId": userID, "workoutPlanId": workoutPlanID})
-	if err != nil {
-		if err == mongo.ErrNoDocuments {
-			return 0, ErrWorkoutPlanNotFound
-		}
-		return 0, fmt.Errorf("error counting workout days: %w", err)
-	}
+// func (us *UserService) GetWorkoutPlanProgress(ctx context.Context, userID, workoutPlanID primitive.ObjectID) (float64, error) {
+// 	totalDays, err := us.database.Collection("userWorkoutDayStatus").CountDocuments(ctx, bson.M{"userId": userID, "workoutPlanId": workoutPlanID})
+// 	if err != nil {
+// 		if err == mongo.ErrNoDocuments {
+// 			return 0, ErrWorkoutPlanNotFound
+// 		}
+// 		return 0, fmt.Errorf("error counting workout days: %w", err)
+// 	}
 
-	completedDays, err := us.database.Collection("userWorkoutDayStatus").CountDocuments(ctx, bson.M{"userId": userID, "workoutPlanId": workoutPlanID, "completed": true})
-	if err != nil {
-		if err == mongo.ErrNoDocuments {
-			return 0, ErrWorkoutPlanNotFound
-		}
+// 	completedDays, err := us.database.Collection("userWorkoutDayStatus").CountDocuments(ctx, bson.M{"userId": userID, "workoutPlanId": workoutPlanID, "completed": true})
+// 	if err != nil {
+// 		if err == mongo.ErrNoDocuments {
+// 			return 0, ErrWorkoutPlanNotFound
+// 		}
 		
-		return 0, fmt.Errorf("error counting completed workout days: %w", err)
-	}
+// 		return 0, fmt.Errorf("error counting completed workout days: %w", err)
+// 	}
 
-	if totalDays == 0 {
-		return 0, nil
-	}
+// 	if totalDays == 0 {
+// 		return 0, nil
+// 	}
 
-	progress := float64(completedDays) / float64(totalDays) * 100
+// 	progress := float64(completedDays) / float64(totalDays) * 100
 
-	return progress, nil
-}
+// 	return progress, nil
+// }
 
