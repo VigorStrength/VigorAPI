@@ -1,7 +1,7 @@
 {
   "$jsonSchema": {
     "bsonType": "object",
-    "required": ["name", "duration", "weeks"],
+    "required": ["name", "imageURL", "duration", "weeks"],
     "properties": {
       "_id": {
         "bsonType": "objectId",
@@ -10,6 +10,10 @@
       "name": {
         "bsonType": "string",
         "description": "name of the workout plan and is required"
+      },
+      "imageURL": {
+        "bsonType": "string",
+        "description": "image url of the workout plan and is required"
       },
       "duration": {
         "bsonType": "int",
@@ -37,6 +41,8 @@
               "items": {
                 "bsonType": "object",
                 "required": [
+                  "name",
+                  "imageURL",
                   "warmUps",
                   "workouts",
                   "coolDowns",
@@ -46,6 +52,14 @@
                   "_id": {
                     "bsonType": "objectId",
                     "description": "must be an objectId"
+                  },
+                  "name": {
+                    "bsonType": "string",
+                    "description": "name of the workout day and is required"
+                  },
+                  "imageURL": {
+                    "bsonType": "string",
+                    "description": "image url of the workout day and is required"
                   },
                   "warmUps": {
                     "bsonType": "array",

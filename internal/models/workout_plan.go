@@ -18,6 +18,8 @@ type Circuit struct {
 // WorkoutDay represents a complete day's workout plan, including warm-up, workout, and cool-down.
 type WorkoutDay struct {
 	ID               primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
+	Name 		     string             `bson:"name" json:"name" binding:"required" validate:"required,min=5,max=50"`
+	ImageURL		 string             `bson:"imageURL" json:"imageURL" binding:"required" validate:"required,url"`
 	WarmUps           []Circuit          `bson:"warmUps" json:"warmUps" binding:"required" validate:"required,dive"`
 	Workouts          []Circuit          `bson:"workouts" json:"workouts" binding:"required" validate:"required,dive"`
 	CoolDowns         []Circuit          `bson:"coolDowns" json:"coolDowns" binding:"required" validate:"required,dive"`
@@ -38,6 +40,7 @@ type WorkoutWeek struct {
 type WorkoutPlan struct {
 	ID       primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
 	Name     string             `bson:"name" json:"name" binding:"required" validate:"required,min=5,max=50"`
+	ImageURL string             `bson:"imageURL" json:"imageURL" binding:"required" validate:"required,url"`
 	Duration int                `bson:"duration" json:"duration" binding:"required" validate:"required,gt=0"`
 	Weeks    []WorkoutWeek      `bson:"weeks" json:"weeks" binding:"required" validate:"required,dive"`
 }

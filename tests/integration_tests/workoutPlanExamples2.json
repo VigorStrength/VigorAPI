@@ -1,0 +1,298 @@
+[
+  {
+    "id": "6615854ee1f782383dec46cd",
+    "name": "Intermediate Core & Flexibility",
+    "imageURL": "https://source.unsplash.com/random/800x600?workout,core",
+    "duration": 4,
+    "weeks": [
+      {
+        "id": "6615854ee1f782383dec46ce",
+        "weekNumber": 1,
+        "days": [
+          {
+            "id": "6615854ee1f782383dec46cf",
+            "name": "Core Stability",
+            "imageURL": "https://source.unsplash.com/random/800x600?workout,stability",
+            "warmUps": [
+              {
+                "id": "6615854ee1f782383dec46d0",
+                "exerciseIds": ["6613e3fa7655ce5f3f0b696e"],
+                "restTime": 60,
+                "proposedLaps": 2
+              }
+            ],
+            "workouts": [
+              {
+                "id": "6615854ee1f782383dec46d1",
+                "exerciseIds": [
+                  "6613e3a87655ce5f3f0b696b",
+                  "6613ee6290b42302aefa18e6"
+                ],
+                "restTime": 120,
+                "proposedLaps": 3
+              }
+            ],
+            "coolDowns": [
+              {
+                "id": "6615854ee1f782383dec46d2",
+                "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+                "restTime": 60,
+                "proposedLaps": 2
+              }
+            ],
+            "workoutTimeRange": [1200, 2400]
+          },
+          {
+            "id": "6615854ee1f782383dec46d3",
+            "name": "Flexibility Focus",
+            "imageURL": "https://source.unsplash.com/random/800x600?workout,flexibility",
+            "warmUps": [
+              {
+                "id": "6615854ee1f782383dec46d4",
+                "exerciseIds": ["6613ee6290b42302aefa18e5"],
+                "restTime": 60,
+                "proposedLaps": 2
+              }
+            ],
+            "workouts": [
+              {
+                "id": "6615854ee1f782383dec46d5",
+                "exerciseIds": [
+                  "6613e3987655ce5f3f0b696a",
+                  "6613e3b67655ce5f3f0b696c"
+                ],
+                "restTime": 90,
+                "proposedLaps": 3
+              }
+            ],
+            "coolDowns": [
+              {
+                "id": "6615854ee1f782383dec46d6",
+                "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+                "restTime": 30,
+                "proposedLaps": 1
+              }
+            ],
+            "workoutTimeRange": [900, 1800]
+          }
+        ]
+      },
+      {
+        "id": "6615854ee1f782383dec46d7",
+        "weekNumber": 2,
+        "days": [
+          {
+            "id": "6615854ee1f782383dec46d8",
+            "name": "Core Endurance",
+            "imageURL": "https://source.unsplash.com/random/800x600?workout,endurance",
+            "warmUps": [
+              {
+                "id": "6615854ee1f782383dec46d9",
+                "exerciseIds": ["6613e3fa7655ce5f3f0b696e"],
+                "restTime": 70,
+                "proposedLaps": 2
+              }
+            ],
+            "workouts": [
+              {
+                "id": "6615854ee1f782383dec46da",
+                "exerciseIds": [
+                  "6613ee6290b42302aefa18e5",
+                  "6613e3b67655ce5f3f0b696c"
+                ],
+                "restTime": 100,
+                "proposedLaps": 3
+              }
+            ],
+            "coolDowns": [
+              {
+                "id": "6615854ee1f782383dec46db",
+                "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+                "restTime": 50,
+                "proposedLaps": 2
+              }
+            ],
+            "workoutTimeRange": [1300, 2200]
+          },
+          {
+            "id": "6615854ee1f782383dec46dc",
+            "name": "Mobility Boost",
+            "imageURL": "https://source.unsplash.com/random/800x600?workout,mobility",
+            "warmUps": [
+              {
+                "id": "6615854ee1f782383dec46dd",
+                "exerciseIds": ["6613ee6290b42302aefa18e6"],
+                "restTime": 60,
+                "proposedLaps": 2
+              }
+            ],
+            "workouts": [
+              {
+                "id": "6615854ee1f782383dec46de",
+                "exerciseIds": [
+                  "6613e3a87655ce5f3f0b696b",
+                  "6613e3987655ce5f3f0b696a"
+                ],
+                "restTime": 120,
+                "proposedLaps": 4
+              }
+            ],
+            "coolDowns": [
+              {
+                "id": "6615854ee1f782383dec46df",
+                "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+                "restTime": 60,
+                "proposedLaps": 1
+              }
+            ],
+            "workoutTimeRange": [1500, 2300]
+          }
+        ]
+      },
+      {
+        "id": "6615854ee1f782383dec46e0",
+        "weekNumber": 3,
+        "days": [
+          {
+            "id": "6615854ee1f782383dec46e1",
+            "name": "Strength & Stability",
+            "imageURL": "https://source.unsplash.com/random/800x600?workout,strength",
+            "warmUps": [
+              {
+                "id": "6615854ee1f782383dec46e2",
+                "exerciseIds": ["6613e3fa7655ce5f3f0b696e"],
+                "restTime": 60,
+                "proposedLaps": 3
+              }
+            ],
+            "workouts": [
+              {
+                "id": "6615854ee1f782383dec46e3",
+                "exerciseIds": [
+                  "6613ee6290b42302aefa18e5",
+                  "6613e3b67655ce5f3f0b696c"
+                ],
+                "restTime": 110,
+                "proposedLaps": 4
+              }
+            ],
+            "coolDowns": [
+              {
+                "id": "6615854ee1f782383dec46e4",
+                "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+                "restTime": 60,
+                "proposedLaps": 3
+              }
+            ],
+            "workoutTimeRange": [1600, 2600]
+          },
+          {
+            "id": "6615854ee1f782383dec46e5",
+            "name": "Dynamic Flexibility",
+            "imageURL": "https://source.unsplash.com/random/800x600?workout,dynamic",
+            "warmUps": [
+              {
+                "id": "6615854ee1f782383dec46e6",
+                "exerciseIds": ["6613e3987655ce5f3f0b696a"],
+                "restTime": 60,
+                "proposedLaps": 3
+              }
+            ],
+            "workouts": [
+              {
+                "id": "6615854ee1f782383dec46e7",
+                "exerciseIds": [
+                  "6613e3a87655ce5f3f0b696b",
+                  "6613ee6290b42302aefa18e6"
+                ],
+                "restTime": 130,
+                "proposedLaps": 5
+              }
+            ],
+            "coolDowns": [
+              {
+                "id": "6615854ee1f782383dec46e8",
+                "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+                "restTime": 70,
+                "proposedLaps": 2
+              }
+            ],
+            "workoutTimeRange": [1700, 2700]
+          }
+        ]
+      },
+      {
+        "id": "6615854ee1f782383dec46e9",
+        "weekNumber": 4,
+        "days": [
+          {
+            "id": "6615854ee1f782383dec46ea",
+            "name": "Endurance Challenge",
+            "imageURL": "https://source.unsplash.com/random/800x600?workout,endurance",
+            "warmUps": [
+              {
+                "id": "6615854ee1f782383dec46eb",
+                "exerciseIds": ["6613e3fa7655ce5f3f0b696e"],
+                "restTime": 70,
+                "proposedLaps": 3
+              }
+            ],
+            "workouts": [
+              {
+                "id": "6615854ee1f782383dec46ec",
+                "exerciseIds": [
+                  "6613ee6290b42302aefa18e5",
+                  "6613e3b67655ce5f3f0b696c"
+                ],
+                "restTime": 120,
+                "proposedLaps": 5
+              }
+            ],
+            "coolDowns": [
+              {
+                "id": "6615854ee1f782383dec46ed",
+                "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+                "restTime": 60,
+                "proposedLaps": 3
+              }
+            ],
+            "workoutTimeRange": [1800, 2800]
+          },
+          {
+            "id": "6615854ee1f782383dec46ee",
+            "name": "Flexibility Finale",
+            "imageURL": "https://source.unsplash.com/random/800x600?workout,finale",
+            "warmUps": [
+              {
+                "id": "6615854ee1f782383dec46ef",
+                "exerciseIds": ["6613e3987655ce5f3f0b696a"],
+                "restTime": 70,
+                "proposedLaps": 3
+              }
+            ],
+            "workouts": [
+              {
+                "id": "6615854ee1f782383dec46f0",
+                "exerciseIds": [
+                  "6613e3a87655ce5f3f0b696b",
+                  "6613ee6290b42302aefa18e6"
+                ],
+                "restTime": 140,
+                "proposedLaps": 6
+              }
+            ],
+            "coolDowns": [
+              {
+                "id": "6615854ee1f782383dec46f1",
+                "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+                "restTime": 80,
+                "proposedLaps": 2
+              }
+            ],
+            "workoutTimeRange": [1900, 2900]
+          }
+        ]
+      }
+    ]
+  }
+]

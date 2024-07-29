@@ -1130,6 +1130,32 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Get Standard Workout Plan",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/user/workout-plans/standard",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/user/workout-plans/standard"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }

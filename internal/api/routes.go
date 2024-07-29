@@ -79,6 +79,7 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	// User Workout Plan
 	userRoutes.POST("/workout-plans/:workoutPlanId/join", userController.JoinWorkoutPlan)
 	userRoutes.GET("/workout-plans/active", userController.GetActiveWorkoutPlan)
+	userRoutes.GET("/workout-plans/standard", userController.GetStandardWorkoutPlan)
 	userRoutes.POST("/exercises/:exerciseId/complete/:circuitId", userController.CompleteExercise)
 	// Merged with GetActiveWorkoutPlan
 	// userRoutes.GET("/workout-plans/:workoutPlanId/progress", userController.GetWorkoutPlanProgress)
