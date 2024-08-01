@@ -593,6 +593,18 @@ func main() {
 			},
 		},
 		{
+			Name: 		"Get Daily Exercises by IDs",
+			Method: 	"POST",
+			Path: 		"/api/v1/user/workout-plans/daily-exercises",
+			Description: "Get the daily exercises by IDs sent in the request body",
+			Headers: []RouteHeader{
+				{
+					Key:  "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
 			Name:       "Complete Exercise",
 			Method:     "POST",
 			Path:       "/api/v1/user/exercises/:exerciseId/complete/:circuitId",

@@ -2,7 +2,7 @@
   {
     "id": "6615854ee1f782383dec46cd",
     "name": "Intermediate Core & Flexibility",
-    "imageURL": "https://source.unsplash.com/random/800x600?workout,core",
+    "imageURL": "https://images.unsplash.com/photo-1591258370814-01609b341790?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "duration": 4,
     "weeks": [
       {
@@ -12,7 +12,7 @@
           {
             "id": "6615854ee1f782383dec46cf",
             "name": "Core Stability",
-            "imageURL": "https://source.unsplash.com/random/800x600?workout,stability",
+            "imageURL": "https://images.unsplash.com/photo-1571019613576-2b22c76fd955?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             "warmUps": [
               {
                 "id": "6615854ee1f782383dec46d0",
@@ -45,7 +45,7 @@
           {
             "id": "6615854ee1f782383dec46d3",
             "name": "Flexibility Focus",
-            "imageURL": "https://source.unsplash.com/random/800x600?workout,flexibility",
+            "imageURL": "https://images.unsplash.com/photo-1649887974297-4be052375a67?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             "warmUps": [
               {
                 "id": "6615854ee1f782383dec46d4",

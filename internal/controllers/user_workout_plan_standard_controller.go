@@ -54,3 +54,25 @@ func (uc *UserController) GetStandardWorkoutPlan(c *gin.Context) {
 
 	c.JSON(http.StatusOK, standardWorkoutPlan)
 }
+
+func (uc *UserController) GetDailyExercisesByIDs(c *gin.Context) {
+	//Get the daily exercises by ID's sent in the request body
+	var requestBody struct {
+		DailyExercisesIDs []primitive.ObjectID `json:"dailyExercisesIDs"`
+	}
+
+	if err := c.ShouldBindJSON(&requestBody); err != nil {
+		log.Printf("Error parsing JSON: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Could not parse request body"})
+		return
+	}
+
+	dailyExercises, err := uc.UserService.GetDailyExercisesByIDs(c.Request.Context(), requestBody.DailyExercisesIDs)
+	if err != nil {
+		log.Printf("Error getting daily exercises: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get daily exercises"})
+		return
+	}
+
+	c.JSON(http.StatusOK, dailyExercises)
+}

@@ -21,3 +21,21 @@ func (us *UserService) GetWorkoutPlanByID(ctx context.Context, workoutPlanID pri
 
 	return workoutPlan, nil
 }
+
+func  (uc *UserService) GetDailyExercisesByIDs(ctx context.Context, exercisesIDs []primitive.ObjectID) ([]models.Exercise, error) {
+	exerciseCollection := uc.database.Collection("exercises")
+
+	filter := bson.M{"_id": bson.M{"$in": exercisesIDs}}
+	cursor, err := exerciseCollection.Find(ctx, filter)
+	if err != nil {
+		return nil, fmt.Errorf("error finding exercises: %w", err)
+	}
+	defer cursor.Close(ctx)
+
+	var exercises []models.Exercise
+	if err := cursor.All(ctx, &exercises); err != nil {
+		return nil, fmt.Errorf("error decoding exercises: %w", err)
+	}
+
+	return exercises, nil
+}

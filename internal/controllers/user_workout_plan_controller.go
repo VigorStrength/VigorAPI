@@ -81,6 +81,7 @@ func (uc *UserController) JoinWorkoutPlan(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Successfully joined workout plan"})
 }
 
+
 func (uc *UserController) CompleteExercise(c *gin.Context) {
 	userID, exists := c.Get("userId")
 	if !exists {

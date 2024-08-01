@@ -1156,6 +1156,32 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Get Daily Exercises by IDs",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/user/workout-plans/daily-exercises",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/user/workout-plans/daily-exercises"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }
