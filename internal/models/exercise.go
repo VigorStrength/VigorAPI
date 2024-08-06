@@ -11,7 +11,7 @@ type Exercise struct {
 	TargetMuscles   []string           `bson:"targetMuscles" json:"targetMuscles" binding:"required" validate:"required,dive,required,gt=0"`
 	EquipmentNeeded []string           `bson:"equipmentNeeded,omitempty" json:"equipmentNeeded,omitempty" validate:"omitempty,dive,required"`
 	Instructions    []string           `bson:"instructions" json:"instructions" binding:"required" validate:"required,dive,required"`
-	Time            int                `bson:"time" json:"time" binding:"required" validate:"required,gte=30,lte=300"` // Time in seconds.
+	Time            int                `bson:"time" json:"time" binding:"required" validate:"required,gte=30,lte=1200"` // Time in seconds.
 	ProposedLog     ExerciseLog        `bson:"proposedLog" json:"proposedLog" validate:"required"`
 }
 

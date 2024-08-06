@@ -33,7 +33,7 @@
         "minItems": 1,
         "items": { "bsonType": "string" }
       },
-      "time": { "bsonType": "int", "minimum": 30, "maximum": 300 },
+      "time": { "bsonType": "int", "minimum": 30, "maximum": 1200 },
       "proposedLog": {
         "bsonType": "object",
         "required": ["proposedReps"],
