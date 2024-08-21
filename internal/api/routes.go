@@ -82,6 +82,7 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	userRoutes.GET("/workout-plans/standard", userController.GetStandardWorkoutPlan)
 	// We using POST here instead of GET because we are sending the IDs in the request body
 	userRoutes.POST("/workout-plans/daily-exercises", userController.GetDailyExercisesByIDs)
+	userRoutes.GET("/exercises/:exerciseId", userController.GetActiveExerciseStatus)
 	userRoutes.POST("/exercises/:exerciseId/complete/:circuitId", userController.CompleteExercise)
 
 	// Merged with GetActiveWorkoutPlan

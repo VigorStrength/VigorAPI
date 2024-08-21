@@ -605,6 +605,18 @@ func main() {
 			},
 		},
 		{
+			Name: 	 	 "Get Active Exercise Status",
+			Method: 	 "GET",
+			Path: 	 	 "/api/v1/user/exercises/:exerciseId",
+			Description: "Get the active exercise status",
+			Headers: []RouteHeader{
+				{
+					Key:  "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
 			Name:       "Complete Exercise",
 			Method:     "POST",
 			Path:       "/api/v1/user/exercises/:exerciseId/complete/:circuitId",
@@ -704,6 +716,7 @@ func createPostmanItemFromRoute(route Route) PostmanItem {
 	routePath = strings.Replace(routePath, "workout-plans/:workoutPlanId/join", "workout-plans/{{workoutPlanId}}/join", -1)
 	routePath = strings.Replace(routePath, "exercises/:exerciseId/complete/:circuitId", "exercises/{{exerciseId}}/complete/{{circuitId}}", -1)
 	routePath = strings.Replace(routePath, "workout-plans/:workoutPlanId/progress", "workout-plans/{{workoutPlanId}}/progress", -1)
+	routePath = strings.Replace(routePath, "exercises/:exerciseId", "exercises/{{exerciseId}}", -1)
 
 	item := PostmanItem{
 		Name: route.Name,

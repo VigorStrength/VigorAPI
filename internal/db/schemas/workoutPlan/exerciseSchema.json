@@ -4,6 +4,7 @@
     "required": [
       "name",
       "description",
+      "coverURL",
       "videoURL",
       "targetMuscles",
       "instructions",
@@ -18,6 +19,7 @@
         "minLength": 5,
         "maxLength": 1000
       },
+      "coverURL": { "bsonType": "string" },
       "videoURL": { "bsonType": "string" },
       "targetMuscles": {
         "bsonType": "array",

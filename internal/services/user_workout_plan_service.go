@@ -18,6 +18,20 @@ var (
 	ErrActiveWorkoutPlanNotFound = fmt.Errorf("the user hasn't joined any workout plan with that ID")
 )
 
+func (us *UserService) GetActiveExerciseStatus(ctx context.Context, exerciseID primitive.ObjectID) (*models.UserExerciseStatus, error) {
+	var userExerciseStatus models.UserExerciseStatus
+	filter := bson.M{"exerciseId": exerciseID}
+	err := us.database.Collection("userExerciseStatus").FindOne(ctx, filter).Decode(&userExerciseStatus)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return nil, ErrExerciseNotFound
+		}
+		return nil, fmt.Errorf("error finding exercise status: %w", err)
+	}
+
+	return &userExerciseStatus, nil
+}
+
 func (us *UserService) GetActiveWorkoutPlan(ctx context.Context, userID primitive.ObjectID) (*models.UserWorkoutPlanStatus, error) {
 	var activeWorkoutPlan models.UserWorkoutPlanStatus
 	userWorkoutPlanStatusCollection := us.database.Collection("userWorkoutPlanStatus")

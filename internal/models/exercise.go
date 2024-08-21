@@ -7,6 +7,7 @@ type Exercise struct {
 	ID              primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
 	Name            string             `bson:"name" json:"name" binding:"required" validate:"required,min=5,max=50"`
 	Description     string             `bson:"description" json:"description" binding:"required" validate:"required,min=5,max=1000"`
+	CoverURL 	  	string             `bson:"coverURL" json:"coverURL" binding:"required" validate:"required,url"`
 	VideoURL        string             `bson:"videoURL" json:"videoURL" binding:"required" validate:"required,url"`
 	TargetMuscles   []string           `bson:"targetMuscles" json:"targetMuscles" binding:"required" validate:"required,dive,required,gt=0"`
 	EquipmentNeeded []string           `bson:"equipmentNeeded,omitempty" json:"equipmentNeeded,omitempty" validate:"omitempty,dive,required"`

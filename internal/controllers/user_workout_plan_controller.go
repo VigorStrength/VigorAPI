@@ -11,6 +11,29 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+func (uc *UserController) GetActiveExerciseStatus(c *gin.Context) {
+	exerciseID, err := primitive.ObjectIDFromHex(c.Param("exerciseId"))
+	if err != nil {
+		log.Printf("Error parsing exercise ID: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid exercise ID"})
+		return
+	}
+
+	userExerciseStatus, err := uc.UserService.GetActiveExerciseStatus(c.Request.Context(), exerciseID)
+	if err != nil {
+		if errors.Is(err, services.ErrExerciseNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "User exercise status not found"})
+			return
+		}
+
+		log.Printf("Error getting active exercise status: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get active exercise status"})
+		return
+	}
+
+	c.JSON(http.StatusOK, userExerciseStatus)
+}
+
 func (uc *UserController) GetActiveWorkoutPlan(c *gin.Context) {
 	userID, exists := c.Get("userId")
 	if !exists {
