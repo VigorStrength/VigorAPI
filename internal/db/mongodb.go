@@ -72,6 +72,9 @@ func (ms *MongoDBService) EnsureIndexes(ctx context.Context, db MongoDatabase) e
 		"userExerciseStatus": {
 			{Keys: bson.D{{Key: "userId", Value: 1},{Key: "exerciseId", Value: 1}, {Key: "circuitId", Value: 1},{Key: "workoutPlanId", Value: 1}}, Options: options.Index().SetUnique(true)},
 		},
+		"userWorkoutItemStatus" : {
+			{Keys: bson.D{{Key: "userId", Value: 1},{Key: "workoutItemId", Value: 1}, {Key: "workoutPlanId", Value: 1}}, Options: options.Index().SetUnique(true)},
+		},
 		"userCircuitStatus": {
 			{Keys: bson.D{{Key: "userId", Value: 1}, {Key: "circuitId", Value: 1},{Key: "workoutDayId", Value: 1},{Key: "workoutPlanId", Value: 1}}, Options: options.Index().SetUnique(true)},
 		},
@@ -134,6 +137,7 @@ func (ms *MongoDBService) InitializeCollections(ctx context.Context, db MongoDat
 		{"exercises", "schemas/workoutPlan/exerciseSchema.json"},
 		{"supersets", "schemas/workoutPlan/supersetSchema.json"},
 		{"userExerciseStatus", "schemas/workoutPlan/userExerciseStatusSchema.json"},
+		{"userWorkoutItemStatus", "schemas/workoutPlan/userWorkoutItemStatusSchema.json"},
 		{"userCircuitStatus", "schemas/workoutPlan/userCircuitStatusSchema.json"},
 		{"userWorkoutDayStatus", "schemas/workoutPlan/userWorkoutDayStatusSchema.json"},
 		{"userWorkoutWeekStatus", "schemas/workoutPlan/userWorkoutWeekStatusSchema.json"},

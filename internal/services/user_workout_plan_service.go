@@ -93,19 +93,44 @@ func (us *UserService) JoinWorkoutPlan(ctx context.Context, userID, workoutPlanI
 				return fmt.Errorf("error inserting user workout day status: %w", err)
 			}
 
-			// for _, circuit := range append(day.WarmUps, append(day.Workouts, day.CoolDowns...)...) {
-			// 	userCircuitStatus := models.NewUserCircuitStatus(userID, circuit.ID, day.ID, workoutPlanID)
-			// 	if _, err := us.database.Collection("userCircuitStatus").InsertOne(ctx, userCircuitStatus); err != nil {
-			// 		return fmt.Errorf("error inserting user circuit status: %w", err)
-			// 	}
+			for _, circuit := range append(day.WarmUps, day.CoolDowns...) {
+				userCircuitStatus := models.NewUserCircuitStatus(userID, circuit.ID, day.ID, workoutPlanID)
+				if _, err := us.database.Collection("userCircuitStatus").InsertOne(ctx, userCircuitStatus); err != nil {
+					return fmt.Errorf("error inserting user circuit status: %w", err)
+				}
 
-			// 	for _, exerciseID := range circuit.ExerciseIDs {
-			// 		userExerciseStatus := models.NewUserExerciseStatus(userID, exerciseID, circuit.ID, workoutPlanID)
-			// 		if _, err := us.database.Collection("userExerciseStatus").InsertOne(ctx, userExerciseStatus); err != nil {
-			// 			return fmt.Errorf("error inserting user exercise status: %w", err)
-			// 		}
-			// 	}
-			// }
+				for _, exerciseID := range circuit.ExerciseIDs {
+					userExerciseStatus := models.NewUserExerciseStatus(userID, exerciseID, circuit.ID, workoutPlanID)
+					if _, err := us.database.Collection("userExerciseStatus").InsertOne(ctx, userExerciseStatus); err != nil {
+						return fmt.Errorf("error inserting user exercise status: %w", err)
+					}
+				}
+			}
+
+			for _, workoutItem := range day.Workouts {
+				// This is where we would add the user status for the workoutItem
+				userWorkoutItemStatus := models.NewUserWorkoutItemStatus(userID, workoutItem.ItemID, day.ID, workoutPlanID, workoutItem.ItemType) 
+				if _, err := us.database.Collection("userWorkoutItemStatus").InsertOne(ctx, userWorkoutItemStatus); err != nil {
+					return fmt.Errorf("error inserting user workout item status: %w", err)
+				}
+
+				// track it by the type of the workoutItem maybe
+				// switch workoutItem.ItemType {
+				// case models.ExerciseType: 
+				// 	userExerciseStatus := models.NewUserExerciseStatus(userID, workoutItem.ItemID, day.ID, workoutPlanID)
+				// 	if _, err := us.database.Collection("userExerciseStatus").InsertOne(ctx, userExerciseStatus); err != nil {
+				// 		return fmt.Errorf("error inserting user exercise status from workouts section: %w", err)
+				// 	}
+				// case models.SupersetType: 
+				// 	userSuperSetStatus := models.NewUserSupersetStatus(userID, workoutItem.ItemID, day.ID, workoutPlanID)
+				// 	if _, err := us.database.Collection("userSupersetStatus").InsertOne(ctx, userSuperSetStatus); err != nil {
+				// 		return fmt.Errorf("error inserting user superset status from workouts section: %w", err)
+				// 	}
+				// }
+
+			}
+
+			
 		}
 	}
 
@@ -153,30 +178,5 @@ func (us *UserService) MarkExerciseAsCompleted(ctx context.Context, userID, exer
     return us.checkAndUpdateCircuitStatus(ctx, userID, circuitID, workoutPlanID)
 }
 
-// func (us *UserService) GetWorkoutPlanProgress(ctx context.Context, userID, workoutPlanID primitive.ObjectID) (float64, error) {
-// 	totalDays, err := us.database.Collection("userWorkoutDayStatus").CountDocuments(ctx, bson.M{"userId": userID, "workoutPlanId": workoutPlanID})
-// 	if err != nil {
-// 		if err == mongo.ErrNoDocuments {
-// 			return 0, ErrWorkoutPlanNotFound
-// 		}
-// 		return 0, fmt.Errorf("error counting workout days: %w", err)
-// 	}
-
-// 	completedDays, err := us.database.Collection("userWorkoutDayStatus").CountDocuments(ctx, bson.M{"userId": userID, "workoutPlanId": workoutPlanID, "completed": true})
-// 	if err != nil {
-// 		if err == mongo.ErrNoDocuments {
-// 			return 0, ErrWorkoutPlanNotFound
-// 		}
-		
-// 		return 0, fmt.Errorf("error counting completed workout days: %w", err)
-// 	}
-
-// 	if totalDays == 0 {
-// 		return 0, nil
-// 	}
-
-// 	progress := float64(completedDays) / float64(totalDays) * 100
-
-// 	return progress, nil
-// }
+// Mark Superset as completed maybe still gotta think about how to switch it up between superstet or standalone exercise
 

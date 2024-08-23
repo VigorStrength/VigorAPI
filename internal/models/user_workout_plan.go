@@ -32,6 +32,28 @@ func NewUserExerciseStatus(userID, exerciseID, circuitID, workoutPlanID primitiv
 	}
 }
 
+// UserWorkoutItemStatus tracks the completion status of a workout item for a specific user.
+type UserWorkoutItemStatus struct {
+	ID           primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
+	UserID       primitive.ObjectID `bson:"userId" json:"userId" binding:"required"`
+	WorkoutItemID primitive.ObjectID `bson:"workoutItemId" json:"workoutItemId" binding:"required"`
+	WorkoutItemType WorkoutItemType `bson:"workoutItemType" json:"workoutItemType" binding:"required" validate:"required,oneof=exercise superset"`
+	WorkoutDayID primitive.ObjectID `bson:"workoutDayId" json:"workoutDayId" binding:"required"` // Reference the workout day
+	WorkoutPlanID  primitive.ObjectID `bson:"workoutPlanId" json:"workoutPlanId" binding:"required"` // Reference to the WorkoutPlan
+	Completed    bool               `bson:"completed" json:"completed"`
+}
+
+func NewUserWorkoutItemStatus(userID, workoutItemID, workoutDayID, workoutPlanID primitive.ObjectID, workoutItemType WorkoutItemType) UserWorkoutItemStatus {
+	return UserWorkoutItemStatus{
+		UserID:       userID,
+		WorkoutItemID: workoutItemID,
+		WorkoutItemType: workoutItemType,
+		WorkoutDayID: workoutDayID,
+		WorkoutPlanID: workoutPlanID,
+		Completed: false,
+	}
+}
+
 // UserCircuitStatus tracks the completion status of a circuit for a specific user.
 type UserCircuitStatus struct {
 	ID        primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`

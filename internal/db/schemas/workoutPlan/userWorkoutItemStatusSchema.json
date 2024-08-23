@@ -1,0 +1,43 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": [
+      "userId",
+      "workoutItemId",
+      "workoutItemType",
+      "workoutDayId",
+      "workoutPlanId"
+    ],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId",
+        "description": "must be an objectId"
+      },
+      "userId": {
+        "bsonType": "objectId",
+        "description": "must be an objectId and is required"
+      },
+      "workoutItemId": {
+        "bsonType": "objectId",
+        "description": "must be an objectId and is required"
+      },
+      "workoutItemType": {
+        "bsonType": "string",
+        "enum": ["exercise", "superset"],
+        "description": "type of the workout item, must be either 'exercise' or 'superset' and is required"
+      },
+      "workoutDayId": {
+        "bsonType": "objectId",
+        "description": "must be an objectId and is required, referencing the workout day"
+      },
+      "workoutPlanId": {
+        "bsonType": "objectId",
+        "description": "must be an objectId and is required, referencing the workout plan"
+      },
+      "completed": {
+        "bsonType": "bool",
+        "description": "boolean indicating if the workout item has been completed"
+      }
+    }
+  }
+}
