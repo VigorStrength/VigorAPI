@@ -96,27 +96,15 @@
                     "minItems": 1,
                     "items": {
                       "bsonType": "object",
-                      "required": ["exerciseIds", "proposedLaps"],
+                      "required": ["itemId", "itemType"],
                       "properties": {
-                        "_id": {
+                        "itemId": {
                           "bsonType": "objectId",
-                          "description": "must be an objectId"
+                          "description": "id of the exercise or superset"
                         },
-                        "exerciseIds": {
-                          "bsonType": "array",
-                          "minItems": 1,
-                          "items": {
-                            "bsonType": "objectId"
-                          }
-                        },
-                        "restTime": {
-                          "bsonType": "int",
-                          "minimum": 5,
-                          "maximum": 240
-                        },
-                        "proposedLaps": {
-                          "bsonType": "int",
-                          "minimum": 1
+                        "itemType": {
+                          "enum": ["exercise", "superset"],
+                          "description": "type of the item, can be exercise or superset"
                         }
                       }
                     }

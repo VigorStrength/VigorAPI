@@ -1,0 +1,288 @@
+{
+  "id": "6615854ee1f782383dec46cd",
+  "name": "Intermediate Core & Flexibility",
+  "imageURL": "https://images.unsplash.com/photo-1591258370814-01609b341790?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "duration": 4,
+  "weeks": [
+    {
+      "id": "6615854ee1f782383dec46ce",
+      "weekNumber": 1,
+      "days": [
+        {
+          "id": "6615854ee1f782383dec46cf",
+          "name": "Core Stability",
+          "imageURL": "https://images.unsplash.com/photo-1571019613576-2b22c76fd955?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "warmUps": [
+            {
+              "id": "6615854ee1f782383dec46d0",
+              "exerciseIds": ["6613e3fa7655ce5f3f0b696e"],
+              "restTime": 60,
+              "proposedLaps": 2
+            }
+          ],
+          "workouts": [
+            {
+              "itemId": "6613e3987655ce5f3f0b696a",
+              "itemType": "exercise"
+            },
+            {
+              "itemId": "66c7bb611539758fe03990ef",
+              "itemType": "superset"
+            }
+          ],
+          "coolDowns": [
+            {
+              "id": "6615854ee1f782383dec46d2",
+              "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+              "restTime": 60,
+              "proposedLaps": 2
+            }
+          ],
+          "workoutTimeRange": [1200, 2400]
+        },
+        {
+          "id": "6615854ee1f782383dec46d3",
+          "name": "Flexibility Focus",
+          "imageURL": "https://images.unsplash.com/photo-1649887974297-4be052375a67?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "warmUps": [
+            {
+              "id": "6615854ee1f782383dec46d4",
+              "exerciseIds": ["6613ee6290b42302aefa18e5"],
+              "restTime": 60,
+              "proposedLaps": 2
+            }
+          ],
+          "workouts": [
+            {
+              "itemId": "6613e3b67655ce5f3f0b696c",
+              "itemType": "exercise"
+            },
+            {
+              "itemId": "66c7bb6f1539758fe03990f0",
+              "itemType": "superset"
+            }
+          ],
+          "coolDowns": [
+            {
+              "id": "6615854ee1f782383dec46d6",
+              "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+              "restTime": 30,
+              "proposedLaps": 1
+            }
+          ],
+          "workoutTimeRange": [900, 1800]
+        }
+      ]
+    },
+    {
+      "id": "6615854ee1f782383dec46d7",
+      "weekNumber": 2,
+      "days": [
+        {
+          "id": "6615854ee1f782383dec46d8",
+          "name": "Core Endurance",
+          "imageURL": "https://source.unsplash.com/random/800x600?workout,endurance",
+          "warmUps": [
+            {
+              "id": "6615854ee1f782383dec46d9",
+              "exerciseIds": ["6613e3fa7655ce5f3f0b696e"],
+              "restTime": 70,
+              "proposedLaps": 2
+            }
+          ],
+          "workouts": [
+            {
+              "itemId": "6613ee6290b42302aefa18e5",
+              "itemType": "exercise"
+            },
+            {
+              "itemId": "66c7bb861539758fe03990f2",
+              "itemType": "superset"
+            }
+          ],
+          "coolDowns": [
+            {
+              "id": "6615854ee1f782383dec46db",
+              "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+              "restTime": 50,
+              "proposedLaps": 2
+            }
+          ],
+          "workoutTimeRange": [1300, 2200]
+        },
+        {
+          "id": "6615854ee1f782383dec46dc",
+          "name": "Mobility Boost",
+          "imageURL": "https://source.unsplash.com/random/800x600?workout,mobility",
+          "warmUps": [
+            {
+              "id": "6615854ee1f782383dec46dd",
+              "exerciseIds": ["6613ee6290b42302aefa18e6"],
+              "restTime": 60,
+              "proposedLaps": 2
+            }
+          ],
+          "workouts": [
+            {
+              "itemId": "6613e3a87655ce5f3f0b696b",
+              "itemType": "exercise"
+            },
+            {
+              "itemId": "66c7bb7a1539758fe03990f1",
+              "itemType": "superset"
+            }
+          ],
+          "coolDowns": [
+            {
+              "id": "6615854ee1f782383dec46df",
+              "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+              "restTime": 60,
+              "proposedLaps": 1
+            }
+          ],
+          "workoutTimeRange": [1500, 2300]
+        }
+      ]
+    },
+    {
+      "id": "6615854ee1f782383dec46e0",
+      "weekNumber": 3,
+      "days": [
+        {
+          "id": "6615854ee1f782383dec46e1",
+          "name": "Strength & Stability",
+          "imageURL": "https://source.unsplash.com/random/800x600?workout,strength",
+          "warmUps": [
+            {
+              "id": "6615854ee1f782383dec46e2",
+              "exerciseIds": ["6613e3fa7655ce5f3f0b696e"],
+              "restTime": 60,
+              "proposedLaps": 3
+            }
+          ],
+          "workouts": [
+            {
+              "itemId": "6613ee6290b42302aefa18e5",
+              "itemType": "exercise"
+            },
+            {
+              "itemId": "66c7bb611539758fe03990ef",
+              "itemType": "superset"
+            }
+          ],
+          "coolDowns": [
+            {
+              "id": "6615854ee1f782383dec46e4",
+              "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+              "restTime": 60,
+              "proposedLaps": 3
+            }
+          ],
+          "workoutTimeRange": [1600, 2600]
+        },
+        {
+          "id": "6615854ee1f782383dec46e5",
+          "name": "Dynamic Flexibility",
+          "imageURL": "https://source.unsplash.com/random/800x600?workout,dynamic",
+          "warmUps": [
+            {
+              "id": "6615854ee1f782383dec46e6",
+              "exerciseIds": ["6613e3987655ce5f3f0b696a"],
+              "restTime": 60,
+              "proposedLaps": 3
+            }
+          ],
+          "workouts": [
+            {
+              "itemId": "6613e3a87655ce5f3f0b696b",
+              "itemType": "exercise"
+            },
+            {
+              "itemId": "66c7bb6f1539758fe03990f0",
+              "itemType": "superset"
+            }
+          ],
+          "coolDowns": [
+            {
+              "id": "6615854ee1f782383dec46e8",
+              "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+              "restTime": 70,
+              "proposedLaps": 2
+            }
+          ],
+          "workoutTimeRange": [1700, 2700]
+        }
+      ]
+    },
+    {
+      "id": "6615854ee1f782383dec46e9",
+      "weekNumber": 4,
+      "days": [
+        {
+          "id": "6615854ee1f782383dec46ea",
+          "name": "Endurance Challenge",
+          "imageURL": "https://source.unsplash.com/random/800x600?workout,endurance",
+          "warmUps": [
+            {
+              "id": "6615854ee1f782383dec46eb",
+              "exerciseIds": ["6613e3fa7655ce5f3f0b696e"],
+              "restTime": 70,
+              "proposedLaps": 3
+            }
+          ],
+          "workouts": [
+            {
+              "itemId": "6613ee6290b42302aefa18e5",
+              "itemType": "exercise"
+            },
+            {
+              "itemId": "66c7bb7a1539758fe03990f1",
+              "itemType": "superset"
+            }
+          ],
+          "coolDowns": [
+            {
+              "id": "6615854ee1f782383dec46ed",
+              "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+              "restTime": 60,
+              "proposedLaps": 3
+            }
+          ],
+          "workoutTimeRange": [1800, 2800]
+        },
+        {
+          "id": "6615854ee1f782383dec46ee",
+          "name": "Flexibility Finale",
+          "imageURL": "https://source.unsplash.com/random/800x600?workout,finale",
+          "warmUps": [
+            {
+              "id": "6615854ee1f782383dec46ef",
+              "exerciseIds": ["6613e3987655ce5f3f0b696a"],
+              "restTime": 70,
+              "proposedLaps": 3
+            }
+          ],
+          "workouts": [
+            {
+              "itemId": "6613e3a87655ce5f3f0b696b",
+              "itemType": "exercise"
+            },
+            {
+              "itemId": "66c7bb861539758fe03990f2",
+              "itemType": "superset"
+            }
+          ],
+          "coolDowns": [
+            {
+              "id": "6615854ee1f782383dec46f1",
+              "exerciseIds": ["6613e3c97655ce5f3f0b696d"],
+              "restTime": 80,
+              "proposedLaps": 2
+            }
+          ],
+          "workoutTimeRange": [1900, 2900]
+        }
+      ]
+    }
+  ]
+}

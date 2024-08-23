@@ -93,19 +93,19 @@ func (us *UserService) JoinWorkoutPlan(ctx context.Context, userID, workoutPlanI
 				return fmt.Errorf("error inserting user workout day status: %w", err)
 			}
 
-			for _, circuit := range append(day.WarmUps, append(day.Workouts, day.CoolDowns...)...) {
-				userCircuitStatus := models.NewUserCircuitStatus(userID, circuit.ID, day.ID, workoutPlanID)
-				if _, err := us.database.Collection("userCircuitStatus").InsertOne(ctx, userCircuitStatus); err != nil {
-					return fmt.Errorf("error inserting user circuit status: %w", err)
-				}
+			// for _, circuit := range append(day.WarmUps, append(day.Workouts, day.CoolDowns...)...) {
+			// 	userCircuitStatus := models.NewUserCircuitStatus(userID, circuit.ID, day.ID, workoutPlanID)
+			// 	if _, err := us.database.Collection("userCircuitStatus").InsertOne(ctx, userCircuitStatus); err != nil {
+			// 		return fmt.Errorf("error inserting user circuit status: %w", err)
+			// 	}
 
-				for _, exerciseID := range circuit.ExerciseIDs {
-					userExerciseStatus := models.NewUserExerciseStatus(userID, exerciseID, circuit.ID, workoutPlanID)
-					if _, err := us.database.Collection("userExerciseStatus").InsertOne(ctx, userExerciseStatus); err != nil {
-						return fmt.Errorf("error inserting user exercise status: %w", err)
-					}
-				}
-			}
+			// 	for _, exerciseID := range circuit.ExerciseIDs {
+			// 		userExerciseStatus := models.NewUserExerciseStatus(userID, exerciseID, circuit.ID, workoutPlanID)
+			// 		if _, err := us.database.Collection("userExerciseStatus").InsertOne(ctx, userExerciseStatus); err != nil {
+			// 			return fmt.Errorf("error inserting user exercise status: %w", err)
+			// 		}
+			// 	}
+			// }
 		}
 	}
 

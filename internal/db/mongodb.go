@@ -132,6 +132,7 @@ func (ms *MongoDBService) InitializeCollections(ctx context.Context, db MongoDat
 		{"users", "schemas/user/userSchema.json"},
 		{"admins", "schemas/user/adminSchema.json"},
 		{"exercises", "schemas/workoutPlan/exerciseSchema.json"},
+		{"supersets", "schemas/workoutPlan/supersetSchema.json"},
 		{"userExerciseStatus", "schemas/workoutPlan/userExerciseStatusSchema.json"},
 		{"userCircuitStatus", "schemas/workoutPlan/userCircuitStatusSchema.json"},
 		{"userWorkoutDayStatus", "schemas/workoutPlan/userWorkoutDayStatusSchema.json"},

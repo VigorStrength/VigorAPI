@@ -232,6 +232,42 @@ func main() {
 			},
 		},
 		{
+			Name:        "Create Superset",
+			Method:      "POST",
+			Path: 	  	"/api/v1/admin/supersets",
+			Description: "Create a new superset",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		}, 
+		{
+			Name:        "Update Superset",
+			Method:      "PUT",
+			Path: 	  	 "/api/v1/admin/supersets/:id",
+			Description: "Update an existing superset",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
+			Name:        "Get Supersets",
+			Method:      "GET",
+			Path: 	  	 "/api/v1/admin/supersets",
+			Description: "Get all supersets",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
 			Name:        "Create Workout Plan",
 			Method:      "POST",
 			Path:        "/api/v1/admin/workout-plans",
@@ -710,6 +746,7 @@ func createPostmanItemFromRoute(route Route) PostmanItem {
 
 	routePath := route.Path
 	routePath = strings.Replace(routePath, "exercises/:id", "exercises/{{exerciseId}}", -1)
+	routePath = strings.Replace(routePath, "supersets/:id", "supersets/{{supersetId}}", -1)
 	routePath = strings.Replace(routePath, "workout-plans/:id", "workout-plans/{{workoutPlanId}}", -1)
 	routePath = strings.Replace(routePath, "meals/:id", "meals/{{mealId}}", -1)
 	routePath = strings.Replace(routePath, "meal-plans/:id", "meal-plans/{{mealPlanId}}", -1)

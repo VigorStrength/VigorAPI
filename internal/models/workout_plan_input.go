@@ -15,7 +15,7 @@ type WorkoutWeekInput struct {
 
 type WorkoutDayInput struct {
 	WarmUps 		 *[]CircuitInput `json:"warmUps,omitempty"  validate:"omitempty,dive"`
-	Workouts 	 *[]CircuitInput `json:"workouts,omitempty"  validate:"omitempty,dive"`
+	Workouts 	 *[]WorkoutItemInput `json:"workouts,omitempty"  validate:"omitempty,dive"`
 	CoolDowns 	 *[]CircuitInput `json:"coolDowns,omitempty"  validate:"omitempty,dive"`
 	WorkoutTimeRange *[2]int `json:"workoutTimeRange,omitempty" validate:"omitempty,dive,gte=1,lte=7200"` // [minTime, maxTime] in seconds.
 }
@@ -24,4 +24,9 @@ type CircuitInput struct {
 	ExerciseIDs  *[]primitive.ObjectID `json:"exerciseIds,omitempty" validate:"omitempty,dive"`
 	RestTime     *int                 `json:"restTime,omitempty" validate:"omitempty,gte=5,lte=240"` // Optional rest time in seconds.
 	ProposedLaps *int                  `json:"proposedLaps,omitempty" validate:"omitempty,gte=1"`
+}
+
+type WorkoutItemInput struct {
+	ItemID *primitive.ObjectID `json:"itemId,omitempty" validate:"omitempty"`
+	ItemType *WorkoutItemType `json:"itemType,omitempty" validate:"omitempty,oneof=exercise superset"`
 }

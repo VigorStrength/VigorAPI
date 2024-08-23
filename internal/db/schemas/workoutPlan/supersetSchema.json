@@ -1,0 +1,31 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": ["exerciseIds", "proposedLaps"],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId",
+        "description": "must be an objectId"
+      },
+      "exerciseIds": {
+        "bsonType": "array",
+        "minItems": 2,
+        "items": {
+          "bsonType": "objectId",
+          "description": "Array of exercise IDs that are part of the superset"
+        }
+      },
+      "restTime": {
+        "bsonType": "int",
+        "minimum": 5,
+        "maximum": 240,
+        "description": "Optional rest time in seconds between exercises in the superset"
+      },
+      "proposedLaps": {
+        "bsonType": "int",
+        "minimum": 1,
+        "description": "Number of laps/reps for the entire superset"
+      }
+    }
+  }
+}

@@ -4,6 +4,19 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+type WorkoutItemType string
+
+const (
+	ExerciseType WorkoutItemType = "exercise"
+	SupersetType WorkoutItemType = "superset"
+)
+
+type WorkoutItem struct {
+	ID   primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
+	ItemID primitive.ObjectID `bson:"itemId" json:"itemId" binding:"required"`
+	ItemType WorkoutItemType `bson:"itemType" json:"itemType" binding:"required" validate:"required,oneof=exercise superset"`
+}
+
 // Circuit represents a set of exercises performed in sequence, with optional rest and laps tracking.
 type Circuit struct {
 	ID           primitive.ObjectID   `bson:"_id,omitempty" json:"id,omitempty"`
@@ -21,7 +34,7 @@ type WorkoutDay struct {
 	Name 		     string             `bson:"name" json:"name" binding:"required" validate:"required,min=5,max=50"`
 	ImageURL		 string             `bson:"imageURL" json:"imageURL" binding:"required" validate:"required,url"`
 	WarmUps           []Circuit          `bson:"warmUps" json:"warmUps" binding:"required" validate:"required,dive"`
-	Workouts          []Circuit          `bson:"workouts" json:"workouts" binding:"required" validate:"required,dive"`
+	Workouts          []WorkoutItem          `bson:"workouts" json:"workouts" binding:"required" validate:"required,dive"`
 	CoolDowns         []Circuit          `bson:"coolDowns" json:"coolDowns" binding:"required" validate:"required,dive"`
 	WorkoutTimeRange [2]int             `bson:"workoutTimeRange" json:"workoutTimeRange" binding:"required" validate:"required,dive,gte=1,lte=7200"` // [minTime, maxTime] in seconds.
 	// Removed TotalExercises and Equipment fields

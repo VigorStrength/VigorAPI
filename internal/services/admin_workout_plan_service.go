@@ -68,7 +68,7 @@ func (as *AdminService) CreateWorkoutPlan(ctx context.Context, workoutPlanInput 
 	// Get the workout plan collection
 	workoutPlanCollection := as.database.Collection("workoutPlans")
 
-	// check if the new workout plan already exists
+	// Check if the new workout plan already exists
 	filter := bson.M{"name": workoutPlanInput.Name}
 	count, err := workoutPlanCollection.CountDocuments(ctx, filter)
 	if err != nil {
@@ -84,6 +84,24 @@ func (as *AdminService) CreateWorkoutPlan(ctx context.Context, workoutPlanInput 
 		workoutPlanInput.Weeks[i].ID = primitive.NewObjectID()
 		for j := range workoutPlanInput.Weeks[i].Days {
 			workoutPlanInput.Weeks[i].Days[j].ID = primitive.NewObjectID()
+
+			// Validate WarmUps
+			if err := as.validateCircuits(ctx, workoutPlanInput.Weeks[i].Days[j].WarmUps); err != nil {
+				return fmt.Errorf("validation error in warmups: %w", err)
+			}
+
+			// Validate Workouts
+			if err := as.validateWorkoutItems(ctx, workoutPlanInput.Weeks[i].Days[j].Workouts); err != nil {
+                fmt.Println(workoutPlanInput.Weeks[i].Days[j].Workouts)
+				return fmt.Errorf("validation error in workouts: %w", err)
+			}
+
+			// Validate CoolDowns
+			if err := as.validateCircuits(ctx, workoutPlanInput.Weeks[i].Days[j].CoolDowns); err != nil {
+				return fmt.Errorf("validation error in cooldowns: %w", err)
+			}
+
+			// Assign IDs to WarmUps, Workouts, and CoolDowns
 			for k := range workoutPlanInput.Weeks[i].Days[j].WarmUps {
 				workoutPlanInput.Weeks[i].Days[j].WarmUps[k].ID = primitive.NewObjectID()
 			}
@@ -239,7 +257,7 @@ func createNewDayFromInput(dayInput models.WorkoutDayInput) models.WorkoutDay {
 
     // Convert CircuitInputs to Circuits
     newDay.WarmUps = convertCircuitInputsToCircuits(dayInput.WarmUps)
-    newDay.Workouts = convertCircuitInputsToCircuits(dayInput.Workouts)
+    newDay.Workouts = convertWorkoutItemInputsToWorkoutItems(dayInput.Workouts)
     newDay.CoolDowns = convertCircuitInputsToCircuits(dayInput.CoolDowns)
 
     return newDay
@@ -279,4 +297,83 @@ func convertCircuitInputsToCircuits(circuitInputs *[]models.CircuitInput) []mode
     }
 
     return circuits
+}
+
+func convertWorkoutItemInputsToWorkoutItems(itemInputs *[]models.WorkoutItemInput) []models.WorkoutItem {
+    workoutItems := []models.WorkoutItem{}
+    if itemInputs == nil {
+        return workoutItems // Return an empty slice if there's no input
+    }
+    
+    for _, input := range *itemInputs {
+        newWorkoutItem := models.WorkoutItem{
+            ID: primitive.NewObjectID(), // Assign a new ID for each workout item
+        }
+
+        // Set ItemID
+        if input.ItemID != nil {
+            newWorkoutItem.ItemID = *input.ItemID
+        } else {
+            newWorkoutItem.ItemID = primitive.NilObjectID // Ensure a valid ObjectID is set
+        }
+
+        // Set ItemType
+        if input.ItemType != nil {
+            newWorkoutItem.ItemType = *input.ItemType
+        } else {
+            newWorkoutItem.ItemType = "" // Ensure a valid WorkoutItemType is set
+        }
+
+        workoutItems = append(workoutItems, newWorkoutItem)
+    }
+
+    return workoutItems
+}
+
+func (as *AdminService) validateWorkoutItems(ctx context.Context, workoutItems []models.WorkoutItem) error {
+    exerciseCollection := as.database.Collection("exercises")
+    supersetCollection := as.database.Collection("supersets")
+
+    for _, item := range workoutItems {
+        var count int64
+        var err error
+
+        switch item.ItemType {
+        case models.ExerciseType:
+            count, err = exerciseCollection.CountDocuments(ctx, bson.M{"_id": item.ItemID})
+        case models.SupersetType:
+            count, err = supersetCollection.CountDocuments(ctx, bson.M{"_id": item.ItemID})
+        default:
+            return fmt.Errorf("invalid workout item type: %s for item ID: %s", item.ItemType, item.ItemID.Hex())
+        }
+
+        if err != nil {
+            return fmt.Errorf("error checking workout item (ID: %s, Type: %s): %w", item.ItemID.Hex(), item.ItemType, err)
+        }
+
+        if count == 0 {
+            return fmt.Errorf("workout item not found: ID: %s, Type: %s", item.ItemID.Hex(), item.ItemType)
+        }
+    }
+
+    return nil
+}
+
+func (as *AdminService) validateCircuits(ctx context.Context, circuits []models.Circuit) error {
+    exerciseCollection := as.database.Collection("exercises")
+
+    for _, circuit := range circuits {
+        for _, exerciseID := range circuit.ExerciseIDs {
+            count, err := exerciseCollection.CountDocuments(ctx, bson.M{"_id": exerciseID})
+            if err != nil {
+                return fmt.Errorf("error checking exercise ID: %s in circuit: %s", exerciseID.Hex(), circuit.ID.Hex())
+            }
+
+            if count == 0 {
+                return fmt.Errorf("exercise not found in circuit: %s", exerciseID.Hex())
+            }
+        }
+    }
+
+    return nil
 }
