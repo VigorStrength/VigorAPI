@@ -664,6 +664,18 @@ func main() {
 				},
 			},
 		},
+		{
+			Name:       "Get Daily Superset by ID",
+			Method:     "POST",
+			Path: 	 	"/api/v1/user/workout-plans/daily-supersets/:supersetId",
+			Description: "Get the daily superset by its ID",
+			Headers: []RouteHeader{
+				{
+					Key:  "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
 	}
 
 	// Attemp to read and update an existing collection; otherwise generate a new one
@@ -754,6 +766,7 @@ func createPostmanItemFromRoute(route Route) PostmanItem {
 	routePath = strings.Replace(routePath, "exercises/:exerciseId/complete/:circuitId", "exercises/{{exerciseId}}/complete/{{circuitId}}", -1)
 	routePath = strings.Replace(routePath, "workout-plans/:workoutPlanId/progress", "workout-plans/{{workoutPlanId}}/progress", -1)
 	routePath = strings.Replace(routePath, "exercises/:exerciseId", "exercises/{{exerciseId}}", -1)
+	routePath = strings.Replace(routePath, "workout-plans/daily-supersets/:supersetId", "workout-plans/daily-supersets/{{supersetId}}", -1)
 
 	item := PostmanItem{
 		Name: route.Name,
