@@ -666,9 +666,21 @@ func main() {
 		},
 		{
 			Name:       "Get Daily Superset by ID",
-			Method:     "POST",
+			Method:     "GET",
 			Path: 	 	"/api/v1/user/workout-plans/daily-supersets/:supersetId",
 			Description: "Get the daily superset by its ID",
+			Headers: []RouteHeader{
+				{
+					Key:  "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
+			Name:       "Get Daily Supersets by IDs",
+			Method:     "POST",
+			Path: 	 	"/api/v1/user/workout-plans/daily-supersets",
+			Description: "Get the daily supersets by IDs sent in the request body",
 			Headers: []RouteHeader{
 				{
 					Key:  "Content-Type",
