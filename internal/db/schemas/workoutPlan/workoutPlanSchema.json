@@ -78,15 +78,6 @@
                           "items": {
                             "bsonType": "objectId"
                           }
-                        },
-                        "restTime": {
-                          "bsonType": "int",
-                          "minimum": 5,
-                          "maximum": 240
-                        },
-                        "proposedLaps": {
-                          "bsonType": "int",
-                          "minimum": 1
                         }
                       }
                     }
@@ -126,15 +117,6 @@
                           "items": {
                             "bsonType": "objectId"
                           }
-                        },
-                        "restTime": {
-                          "bsonType": "int",
-                          "minimum": 5,
-                          "maximum": 240
-                        },
-                        "proposedLaps": {
-                          "bsonType": "int",
-                          "minimum": 1
                         }
                       }
                     }

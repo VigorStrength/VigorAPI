@@ -21,11 +21,6 @@ type WorkoutItem struct {
 type Circuit struct {
 	ID           primitive.ObjectID   `bson:"_id,omitempty" json:"id,omitempty"`
 	ExerciseIDs  []primitive.ObjectID `bson:"exerciseIds" json:"exerciseIds" binding:"required" validate:"required,dive,required"`
-	RestTime     *int                 `bson:"restTime,omitempty" json:"restTime,omitempty" validate:"omitempty,gte=5,lte=240"` // Optional rest time in seconds.
-	ProposedLaps int                  `bson:"proposedLaps" json:"proposedLaps" binding:"required" validate:"required,gte=1"`
-	//To be added later once the generative AI is integrated, program will be distinct from each user
-	// ActualLaps   int                  `bson:"actualLaps" json:"actualLaps"` // Actual laps completed by the user.
-	// Completed    bool                 `bson:"completed" json:"completed"`
 }
 
 // WorkoutDay represents a complete day's workout plan, including warm-up, workout, and cool-down.

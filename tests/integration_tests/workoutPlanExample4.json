@@ -1,0 +1,46 @@
+{
+  "id": "6615854ee1f782383dec46cd",
+  "name": "Core Strength & Stability",
+  "imageURL": "https://images.unsplash.com/photo-1591258370814-01609b341790?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "duration": 1,
+  "weeks": [
+    {
+      "id": "6615854ee1f782383dec46ce",
+      "weekNumber": 1,
+      "days": [
+        {
+          "id": "6615854ee1f782383dec46cf",
+          "name": "Core Strength Day",
+          "imageURL": "https://images.unsplash.com/photo-1571019613576-2b22c76fd955?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "warmUps": [
+            {
+              "id": "6615854ee1f782383dec46d0",
+              "exerciseIds": ["6613e3fa7655ce5f3f0b696e"]
+            }
+          ],
+          "workouts": [
+            {
+              "itemId": "6613e3987655ce5f3f0b696a",
+              "itemType": "exercise"
+            },
+            {
+              "itemId": "66c7bb611539758fe03990ef",
+              "itemType": "superset"
+            },
+            {
+              "itemId": "6613ee6290b42302aefa18e6",
+              "itemType": "exercise"
+            }
+          ],
+          "coolDowns": [
+            {
+              "id": "6615854ee1f782383dec46d2",
+              "exerciseIds": ["6613e3c97655ce5f3f0b696d"]
+            }
+          ],
+          "workoutTimeRange": [1200, 2400]
+        }
+      ]
+    }
+  ]
+}

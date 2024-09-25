@@ -281,18 +281,6 @@ func convertCircuitInputsToCircuits(circuitInputs *[]models.CircuitInput) []mode
             newCircuit.ExerciseIDs = []primitive.ObjectID{} // Ensure a valid slice is set
         }
 
-        // Set RestTime
-        if input.RestTime != nil {
-            newCircuit.RestTime = input.RestTime
-        } // else it remains nil, which is valid per the Circuit struct definition
-
-        // Set ProposedLaps, defaulting to 1 if not provided
-        if input.ProposedLaps != nil {
-            newCircuit.ProposedLaps = *input.ProposedLaps
-        } else {
-            newCircuit.ProposedLaps = 1
-        }
-
         circuits = append(circuits, newCircuit)
     }
 
