@@ -701,6 +701,30 @@ func main() {
 			},
 		},
 		{
+			Name:       "Get Daily Set by ID",
+			Method:     "GET",
+			Path: 	 	"/api/v1/user/workout-plans/daily-sets/:setId",
+			Description: "Get the daily set by its ID",
+			Headers: []RouteHeader{
+				{
+					Key:  "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
+			Name:       "Get Daily Sets by IDs",
+			Method:     "POST",
+			Path: 	 	"/api/v1/user/workout-plans/daily-sets",
+			Description: "Get the daily sets by IDs sent in the request body",
+			Headers: []RouteHeader{
+				{
+					Key:  "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
 			Name:       "Get Daily Superset by ID",
 			Method:     "GET",
 			Path: 	 	"/api/v1/user/workout-plans/daily-supersets/:supersetId",
@@ -816,6 +840,7 @@ func createPostmanItemFromRoute(route Route) PostmanItem {
 	routePath = strings.Replace(routePath, "workout-plans/:workoutPlanId/progress", "workout-plans/{{workoutPlanId}}/progress", -1)
 	routePath = strings.Replace(routePath, "exercises/:exerciseId", "exercises/{{exerciseId}}", -1)
 	routePath = strings.Replace(routePath, "workout-plans/daily-supersets/:supersetId", "workout-plans/daily-supersets/{{supersetId}}", -1)
+	routePath = strings.Replace(routePath, "workout-plans/daily-sets/:setId", "workout-plans/daily-sets/{{setId}}", -1)
 
 	item := PostmanItem{
 		Name: route.Name,

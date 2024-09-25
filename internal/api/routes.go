@@ -96,6 +96,9 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	// Supersets
 	userRoutes.POST("/workout-plans/daily-supersets", userController.GetDailySupersetsByIDs)
 	userRoutes.GET("/workout-plans/daily-supersets/:supersetId", userController.GetDailySupertsetByID)
+	// Sets 
+	userRoutes.GET("/workout-plans/daily-sets/:setId", userController.GetDailySetByID)
+	userRoutes.POST("/workout-plans/daily-sets", userController.GetDailySetsByIDs)
 
 	// Merged with GetActiveWorkoutPlan
 	// userRoutes.GET("/workout-plans/:workoutPlanId/progress", userController.GetWorkoutPlanProgress)

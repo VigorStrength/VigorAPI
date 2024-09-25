@@ -77,7 +77,52 @@ func (uc *UserController) GetDailyExercisesByIDs(c *gin.Context) {
 	c.JSON(http.StatusOK, dailyExercises)
 }
 
-func (us *UserController) GetDailySupertsetByID(c *gin.Context) {
+func (uc *UserController) GetDailySetByID(c *gin.Context) {
+	setID, err := primitive.ObjectIDFromHex(c.Param("setId"))
+	if err != nil {
+		log.Printf("Error parsing ID: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+
+	dailySet, err := uc.UserService.GetDailySetByID(c.Request.Context(), setID)
+	if err !=  nil {
+		if errors.Is(err, services.ErrSetNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Set not found"})
+			return
+		}
+
+		log.Printf("Error getting daily set: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get daily set"})
+		return
+	}
+
+	c.JSON(http.StatusOK, dailySet)
+}
+
+func (uc *UserController) GetDailySetsByIDs(c *gin.Context) {
+	//Get the daily sets by ID's sent in the request body
+	var requestBody struct {
+		DailySetsIDs []primitive.ObjectID `json:"dailySetsIDs"`
+	}
+
+	if err := c.ShouldBindJSON(&requestBody); err != nil {
+		log.Printf("Error parsing JSON: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Could not parse request body"})
+		return
+	}
+
+	dailySets, err := uc.UserService.GetDailySetsByIDs(c.Request.Context(), requestBody.DailySetsIDs)
+	if err != nil {
+		log.Printf("Error getting daily sets: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get daily sets"})
+		return
+	}
+
+	c.JSON(http.StatusOK, dailySets)
+}
+
+func (uc *UserController) GetDailySupertsetByID(c *gin.Context) {
 	supersetID, err := primitive.ObjectIDFromHex(c.Param("supersetId"))
 	if err != nil {
 		log.Printf("Error parsing ID: %v\n", err)
@@ -85,7 +130,7 @@ func (us *UserController) GetDailySupertsetByID(c *gin.Context) {
 		return
 	}
 
-	dailySuperset, err := us.UserService.GetDailySupersetByID(c.Request.Context(), supersetID)
+	dailySuperset, err := uc.UserService.GetDailySupersetByID(c.Request.Context(), supersetID)
 	if err != nil {
 		if errors.Is(err, services.ErrDailySupersetNotFound) {
 			c.JSON(http.StatusNotFound, gin.H{"error": "Daily Superset not found"})
@@ -100,7 +145,7 @@ func (us *UserController) GetDailySupertsetByID(c *gin.Context) {
 	c.JSON(http.StatusOK, dailySuperset)
 }
 
-func (us *UserController) GetDailySupersetsByIDs(c *gin.Context) {
+func (uc *UserController) GetDailySupersetsByIDs(c *gin.Context) {
 	//Get the daily supersets by ID's sent in the request body
 
 	var requestBody struct {
@@ -113,7 +158,7 @@ func (us *UserController) GetDailySupersetsByIDs(c *gin.Context) {
 		return
 	}
 
-	dailySuperSets, err := us.UserService.GetDailySupersetsByIDs(c.Request.Context(), requestBody.DailySupersetsIDs)
+	dailySuperSets, err := uc.UserService.GetDailySupersetsByIDs(c.Request.Context(), requestBody.DailySupersetsIDs)
 	if err != nil {
 		log.Printf("Error getting daily supersets: %v\n", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get daily supersets"})
@@ -122,3 +167,4 @@ func (us *UserController) GetDailySupersetsByIDs(c *gin.Context) {
 
 	c.JSON(http.StatusOK, dailySuperSets)
 }
+

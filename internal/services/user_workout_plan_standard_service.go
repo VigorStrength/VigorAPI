@@ -59,6 +59,53 @@ func  (uc *UserService) GetDailyExercisesByIDs(ctx context.Context, exercisesIDs
 	return orderedExercises, nil
 }
 
+func (us *UserService) GetDailySetByID(ctx context.Context, setID primitive.ObjectID) (*models.Set, error) {
+	var set models.Set
+	setCollection := us.database.Collection("sets")
+	filter := bson.M{"_id": setID}
+	err := setCollection.FindOne(ctx, filter).Decode(&set)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return nil, ErrSetNotFound
+		}
+		return nil, fmt.Errorf("error finding set: %w", err)
+	}
+
+	return &set, nil
+}
+
+func (us *UserService) GetDailySetsByIDs(ctx context.Context, setsIDs []primitive.ObjectID) ([]models.Set, error) {
+	setCollection := us.database.Collection("sets")
+
+	filter := bson.M{"_id": bson.M{"$in": setsIDs}}
+	cursor, err := setCollection.Find(ctx, filter)
+	if err != nil {
+		return nil, fmt.Errorf("error finding sets: %w", err)
+	}
+	defer cursor.Close(ctx)
+
+	var sets []models.Set
+	if err := cursor.All(ctx, &sets); err != nil {
+		return nil, fmt.Errorf("error decoding sets: %w", err)
+	}
+
+	setsMap := make(map[primitive.ObjectID]models.Set)
+	for _, set := range sets {
+		setsMap[set.ID] = set
+	}
+
+	orderedSets := make([]models.Set, len(setsIDs))
+	for i, id := range setsIDs {
+		if set, exists := setsMap[id]; exists {
+			orderedSets[i] = set
+		} else {
+			return nil, fmt.Errorf("set with ID %s not found", id.Hex())
+		}
+	}
+
+	return orderedSets, nil
+}
+
 func (us * UserService) GetDailySupersetByID(ctx context.Context, supersetID primitive.ObjectID) (*models.Superset, error) {
 	var superset models.Superset
 	supersetCollection := us.database.Collection("supersets")
