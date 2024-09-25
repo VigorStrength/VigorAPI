@@ -70,7 +70,28 @@ func (ms *MongoDBService) EnsureIndexes(ctx context.Context, db MongoDatabase) e
 			{Keys: bson.M{"name": 1}, Options: options.Index().SetUnique(true)},
 		},
 		"userExerciseStatus": {
-			{Keys: bson.D{{Key: "userId", Value: 1},{Key: "exerciseId", Value: 1}, {Key: "circuitId", Value: 1},{Key: "workoutPlanId", Value: 1}}, Options: options.Index().SetUnique(true)},
+			{
+				Keys: bson.D{
+					{Key: "userId", Value: 1},
+					{Key: "exerciseId", Value: 1},
+					{Key: "circuitId", Value: 1},
+					{Key: "workoutPlanId", Value: 1},
+				},
+				Options: options.Index().SetUnique(true).SetPartialFilterExpression(bson.D{
+					{Key: "circuitId", Value: bson.D{{Key: "$exists", Value: true}}},
+				}),
+			},
+			{
+				Keys: bson.D{
+					{Key: "userId", Value: 1},
+					{Key: "exerciseId", Value: 1},
+					{Key: "workoutItemId", Value: 1},
+					{Key: "workoutPlanId", Value: 1},
+				},
+				Options: options.Index().SetUnique(true).SetPartialFilterExpression(bson.D{
+					{Key: "workoutItemId", Value: bson.D{{Key: "$exists", Value: true}}},
+				}),
+			},
 		},
 		"userWorkoutItemStatus" : {
 			{Keys: bson.D{{Key: "userId", Value: 1},{Key: "workoutItemId", Value: 1}, {Key: "workoutPlanId", Value: 1}}, Options: options.Index().SetUnique(true)},

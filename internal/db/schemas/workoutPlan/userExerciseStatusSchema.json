@@ -4,7 +4,6 @@
     "required": [
       "userId",
       "exerciseId",
-      "circuitId",
       "workoutPlanId",
       "completed",
       "completedLogs"
@@ -19,12 +18,16 @@
         "description": "must be an objectId and is required"
       },
       "circuitId": {
-        "bsonType": "objectId",
-        "description": "must be an objectId and is optional"
+        "bsonType": ["objectId", "null"],
+        "description": "can be an objectId or null and is optional"
+      },
+      "workoutItemId": {
+        "bsonType": ["objectId", "null"],
+        "description": "can be an objectId or null and is optional"
       },
       "workoutPlanId": {
         "bsonType": "objectId",
-        "description": "must be an objectId and is optional"
+        "description": "must be an objectId and is required"
       },
       "completed": {
         "bsonType": "bool",
@@ -40,19 +43,11 @@
               "bsonType": ["int", "null"],
               "description": "can be null or an integer"
             },
-            "proposedReps": {
-              "bsonType": "int",
-              "description": "must be an integer and is required"
-            },
-            "actualReps": {
+            "reps": {
               "bsonType": ["int", "null"],
               "description": "can be null or an integer"
             },
-            "proposedWeight": {
-              "bsonType": ["double", "null"],
-              "description": "can be null or a double"
-            },
-            "actualWeight": {
+            "weight": {
               "bsonType": ["double", "null"],
               "description": "can be null or a double"
             }

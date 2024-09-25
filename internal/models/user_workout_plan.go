@@ -15,9 +15,10 @@ type UserExerciseLogInput struct {
 type UserExerciseStatus struct {
 	UserID        primitive.ObjectID `bson:"userId" json:"userId" binding:"required" validate:"required"`
 	ExerciseID    primitive.ObjectID `bson:"exerciseId" json:"exerciseId" binding:"required" validate:"required"`
-	CircuitID     primitive.ObjectID `bson:"circuitId" json:"circuitId" binding:"required" validate:"required"`
+	CircuitID     *primitive.ObjectID `bson:"circuitId" json:"circuitId" binding:"omitempty" validate:"omitempty"`
+	WorkoutItemID *primitive.ObjectID `bson:"workoutItemId" json:"workoutItemId" binding:"omitempty" validate:"omitempty"`
 	WorkoutPlanID primitive.ObjectID `bson:"workoutPlanId" json:"workoutPlanId" binding:"required" validate:"required"`
-	Completed     bool               `bson:"completed" json:"completed" binding:"required" validate:"omitempty"`
+	Completed     bool               `bson:"completed" json:"completed" binding:"required"`
 	CompletedLogs []UserExerciseLogInput      `bson:"completedLogs" json:"completedLogs" binding:"required" validate:"required,dive,required"`
 }
 
@@ -25,7 +26,18 @@ func NewUserExerciseStatus(userID, exerciseID, circuitID, workoutPlanID primitiv
 	return UserExerciseStatus{
 		UserID:        userID,
 		ExerciseID:    exerciseID,
-		CircuitID:     circuitID,
+		CircuitID:     &circuitID,
+		WorkoutPlanID: workoutPlanID,
+		Completed:     false,
+		CompletedLogs: []UserExerciseLogInput{},
+	}
+}
+
+func NewUserWorkoutItemExerciseStatus(userID, exerciseID, workoutItemID, workoutPlanID primitive.ObjectID) UserExerciseStatus {
+	return UserExerciseStatus{
+		UserID:        userID,
+		ExerciseID:    exerciseID,
+		WorkoutItemID: &workoutItemID,
 		WorkoutPlanID: workoutPlanID,
 		Completed:     false,
 		CompletedLogs: []UserExerciseLogInput{},
@@ -40,7 +52,7 @@ type UserWorkoutItemStatus struct {
 	WorkoutItemType WorkoutItemType `bson:"workoutItemType" json:"workoutItemType" binding:"required" validate:"required,oneof=exercise superset"`
 	WorkoutDayID primitive.ObjectID `bson:"workoutDayId" json:"workoutDayId" binding:"required"` // Reference the workout day
 	WorkoutPlanID  primitive.ObjectID `bson:"workoutPlanId" json:"workoutPlanId" binding:"required"` // Reference to the WorkoutPlan
-	Completed    bool               `bson:"completed" json:"completed"`
+	Completed    bool               `bson:"completed" json:"completed" binding:"required"`
 }
 
 func NewUserWorkoutItemStatus(userID, workoutItemID, workoutDayID, workoutPlanID primitive.ObjectID, workoutItemType WorkoutItemType) UserWorkoutItemStatus {
@@ -61,7 +73,7 @@ type UserCircuitStatus struct {
 	CircuitID primitive.ObjectID `bson:"circuitId" json:"circuitId" binding:"required"`
 	WorkoutDayID primitive.ObjectID `bson:"workoutDayId" json:"workoutDayId" binding:"required"` // Reference the workout day
 	WorkoutPlanID  primitive.ObjectID `bson:"workoutPlanId" json:"workoutPlanId" binding:"required"` // Reference to the WorkoutPlan
-	Completed bool               `bson:"completed" json:"completed"`
+	Completed bool               `bson:"completed" json:"completed" binding:"required"`
 }
 
 func NewUserCircuitStatus(userID, circuitID, workoutDayID, workoutPlanID primitive.ObjectID) UserCircuitStatus {
@@ -81,7 +93,7 @@ type UserWorkoutDayStatus struct {
 	WorkoutDayID primitive.ObjectID `bson:"workoutDayId" json:"workoutDayId" binding:"required"`
 	WorkoutWeekID primitive.ObjectID `bson:"workoutWeekId" json:"workoutWeekId" binding:"required"` // Reference the workout week
 	WorkoutPlanID  primitive.ObjectID `bson:"workoutPlanId" json:"workoutPlanId" binding:"required"` // Reference to the WorkoutPlan
-	Completed    bool               `bson:"completed" json:"completed"`
+	Completed    bool               `bson:"completed" json:"completed" binding:"required"`
 }
 
 func NewUserWorkoutDayStatus(userID, workoutDayID, workoutWeekID, workoutPlanID primitive.ObjectID) UserWorkoutDayStatus {
@@ -120,7 +132,7 @@ type UserWorkoutPlanStatus struct {
 	StartDate      time.Time          `bson:"startDate" json:"startDate" binding:"required"`
 	Progress 	 	float64            `bson:"progress" json:"progress"`
 	CompletionDate *time.Time         `bson:"completionDate" json:"completionDate"` // nil if not completed
-	Completed      bool               `bson:"completed" json:"completed"`
+	Completed      bool               `bson:"completed" json:"completed" binding:"required"`
 	// More fields as necessary to track progress, such as completed workouts or weeks
 }
 

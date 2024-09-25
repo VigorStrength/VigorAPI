@@ -115,18 +115,23 @@ func (us *UserService) JoinWorkoutPlan(ctx context.Context, userID, workoutPlanI
 				}
 
 				// track it by the type of the workoutItem maybe
-				// switch workoutItem.ItemType {
-				// case models.ExerciseType: 
-				// 	userExerciseStatus := models.NewUserExerciseStatus(userID, workoutItem.ItemID, day.ID, workoutPlanID)
-				// 	if _, err := us.database.Collection("userExerciseStatus").InsertOne(ctx, userExerciseStatus); err != nil {
-				// 		return fmt.Errorf("error inserting user exercise status from workouts section: %w", err)
-				// 	}
-				// case models.SupersetType: 
-				// 	userSuperSetStatus := models.NewUserSupersetStatus(userID, workoutItem.ItemID, day.ID, workoutPlanID)
-				// 	if _, err := us.database.Collection("userSupersetStatus").InsertOne(ctx, userSuperSetStatus); err != nil {
-				// 		return fmt.Errorf("error inserting user superset status from workouts section: %w", err)
-				// 	}
-				// }
+				switch workoutItem.ItemType {
+				case models.ExerciseType: 
+					userStandAloneExerciseStatus := models.NewUserExerciseStatus(userID, workoutItem.ItemID, workoutItem.ID, workoutPlanID)
+					if _, err := us.database.Collection("userExerciseStatus").InsertOne(ctx, userStandAloneExerciseStatus); err != nil {
+						return fmt.Errorf("error inserting a stand alone user exercise status for workoutItem ID %v: %w", workoutItem.ID, err)
+					}
+				case models.SetType:
+					userSetExerciseStatus := models.NewUserExerciseStatus(userID, workoutItem.ItemID, workoutItem.ID, workoutPlanID)
+					if _, err := us.database.Collection("userExerciseStatus").InsertOne(ctx, userSetExerciseStatus); err != nil {
+						return fmt.Errorf("error inserting set exercise status for workoutItem ID %v: %w", workoutItem.ID, err)
+					}
+				case models.SupersetType: 
+					userSupersetExerciseStatus := models.NewUserExerciseStatus(userID, workoutItem.ItemID, workoutItem.ID, workoutPlanID)
+					if _, err := us.database.Collection("userExerciseStatus").InsertOne(ctx, userSupersetExerciseStatus); err != nil {
+						return fmt.Errorf("error inserting superset exercise status for workoutItem ID %v: %w", workoutItem.ID, err)
+					}
+				}
 
 			}
 
