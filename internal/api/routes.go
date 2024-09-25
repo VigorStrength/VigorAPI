@@ -35,6 +35,10 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	adminRoutes.GET("/exercises/search", adminController.SearchExercisesByName)
 	adminRoutes.PUT("/exercises/:id", adminController.UpdateExercise)
 	adminRoutes.DELETE("/exercises/:id", adminController.DeleteExercise)
+	// CRUD Sets
+	adminRoutes.POST("/sets", adminController.CreateSet)
+	adminRoutes.PUT("/sets/:id", adminController.UpdateSet)
+	adminRoutes.GET("/sets", adminController.GetSets)
 	// CRUD Supersets
 	adminRoutes.POST("/supersets", adminController.CreateSuperset)
 	adminRoutes.PUT("/supersets/:id", adminController.UpdateSuperset)

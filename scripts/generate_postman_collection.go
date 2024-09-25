@@ -232,6 +232,42 @@ func main() {
 			},
 		},
 		{
+			Name:        "Create Set",
+			Method:      "POST",
+			Path:		 "/api/v1/admin/sets",
+			Description: "Create a new set",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
+			Name:        "Update Set",
+			Method:      "PUT",
+			Path: 	  	 "/api/v1/admin/sets/:id",
+			Description: "Update an existing set",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
+			Name:        "Get Sets",
+			Method:      "GET",
+			Path: 	  	 "/api/v1/admin/sets",
+			Description: "Get all sets",
+			Headers: []RouteHeader{
+				{
+					Key:   "Content-Type",
+					Value: "application/json",
+				},
+			},
+		},
+		{
 			Name:        "Create Superset",
 			Method:      "POST",
 			Path: 	  	"/api/v1/admin/supersets",
@@ -771,6 +807,7 @@ func createPostmanItemFromRoute(route Route) PostmanItem {
 	routePath := route.Path
 	routePath = strings.Replace(routePath, "exercises/:id", "exercises/{{exerciseId}}", -1)
 	routePath = strings.Replace(routePath, "supersets/:id", "supersets/{{supersetId}}", -1)
+	routePath = strings.Replace(routePath, "sets/:id", "sets/{{setId}}", -1)
 	routePath = strings.Replace(routePath, "workout-plans/:id", "workout-plans/{{workoutPlanId}}", -1)
 	routePath = strings.Replace(routePath, "meals/:id", "meals/{{mealId}}", -1)
 	routePath = strings.Replace(routePath, "meal-plans/:id", "meal-plans/{{mealPlanId}}", -1)
