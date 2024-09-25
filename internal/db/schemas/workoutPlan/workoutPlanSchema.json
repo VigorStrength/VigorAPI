@@ -66,7 +66,7 @@
                     "minItems": 1,
                     "items": {
                       "bsonType": "object",
-                      "required": ["exerciseIds", "proposedLaps"],
+                      "required": ["exerciseIds"],
                       "properties": {
                         "_id": {
                           "bsonType": "objectId",
@@ -91,11 +91,11 @@
                       "properties": {
                         "itemId": {
                           "bsonType": "objectId",
-                          "description": "id of the exercise or superset"
+                          "description": "id of the exercise, set or superset"
                         },
                         "itemType": {
-                          "enum": ["exercise", "superset"],
-                          "description": "type of the item, can be exercise or superset"
+                          "enum": ["exercise", "set", "superset"],
+                          "description": "type of the item, can be exercise, set or superset"
                         }
                       }
                     }
@@ -105,7 +105,7 @@
                     "minItems": 1,
                     "items": {
                       "bsonType": "object",
-                      "required": ["exerciseIds", "proposedLaps"],
+                      "required": ["exerciseIds"],
                       "properties": {
                         "_id": {
                           "bsonType": "objectId",

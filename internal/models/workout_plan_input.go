@@ -28,5 +28,5 @@ type CircuitInput struct {
 
 type WorkoutItemInput struct {
 	ItemID *primitive.ObjectID `json:"itemId,omitempty" validate:"omitempty"`
-	ItemType *WorkoutItemType `json:"itemType,omitempty" validate:"omitempty,oneof=exercise superset"`
+	ItemType *WorkoutItemType `json:"itemType,omitempty" validate:"omitempty,oneof=exercise set superset"`
 }
