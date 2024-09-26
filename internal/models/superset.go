@@ -11,8 +11,8 @@ type Superset struct {
 }
 
 type SupersetUpdateInput struct {
-	ExerciseIDs  *[]primitive.ObjectID `json:"exerciseIds,omitempty" validate:"omitempty,dive,required"`
-	RestTime     *int                 `json:"restTime,omitempty" validate:"omitempty,gte=5,lte=240"` // Rest time in seconds after the superset.
-	ProposedLaps *int                  `json:"proposedLaps,omitempty" validate:"omitempty,gte=1"`
+	ExerciseIDs  *[]primitive.ObjectID `bson:"exerciseIds,omitempty" json:"exerciseIds,omitempty" validate:"omitempty,dive,required"`
+	RestTime     *int                 `bson:"restTime,omitempty" json:"restTime,omitempty" validate:"omitempty,gte=5,lte=240"` // Rest time in seconds after the superset.
+	ProposedLaps *int                  `bson:"proposedLaps,omitempty" json:"proposedLaps,omitempty" validate:"omitempty,gte=1"`
 }
 
