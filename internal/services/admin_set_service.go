@@ -14,8 +14,8 @@ var (
 	ErrSetNotFound 	= fmt.Errorf("set not found")
 )
 
-func (ac *AdminService) CreateSet(ctx context.Context, set models.Set) error {
-	setCollection := ac.database.Collection("sets")
+func (as *AdminService) CreateSet(ctx context.Context, set models.Set) error {
+	setCollection := as.database.Collection("sets")
 
 	filter := bson.M{"_id": set.ID}
 	count, err := setCollection.CountDocuments(ctx, filter)
@@ -35,13 +35,13 @@ func (ac *AdminService) CreateSet(ctx context.Context, set models.Set) error {
 	return nil
 }
 
-func (ac *AdminService) UpdateSet(ctx context.Context, setID primitive.ObjectID, setInput models.SetUpdateInput) error {
+func (as *AdminService) UpdateSet(ctx context.Context, setID primitive.ObjectID, setInput models.SetUpdateInput) error {
 	// Check if setInput is empty
 	if (models.SetUpdateInput{}) == setInput {
 		return fmt.Errorf("setInput cannot be empty")
 	}
 
-	setCollection := ac.database.Collection("sets")
+	setCollection := as.database.Collection("sets")
 
 	filter := bson.M{"_id": setID}
 	var set models.Set
@@ -59,8 +59,8 @@ func (ac *AdminService) UpdateSet(ctx context.Context, setID primitive.ObjectID,
 	return nil
 }
 
-func (ac *AdminService) GetSets(ctx context.Context) ([]models.Set, error) {
-	setCollection := ac.database.Collection("sets")
+func (as *AdminService) GetSets(ctx context.Context) ([]models.Set, error) {
+	setCollection := as.database.Collection("sets")
 
 	cursor, err := setCollection.Find(ctx, bson.M{})
 	if err != nil {

@@ -35,6 +35,10 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	adminRoutes.GET("/exercises/search", adminController.SearchExercisesByName)
 	adminRoutes.PUT("/exercises/:id", adminController.UpdateExercise)
 	adminRoutes.DELETE("/exercises/:id", adminController.DeleteExercise)
+	// CRUD Standalone Workouts
+	adminRoutes.POST("/standalone-workouts", adminController.CreateStandAloneWorkoutItem)
+	adminRoutes.PUT("/standalone-workouts/:id", adminController.UpdateStandAloneWorkoutItem)
+	adminRoutes.GET("/standalone-workouts", adminController.GetStandAloneWorkoutItems)	
 	// CRUD Sets
 	adminRoutes.POST("/sets", adminController.CreateSet)
 	adminRoutes.PUT("/sets/:id", adminController.UpdateSet)

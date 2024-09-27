@@ -1,0 +1,27 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": ["exerciseId"],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId",
+        "description": "must be an objectId"
+      },
+      "exerciseId": {
+        "bsonType": "objectId",
+        "description": "must be an objectId and is required"
+      },
+      "restTime": {
+        "bsonType": "int",
+        "minimum": 5,
+        "maximum": 240,
+        "description": "Rest time in between laps of a stand alone exercise and is required"
+      },
+      "proposedLaps": {
+        "bsonType": "int",
+        "minimum": 1,
+        "description": "Number of laps/reps for the entire set"
+      }
+    }
+  }
+}
