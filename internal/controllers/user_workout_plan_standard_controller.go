@@ -122,6 +122,53 @@ func (uc *UserController) GetDailySetsByIDs(c *gin.Context) {
 	c.JSON(http.StatusOK, dailySets)
 }
 
+func (uc *UserController) GetDailyStandAloneWorkoutItemByID(c *gin.Context) {
+	standAloneWorkoutItemID, err := primitive.ObjectIDFromHex(c.Param("standaloneId"))
+	if err != nil {
+		log.Printf("Error parsing ID: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+
+	standAloneWorkout, err := uc.UserService.GetDailyStandAloneWorkoutItemByID(c.Request.Context(), standAloneWorkoutItemID)
+	if err != nil {
+		if errors.Is(err, services.ErrStandAloneWorkoutNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Stand alone workout not found"})
+			return
+		}
+
+		log.Printf("Error getting stand alone workout: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get stand alone workout"})
+		return
+	}
+
+	c.JSON(http.StatusOK, standAloneWorkout)
+}
+
+func (uc *UserController) GetDailyStandAloneWorkoutItemsByIDs(c *gin.Context) {
+	//Get the daily stand alone workouts by ID's sent in the request body
+	var requestBody struct {
+		DailyStandAloneWorkoutsIDs []primitive.ObjectID `json:"dailyStandAloneWorkoutsIDs"`
+	}
+
+	if err := c.ShouldBindJSON(&requestBody); err != nil {
+		log.Printf("Error parsing JSON: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Could not parse request body"})
+		return
+	}
+
+	dailyStandAloneWorkouts, err := uc.UserService.GetDailyStandAloneWorkoutItemsByIDs(c.Request.Context(), requestBody.DailyStandAloneWorkoutsIDs)
+
+	if err != nil {
+		log.Printf("Error getting daily stand alone workouts: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get daily stand alone workouts"})
+		return
+	}
+
+	c.JSON(http.StatusOK, dailyStandAloneWorkouts)
+}
+
+
 func (uc *UserController) GetDailySupertsetByID(c *gin.Context) {
 	supersetID, err := primitive.ObjectIDFromHex(c.Param("supersetId"))
 	if err != nil {

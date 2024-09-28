@@ -59,6 +59,55 @@ func  (uc *UserService) GetDailyExercisesByIDs(ctx context.Context, exercisesIDs
 	return orderedExercises, nil
 }
 
+func (us *UserService) GetDailyStandAloneWorkoutItemByID(ctx context.Context, standAloneID primitive.ObjectID) (*models.StandAlone, error) {
+	var standAlone models.StandAlone
+	standAloneCollection := us.database.Collection("standAloneWorkouts")
+	filter := bson.M{"_id": standAloneID}
+	
+	err := standAloneCollection.FindOne(ctx, filter).Decode(&standAlone)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return nil, ErrStandAloneWorkoutNotFound
+		}
+		return nil, fmt.Errorf("error finding stand alone workout: %w", err)
+	}
+
+	return &standAlone, nil
+}
+
+func (us *UserService) GetDailyStandAloneWorkoutItemsByIDs(ctx context.Context, standAlonesIDs []primitive.ObjectID) ([]models.StandAlone, error) {
+	standAloneCollection := us.database.Collection("standAloneWorkouts")
+
+	filter := bson.M{"_id": bson.M{"$in": standAlonesIDs}}
+	cursor, err := standAloneCollection.Find(ctx, filter)
+	if err != nil {
+		return nil, fmt.Errorf("error finding stand alone workouts: %w", err)
+	}
+	defer cursor.Close(ctx)
+
+	var standAloneWorkouts []models.StandAlone
+	if err := cursor.All(ctx, &standAloneWorkouts); err != nil {
+		return nil, fmt.Errorf("error decoding stand alone workouts: %w", err)
+	}
+
+	standAloneWorkoutsMap := make(map[primitive.ObjectID]models.StandAlone)
+	for _, standAlone := range standAloneWorkouts {
+		standAloneWorkoutsMap[standAlone.ID] = standAlone
+	}
+
+	orderedStandAlones := make([]models.StandAlone, len(standAlonesIDs))
+	for i, id := range standAlonesIDs {
+		if standAlone, exists := standAloneWorkoutsMap[id]; exists {
+			orderedStandAlones[i] = standAlone
+		} else {
+			return nil, fmt.Errorf("stand alone workout with ID %s not found", id.Hex())
+		}
+	}
+
+	return orderedStandAlones, nil
+}
+	
+
 func (us *UserService) GetDailySetByID(ctx context.Context, setID primitive.ObjectID) (*models.Set, error) {
 	var set models.Set
 	setCollection := us.database.Collection("sets")

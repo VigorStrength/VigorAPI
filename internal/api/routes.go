@@ -98,8 +98,8 @@ func SetupRoutes(router *gin.Engine, ts utils.TokenService, userService services
 	userRoutes.GET("/exercises/:exerciseId", userController.GetActiveExerciseStatus)
 	userRoutes.POST("/exercises/:exerciseId/complete/:circuitId", userController.CompleteExercise)
 	// StandAlone Workout Items
-	// userRoutes.GET("/workout-plans/daily-standalone-workouts/:standaloneId", userController.GetDailyStandAloneWorkoutItem)
-	// userRoutes.POST("/workout-plans/daily-standalone-workouts", userController.GetDailyStandAloneWorkoutItemsByIDs)
+	userRoutes.GET("/workout-plans/daily-standalone-workouts/:standaloneId", userController.GetDailyStandAloneWorkoutItemByID)
+	userRoutes.POST("/workout-plans/daily-standalone-workouts", userController.GetDailyStandAloneWorkoutItemsByIDs)
 	// Supersets
 	userRoutes.POST("/workout-plans/daily-supersets", userController.GetDailySupersetsByIDs)
 	userRoutes.GET("/workout-plans/daily-supersets/:supersetId", userController.GetDailySupertsetByID)

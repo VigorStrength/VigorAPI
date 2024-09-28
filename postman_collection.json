@@ -21,8 +21,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/auth/admin/register",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/auth/admin/register"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/auth/admin/register"
+          ]
         }
       },
       "response": []
@@ -43,8 +47,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/auth/admin/login",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/auth/admin/login"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/auth/admin/login"
+          ]
         }
       },
       "response": []
@@ -65,8 +73,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/auth/user/register",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/auth/user/register"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/auth/user/register"
+          ]
         }
       },
       "response": []
@@ -87,8 +99,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/auth/user/login",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/auth/user/login"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/auth/user/login"
+          ]
         }
       },
       "response": []
@@ -113,8 +129,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/auth/refreshAccessToken",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/auth/refreshAccessToken"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/auth/refreshAccessToken"
+          ]
         }
       },
       "response": []
@@ -139,8 +159,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/auth/renewRefreshToken",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/auth/renewRefreshToken"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/auth/renewRefreshToken"
+          ]
         }
       },
       "response": []
@@ -161,8 +185,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/exercises",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/exercises"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/exercises"
+          ]
         }
       },
       "response": []
@@ -183,8 +211,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/exercises/{{exerciseId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/exercises/{{exerciseId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/exercises/{{exerciseId}}"
+          ]
         }
       },
       "response": []
@@ -205,8 +237,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/exercises/{{exerciseId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/exercises/{{exerciseId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/exercises/{{exerciseId}}"
+          ]
         }
       },
       "response": []
@@ -227,8 +263,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/exercises",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/exercises"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/exercises"
+          ]
         }
       },
       "response": []
@@ -249,8 +289,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/exercises/{{exerciseId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/exercises/{{exerciseId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/exercises/{{exerciseId}}"
+          ]
         }
       },
       "response": []
@@ -271,8 +315,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/exercises/search?name={{exerciseName}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/exercises/search?name={{exerciseName}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/exercises/search?name={{exerciseName}}"
+          ]
         }
       },
       "response": []
@@ -293,8 +341,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/exercises/bulk-insert",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/exercises/bulk-insert"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/exercises/bulk-insert"
+          ]
         }
       },
       "response": []
@@ -315,8 +367,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/standalone-workouts",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/standalone-workouts"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/standalone-workouts"
+          ]
         }
       },
       "response": []
@@ -337,7 +393,9 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/standalone-workouts/{{standAloneWorkoutItemId}}",
-          "host": ["{{baseUrl}}"],
+          "host": [
+            "{{baseUrl}}"
+          ],
           "path": [
             "/api/v1/admin/standalone-workouts/{{standAloneWorkoutItemId}}"
           ]
@@ -361,8 +419,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/standalone-workouts",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/standalone-workouts"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/standalone-workouts"
+          ]
         }
       },
       "response": []
@@ -383,8 +445,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/sets",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/sets"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/sets"
+          ]
         }
       },
       "response": []
@@ -405,8 +471,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/sets/{{setId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/sets/{{setId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/sets/{{setId}}"
+          ]
         }
       },
       "response": []
@@ -427,8 +497,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/sets",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/sets"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/sets"
+          ]
         }
       },
       "response": []
@@ -449,8 +523,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/supersets",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/supersets"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/supersets"
+          ]
         }
       },
       "response": []
@@ -471,8 +549,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/supersets/{{supersetId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/supersets/{{supersetId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/supersets/{{supersetId}}"
+          ]
         }
       },
       "response": []
@@ -493,8 +575,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/supersets",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/supersets"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/supersets"
+          ]
         }
       },
       "response": []
@@ -515,8 +601,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/workout-plans",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/workout-plans"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/workout-plans"
+          ]
         }
       },
       "response": []
@@ -537,8 +627,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/workout-plans/{{workoutPlanId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/workout-plans/{{workoutPlanId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/workout-plans/{{workoutPlanId}}"
+          ]
         }
       },
       "response": []
@@ -559,8 +653,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/workout-plans/{{workoutPlanId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/workout-plans/{{workoutPlanId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/workout-plans/{{workoutPlanId}}"
+          ]
         }
       },
       "response": []
@@ -581,8 +679,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/workout-plans/{{workoutPlanId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/workout-plans/{{workoutPlanId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/workout-plans/{{workoutPlanId}}"
+          ]
         }
       },
       "response": []
@@ -603,8 +705,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/workout-plans",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/workout-plans"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/workout-plans"
+          ]
         }
       },
       "response": []
@@ -625,7 +731,9 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/workout-plans/search?name={{workoutPlanName}}",
-          "host": ["{{baseUrl}}"],
+          "host": [
+            "{{baseUrl}}"
+          ],
           "path": [
             "/api/v1/admin/workout-plans/search?name={{workoutPlanName}}"
           ]
@@ -649,8 +757,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/meals",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/meals"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meals"
+          ]
         }
       },
       "response": []
@@ -671,8 +783,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/meals/{{mealId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/meals/{{mealId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meals/{{mealId}}"
+          ]
         }
       },
       "response": []
@@ -693,8 +809,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/meals",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/meals"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meals"
+          ]
         }
       },
       "response": []
@@ -715,8 +835,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/meals/{{mealId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/meals/{{mealId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meals/{{mealId}}"
+          ]
         }
       },
       "response": []
@@ -737,8 +861,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/meals/search?name={{mealName}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/meals/search?name={{mealName}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meals/search?name={{mealName}}"
+          ]
         }
       },
       "response": []
@@ -759,8 +887,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/meals/bulk-insert",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/meals/bulk-insert"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meals/bulk-insert"
+          ]
         }
       },
       "response": []
@@ -781,8 +913,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/meals/{{mealId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/meals/{{mealId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meals/{{mealId}}"
+          ]
         }
       },
       "response": []
@@ -803,8 +939,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/meal-plans",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/meal-plans"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meal-plans"
+          ]
         }
       },
       "response": []
@@ -825,8 +965,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/meal-plans/{{mealPlanId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/meal-plans/{{mealPlanId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meal-plans/{{mealPlanId}}"
+          ]
         }
       },
       "response": []
@@ -847,8 +991,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/meal-plans",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/meal-plans"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meal-plans"
+          ]
         }
       },
       "response": []
@@ -869,8 +1017,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/meal-plans/{{mealPlanId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/meal-plans/{{mealPlanId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meal-plans/{{mealPlanId}}"
+          ]
         }
       },
       "response": []
@@ -891,8 +1043,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/meal-plans/search?name={{mealPlanName}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/meal-plans/search?name={{mealPlanName}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meal-plans/search?name={{mealPlanName}}"
+          ]
         }
       },
       "response": []
@@ -913,8 +1069,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/meal-plans/{{mealPlanId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/meal-plans/{{mealPlanId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/meal-plans/{{mealPlanId}}"
+          ]
         }
       },
       "response": []
@@ -935,8 +1095,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/admin/users",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/admin/users"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/admin/users"
+          ]
         }
       },
       "response": []
@@ -957,8 +1121,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/user/profile",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/user/profile"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/user/profile"
+          ]
         }
       },
       "response": []
@@ -979,8 +1147,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/user/preferences",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/user/preferences"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/user/preferences"
+          ]
         }
       },
       "response": []
@@ -1001,8 +1173,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/user/subscription",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/user/subscription"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/user/subscription"
+          ]
         }
       },
       "response": []
@@ -1023,8 +1199,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/user/profile",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/user/profile"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/user/profile"
+          ]
         }
       },
       "response": []
@@ -1045,8 +1225,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/user/subscription",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/user/subscription"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/user/subscription"
+          ]
         }
       },
       "response": []
@@ -1067,8 +1251,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/user/preferences",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/user/preferences"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/user/preferences"
+          ]
         }
       },
       "response": []
@@ -1089,8 +1277,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/user/subscription/cancel",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/user/subscription/cancel"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/user/subscription/cancel"
+          ]
         }
       },
       "response": []
@@ -1111,8 +1303,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/user/workout-plans/{{workoutPlanId}}/join",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/user/workout-plans/{{workoutPlanId}}/join"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/user/workout-plans/{{workoutPlanId}}/join"
+          ]
         }
       },
       "response": []
@@ -1133,7 +1329,9 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/user/exercises/{{exerciseId}}/complete/{{circuitId}}",
-          "host": ["{{baseUrl}}"],
+          "host": [
+            "{{baseUrl}}"
+          ],
           "path": [
             "/api/v1/user/exercises/{{exerciseId}}/complete/{{circuitId}}"
           ]
@@ -1157,8 +1355,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/user/workout-plans/active",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/user/workout-plans/active"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/user/workout-plans/active"
+          ]
         }
       },
       "response": []
@@ -1179,8 +1381,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/user/workout-plans/standard",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/user/workout-plans/standard"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/user/workout-plans/standard"
+          ]
         }
       },
       "response": []
@@ -1201,8 +1407,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/user/workout-plans/daily-exercises",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/user/workout-plans/daily-exercises"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/user/workout-plans/daily-exercises"
+          ]
         }
       },
       "response": []
@@ -1223,8 +1433,64 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/user/exercises/{{exerciseId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/user/exercises/{{exerciseId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/user/exercises/{{exerciseId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Daily Standalone Workout Item by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/user/workout-plans/daily-standalone-workouts/{{standAloneWorkoutItemId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/user/workout-plans/daily-standalone-workouts/{{standAloneWorkoutItemId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Daily Standalone Workout Items by IDs",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/user/workout-plans/daily-standalone-workouts",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/user/workout-plans/daily-standalone-workouts"
+          ]
         }
       },
       "response": []
@@ -1245,8 +1511,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/user/workout-plans/daily-sets/{{setId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/user/workout-plans/daily-sets/{{setId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/user/workout-plans/daily-sets/{{setId}}"
+          ]
         }
       },
       "response": []
@@ -1267,8 +1537,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/user/workout-plans/daily-sets",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/user/workout-plans/daily-sets"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/user/workout-plans/daily-sets"
+          ]
         }
       },
       "response": []
@@ -1289,8 +1563,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/user/workout-plans/daily-supersets",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/user/workout-plans/daily-supersets"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/user/workout-plans/daily-supersets"
+          ]
         }
       },
       "response": []
@@ -1311,8 +1589,12 @@
         },
         "url": {
           "raw": "{{baseUrl}}/api/v1/user/workout-plans/daily-supersets/{{supersetId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["/api/v1/user/workout-plans/daily-supersets/{{supersetId}}"]
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "/api/v1/user/workout-plans/daily-supersets/{{supersetId}}"
+          ]
         }
       },
       "response": []
