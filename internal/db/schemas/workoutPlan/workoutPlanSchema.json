@@ -91,11 +91,11 @@
                       "properties": {
                         "itemId": {
                           "bsonType": "objectId",
-                          "description": "id of the exercise, set or superset"
+                          "description": "id of the standalone workout, set or superset"
                         },
                         "itemType": {
-                          "enum": ["exercise", "set", "superset"],
-                          "description": "type of the item, can be exercise, set or superset"
+                          "enum": ["standalone", "set", "superset"],
+                          "description": "type of the item, can be standalone, set or superset"
                         }
                       }
                     }

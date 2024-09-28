@@ -63,80 +63,95 @@ func (us *UserService) GetActiveWorkoutPlan(ctx context.Context, userID primitiv
 }
 
 func (us *UserService) JoinWorkoutPlan(ctx context.Context, userID, workoutPlanID primitive.ObjectID) error {
-	var workoutPlan models.WorkoutPlan
-	workoutPlanCollection := us.database.Collection("workoutPlans")
-	err := workoutPlanCollection.FindOne(ctx, bson.M{"_id": workoutPlanID}).Decode(&workoutPlan)
+	// Start a session for the transaction
+	session, err := us.database.Client().StartSession()
 	if err != nil {
-		if err == mongo.ErrNoDocuments {
-			return ErrWorkoutPlanNotFound
-		}
-		return fmt.Errorf("error finding workout plan: %w", err)
+		return fmt.Errorf("error starting session: %w", err)
 	}
+	defer session.EndSession(ctx)
 
-	userWorkoutPlanStatus := models.NewUserWorkoutPlanStatus(userID, workoutPlanID, workoutPlan.Name)
-	if _, err := us.database.Collection("userWorkoutPlanStatus").InsertOne(ctx, userWorkoutPlanStatus); err != nil {
-		if mongo.IsDuplicateKeyError(err) {
-			return ErrAlreadyJoinded
+	// Define a function to run in the transaction
+	// The session will pass context into this function to maintain transaction boundaries
+	_, err = session.WithTransaction(ctx, func(sc mongo.SessionContext) (interface{}, error) {
+		var workoutPlan models.WorkoutPlan
+		workoutPlanCollection := us.database.Collection("workoutPlans")
+		err := workoutPlanCollection.FindOne(sc, bson.M{"_id": workoutPlanID}).Decode(&workoutPlan)
+		if err != nil {
+			if err == mongo.ErrNoDocuments {
+				return nil, ErrWorkoutPlanNotFound
+			}
+			return nil, fmt.Errorf("error finding workout plan: %w", err)
 		}
-		return fmt.Errorf("error inserting user workout plan status: %w", err)
-	}
 
-	for _, week := range workoutPlan.Weeks {
-		userWeekStatus := models.NewUserWorkoutWeekStatus(userID, week.ID, workoutPlanID)
-		if _, err := us.database.Collection("userWorkoutWeekStatus").InsertOne(ctx, userWeekStatus); err != nil {
-			return fmt.Errorf("error inserting user workout week status: %w", err)
+		// Insert User Workout Plan Status
+		userWorkoutPlanStatus := models.NewUserWorkoutPlanStatus(userID, workoutPlanID, workoutPlan.Name)
+		if _, err := us.database.Collection("userWorkoutPlanStatus").InsertOne(sc, userWorkoutPlanStatus); err != nil {
+			if mongo.IsDuplicateKeyError(err) {
+				return nil, ErrAlreadyJoinded
+			}
+			return nil, fmt.Errorf("error inserting user workout plan status: %w", err)
 		}
 
-		for _, day := range week.Days {
-			userDayStatus := models.NewUserWorkoutDayStatus(userID, day.ID, week.ID, workoutPlanID)
-			if _, err := us.database.Collection("userWorkoutDayStatus").InsertOne(ctx, userDayStatus); err != nil {
-				return fmt.Errorf("error inserting user workout day status: %w", err)
+		// Process weeks, days, circuits, and exercises
+		for _, week := range workoutPlan.Weeks {
+			userWeekStatus := models.NewUserWorkoutWeekStatus(userID, week.ID, workoutPlanID)
+			if _, err := us.database.Collection("userWorkoutWeekStatus").InsertOne(sc, userWeekStatus); err != nil {
+				return nil, fmt.Errorf("error inserting user workout week status: %w", err)
 			}
 
-			for _, circuit := range append(day.WarmUps, day.CoolDowns...) {
-				userCircuitStatus := models.NewUserCircuitStatus(userID, circuit.ID, day.ID, workoutPlanID)
-				if _, err := us.database.Collection("userCircuitStatus").InsertOne(ctx, userCircuitStatus); err != nil {
-					return fmt.Errorf("error inserting user circuit status: %w", err)
+			for _, day := range week.Days {
+				userDayStatus := models.NewUserWorkoutDayStatus(userID, day.ID, week.ID, workoutPlanID)
+				if _, err := us.database.Collection("userWorkoutDayStatus").InsertOne(sc, userDayStatus); err != nil {
+					return nil, fmt.Errorf("error inserting user workout day status: %w", err)
 				}
 
-				for _, exerciseID := range circuit.ExerciseIDs {
-					userExerciseStatus := models.NewUserExerciseStatus(userID, exerciseID, circuit.ID, workoutPlanID)
-					if _, err := us.database.Collection("userExerciseStatus").InsertOne(ctx, userExerciseStatus); err != nil {
-						return fmt.Errorf("error inserting user exercise status: %w", err)
+				for _, circuit := range append(day.WarmUps, day.CoolDowns...) {
+					userCircuitStatus := models.NewUserCircuitStatus(userID, circuit.ID, day.ID, workoutPlanID)
+					if _, err := us.database.Collection("userCircuitStatus").InsertOne(sc, userCircuitStatus); err != nil {
+						return nil, fmt.Errorf("error inserting user circuit status: %w", err)
+					}
+
+					for _, exerciseID := range circuit.ExerciseIDs {
+						userExerciseStatus := models.NewUserExerciseStatus(userID, exerciseID, circuit.ID, workoutPlanID)
+						if _, err := us.database.Collection("userExerciseStatus").InsertOne(sc, userExerciseStatus); err != nil {
+							return nil, fmt.Errorf("error inserting user exercise status: %w", err)
+						}
+					}
+				}
+
+				// Process workout items
+				for _, workoutItem := range day.Workouts {
+					userWorkoutItemStatus := models.NewUserWorkoutItemStatus(userID, workoutItem.ItemID, day.ID, workoutPlanID, workoutItem.ItemType)
+					if _, err := us.database.Collection("userWorkoutItemStatus").InsertOne(sc, userWorkoutItemStatus); err != nil {
+						return nil, fmt.Errorf("error inserting user workout item status: %w", err)
+					}
+
+					switch workoutItem.ItemType {
+					case models.StandAloneType:
+						userStandAloneExerciseStatus := models.NewUserWorkoutItemExerciseStatus(userID, workoutItem.ItemID, workoutItem.ID, workoutPlanID)
+						if _, err := us.database.Collection("userExerciseStatus").InsertOne(sc, userStandAloneExerciseStatus); err != nil {
+							return nil, fmt.Errorf("error inserting stand alone user exercise status for workoutItem ID %v: %w", workoutItem.ID, err)
+						}
+					case models.SetType:
+						userSetExerciseStatus := models.NewUserWorkoutItemExerciseStatus(userID, workoutItem.ItemID, workoutItem.ID, workoutPlanID)
+						if _, err := us.database.Collection("userExerciseStatus").InsertOne(sc, userSetExerciseStatus); err != nil {
+							return nil, fmt.Errorf("error inserting set exercise status for workoutItem ID %v: %w", workoutItem.ID, err)
+						}
+					case models.SupersetType:
+						userSupersetExerciseStatus := models.NewUserWorkoutItemExerciseStatus(userID, workoutItem.ItemID, workoutItem.ID, workoutPlanID)
+						if _, err := us.database.Collection("userExerciseStatus").InsertOne(sc, userSupersetExerciseStatus); err != nil {
+							return nil, fmt.Errorf("error inserting superset exercise status for workoutItem ID %v: %w", workoutItem.ID, err)
+						}
 					}
 				}
 			}
-
-			for _, workoutItem := range day.Workouts {
-				// This is where we would add the user status for the workoutItem
-				userWorkoutItemStatus := models.NewUserWorkoutItemStatus(userID, workoutItem.ItemID, day.ID, workoutPlanID, workoutItem.ItemType) 
-				if _, err := us.database.Collection("userWorkoutItemStatus").InsertOne(ctx, userWorkoutItemStatus); err != nil {
-					return fmt.Errorf("error inserting user workout item status: %w", err)
-				}
-
-				// track it by the type of the workoutItem maybe
-				switch workoutItem.ItemType {
-				case models.ExerciseType: 
-					userStandAloneExerciseStatus := models.NewUserExerciseStatus(userID, workoutItem.ItemID, workoutItem.ID, workoutPlanID)
-					if _, err := us.database.Collection("userExerciseStatus").InsertOne(ctx, userStandAloneExerciseStatus); err != nil {
-						return fmt.Errorf("error inserting a stand alone user exercise status for workoutItem ID %v: %w", workoutItem.ID, err)
-					}
-				case models.SetType:
-					userSetExerciseStatus := models.NewUserExerciseStatus(userID, workoutItem.ItemID, workoutItem.ID, workoutPlanID)
-					if _, err := us.database.Collection("userExerciseStatus").InsertOne(ctx, userSetExerciseStatus); err != nil {
-						return fmt.Errorf("error inserting set exercise status for workoutItem ID %v: %w", workoutItem.ID, err)
-					}
-				case models.SupersetType: 
-					userSupersetExerciseStatus := models.NewUserExerciseStatus(userID, workoutItem.ItemID, workoutItem.ID, workoutPlanID)
-					if _, err := us.database.Collection("userExerciseStatus").InsertOne(ctx, userSupersetExerciseStatus); err != nil {
-						return fmt.Errorf("error inserting superset exercise status for workoutItem ID %v: %w", workoutItem.ID, err)
-					}
-				}
-
-			}
-
-			
 		}
+
+		return nil, nil
+	})
+
+	if err != nil {
+		return fmt.Errorf("error during workout plan transaction: %w", err)
 	}
 
 	return nil

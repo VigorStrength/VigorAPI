@@ -7,7 +7,7 @@ import (
 type WorkoutItemType string
 
 const (
-	ExerciseType WorkoutItemType = "exercise"
+	StandAloneType WorkoutItemType = "standalone"
 	SetType WorkoutItemType = "set"
 	SupersetType WorkoutItemType = "superset"
 )
@@ -15,7 +15,7 @@ const (
 type WorkoutItem struct {
 	ID   primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
 	ItemID primitive.ObjectID `bson:"itemId" json:"itemId" binding:"required"`
-	ItemType WorkoutItemType `bson:"itemType" json:"itemType" binding:"required" validate:"required,oneof=exercise set superset"`
+	ItemType WorkoutItemType `bson:"itemType" json:"itemType" binding:"required" validate:"required,oneof=standalone set superset"`
 }
 
 // Circuit represents a set of exercises performed in sequence, with optional rest and laps tracking.

@@ -319,7 +319,7 @@ func convertWorkoutItemInputsToWorkoutItems(itemInputs *[]models.WorkoutItemInpu
 }
 
 func (as *AdminService) validateWorkoutItems(ctx context.Context, workoutItems []models.WorkoutItem) error {
-    exerciseCollection := as.database.Collection("exercises")
+    standAloneWorkoutsCollection := as.database.Collection("standAloneWorkouts")
     setCollection := as.database.Collection("sets")
     supersetCollection := as.database.Collection("supersets")
 
@@ -328,8 +328,8 @@ func (as *AdminService) validateWorkoutItems(ctx context.Context, workoutItems [
         var err error
 
         switch item.ItemType {
-        case models.ExerciseType:
-            count, err = exerciseCollection.CountDocuments(ctx, bson.M{"_id": item.ItemID})
+        case models.StandAloneType:
+            count, err = standAloneWorkoutsCollection.CountDocuments(ctx, bson.M{"_id": item.ItemID})
         case models.SetType: 
             count, err = setCollection.CountDocuments(ctx, bson.M{"_id": item.ItemID})
         case models.SupersetType:

@@ -23,8 +23,8 @@
       },
       "workoutItemType": {
         "bsonType": "string",
-        "enum": ["exercise", "superset"],
-        "description": "type of the workout item, must be either 'exercise' or 'superset' and is required"
+        "enum": ["standalone", "set", "superset"],
+        "description": "type of the workout item, must be either 'standalone', 'set' or 'superset' and is required"
       },
       "workoutDayId": {
         "bsonType": "objectId",

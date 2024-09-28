@@ -23,7 +23,7 @@
           "workouts": [
             {
               "itemId": "6613e3987655ce5f3f0b696a",
-              "itemType": "exercise"
+              "itemType": "standalone"
             },
             {
               "itemId": "66c7bb611539758fe03990ef",
@@ -31,7 +31,7 @@
             },
             {
               "itemId": "6613ee6290b42302aefa18e6",
-              "itemType": "exercise"
+              "itemType": "standalone"
             }
           ],
           "coolDowns": [
